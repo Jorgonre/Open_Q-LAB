@@ -1,0 +1,7 @@
+{
+  "name": "Quantum-benchmark",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "qiskit", 
+  "workspaceFolder": "/workspace",
+  "shutdownAction": "none"
+}
