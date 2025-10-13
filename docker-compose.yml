@@ -11,7 +11,7 @@ services:
     build: ./pennylane
     volumes:
       - ./results:/results
-  braket:
-    build: ./braket
+  myqlm:
+    build: ./myqlm
     volumes:
       - ./results:/results
