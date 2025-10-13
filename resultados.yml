@@ -1,0 +1,17 @@
+services:
+  qiskit:
+    build: ./qiskit
+    volumes:
+      - ./results:/results
+  cirq:
+    build: ./cirq
+    volumes:
+      - ./results:/results
+  pennylane:
+    build: ./pennylane
+    volumes:
+      - ./results:/results
+  braket:
+    build: ./braket
+    volumes:
+      - ./results:/results
