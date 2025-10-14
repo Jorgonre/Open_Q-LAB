@@ -2,8 +2,6 @@ FROM python:3.11
 
 WORKDIR /app
 
-COPY ../common /app/common
-
 RUN pip install qiskit
 RUN pip install qiskit_ibm_runtime
 RUN pip install qiskit[visualization]
