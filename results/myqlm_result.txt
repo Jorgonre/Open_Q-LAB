@@ -1,0 +1,5 @@
+Benchmark de myqlm
+Duración: 38.12s
+
+State |00> amplitude (0.7071067811865475+0j)
+State |11> amplitude (0.7071067811865475+0j)
