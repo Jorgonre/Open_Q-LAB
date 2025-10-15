@@ -3,15 +3,19 @@ services:
     build: ./qiskit
     volumes:
       - ./results:/results
+    command: python /app/benchmark.py
   cirq:
     build: ./cirq
     volumes:
       - ./results:/results
+    command: python /app/benchmark.py
   pennylane:
     build: ./pennylane
     volumes:
       - ./results:/results
+    command: python /app/benchmark.py
   myqlm:
     build: ./myqlm
     volumes:
       - ./results:/results
+    command: python /app/benchmark.py
