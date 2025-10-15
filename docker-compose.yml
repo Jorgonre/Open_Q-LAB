@@ -12,7 +12,7 @@ services:
   pennylane:
     build: ./pennylane
     volumes:
-      - .;/app
+      - .:/app
     command: python /app/benchmark.py
   myqlm:
     build: ./myqlm
