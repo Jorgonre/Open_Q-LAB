@@ -1,3 +1,0 @@
-Benchmark de myqlm
-Duración: 3.02s
-

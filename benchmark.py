@@ -12,9 +12,9 @@ def ensure_results_dir():
     """Crea la carpeta 'results' si no existe."""
     os.makedirs(RESULTS_DIR, exist_ok=True)
 
-def run_framework(framework):
+def run_framework():
     """Ejecuta el benchmark de un framework y guarda su salida."""
-    print(f"\nEjecutando benchmark para {framework}...\n")
+    print(f"\nEjecutando benchmark...\n")
     start_time = datetime.now()
 
     # Ruta del script dentro de cada carpeta
@@ -34,19 +34,19 @@ def run_framework(framework):
         )
 
         duration = (datetime.now() - start_time).total_seconds()
-        print(f"{framework} completado en {duration:.2f}s\n")
+        print(f"Completado en {duration:.2f}s\n")
 
         # Guardamos la salida en un archivo dentro de /results
-        result_file = os.path.join(RESULTS_DIR, f"{framework}_result.txt")
+        result_file = os.path.join(RESULTS_DIR, f"{script_path}_result.txt")
         with open(result_file, "w") as f:
-            f.write(f"Benchmark de {framework}\n")
+            f.write(f"Benchmark\n")
             f.write(f"Duración: {duration:.2f}s\n\n")
             f.write(result.stdout)
 
         return duration
 
     except subprocess.CalledProcessError as e:
-        print(f"Error ejecutando {framework}:\n{e.stderr}")
+        print(f"Error ejecutando {script_path}:\n{e.stderr}")
         return None
 
 
@@ -56,10 +56,10 @@ def main():
 
     resultados = {}
 
-    for fw in FRAMEWORKS:
-        duracion = run_framework(fw)
-        if duracion is not None:
-            resultados[fw] = duracion
+    #for fw in FRAMEWORKS:
+    duracion = run_framework()
+    if duracion is not None:
+        resultados[os.path] = duracion
 
     print("\n=== RESUMEN FINAL ===")
     for fw, dur in resultados.items():

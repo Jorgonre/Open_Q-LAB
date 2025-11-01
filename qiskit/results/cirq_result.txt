@@ -1,3 +1,0 @@
-Benchmark de cirq
-Duración: 3.53s
-
