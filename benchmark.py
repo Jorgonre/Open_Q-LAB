@@ -6,7 +6,7 @@ from datetime import datetime
 FRAMEWORKS = ["qiskit", "cirq", "pennylane", "myqlm"]
 
 # Carpeta donde se guardarán los resultados
-RESULTS_DIR = "results"
+RESULTS_DIR = os.path.join(os.path.dirname(os.getcwd()), "results")
 
 def ensure_results_dir():
     """Crea la carpeta 'results' si no existe."""
@@ -37,7 +37,7 @@ def run_framework():
         print(f"Completado en {duration:.2f}s\n")
 
         # Guardamos la salida en un archivo dentro de /results
-        result_file = os.path.join(RESULTS_DIR, f"{script_path}_result.txt")
+        result_file = os.path.join(RESULTS_DIR, f"{os.path.basename(os.getcwd())}_result.txt")
         with open(result_file, "w") as f:
             f.write(f"Benchmark\n")
             f.write(f"Duración: {duration:.2f}s\n\n")
