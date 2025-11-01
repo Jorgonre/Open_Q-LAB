@@ -1,3 +1,4 @@
 Benchmark de qiskit
-Duración: 24.47s
+Duración: 1.86s
 
+{'1001': 1024}

@@ -1,4 +1,4 @@
 Benchmark de pennylane
-Duración: 36.99s
+Duración: 37.08s
 
 0.85154057
