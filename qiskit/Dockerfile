@@ -1,12 +1,7 @@
-FROM python:3.11
+FROM quantum-base:latest
 
 WORKDIR /app
 
-RUN pip install qiskit
-RUN pip install qiskit_ibm_runtime
-RUN pip install qiskit[visualization]
-RUN pip install qiskit-aer
+COPY circuito_prueba.py /app/
 
-COPY adder_n4.py /app/
-
-CMD ["python", "adder_n4.py"]
+CMD ["python", "circuito_prueba.py"]

@@ -1,7 +1,7 @@
-Benchmark de cirq
-Duración: 6.47s
+Benchmark de qiskit
+Duración: 6.43s
 
 Circuit:
 (0, 0): ───X^0.5───M('m')───
 Results:
-m=00111111011011110000
+m=01111010110011011011

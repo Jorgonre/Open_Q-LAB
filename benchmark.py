@@ -18,7 +18,7 @@ def run_framework(framework):
     start_time = datetime.now()
 
     # Ruta del script dentro de cada carpeta
-    script_path = os.path.join(framework, "circuito_prueba.py")
+    script_path = os.path.join("circuito_prueba.py")
 
     if not os.path.exists(script_path):
         print(f"No se encontró {script_path}, saltando...")

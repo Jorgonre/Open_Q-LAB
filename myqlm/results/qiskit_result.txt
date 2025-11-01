@@ -1,5 +1,5 @@
-Benchmark de myqlm
-Duración: 3.63s
+Benchmark de qiskit
+Duración: 2.99s
 
 State |00> amplitude (0.7071067811865475+0j)
 State |11> amplitude (0.7071067811865475+0j)
