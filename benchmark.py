@@ -49,6 +49,22 @@ def run_framework():
         print(f"Error ejecutando {script_path}:\n{e.stderr}")
         return None
 
+def save_to_csv(resultados):
+    """Guarda los resultados en un archivo CSV dentro de /results."""
+    csv_file = os.path.join(RESULTS_DIR, "benchmark_results.csv")
+    file_exists = os.path.exists(csv_file)
+
+    with open(csv_file, "a", newline="", encoding="utf-8") as csvfile:
+        writer = csv.writer(csvfile)
+
+        # Si el archivo no existía, escribir encabezados
+        if not file_exists:
+            writer.writerow(["Framework", "Duración (s)", "Fecha y hora"])
+
+        for fw, dur in resultados.items():
+            writer.writerow([fw, f"{dur:.2f}", datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
+
+    print(f"\nResultados guardados en CSV: {csv_file}")
 
 def main():
     print("=== BENCHMARK DE FRAMEWORKS CUÁNTICOS ===")
