@@ -2,5 +2,5 @@ myqlm,circuito_prueba.py,3.32,2025-11-02 15:57:02
 qiskit,circuito_prueba.py,4.20,2025-11-02 15:57:03
 cirq,circuito_prueba.py,5.15,2025-11-02 15:57:03
 pennylane,circuito_prueba.py,6.49,2025-11-02 15:57:05
-myqlm,adder_n4.py,13.60,2025-11-02 16:48:46
-qiskit,adder_n4.py,13.78,2025-11-02 16:48:46
+qiskit,adder_n4.py,1.60,2025-11-02 19:09:43
+myqlm,adder_n4.py,2.24,2025-11-02 19:09:43

@@ -1,53 +1,54 @@
-from qat.interop.openqasm import OqasmParser
-from qat.qpus import Linalg
+from qat.lang.AQASM import Program, H, CNOT, X, T, S
+from qat.qpus import PyLinalg
 from qat.core import Job
 
-qasm_code = """
-OPENQASM 2.0;
-include "qelib1.inc";
+prog = Program()
+qbits = prog.qalloc(4)
 
-qreg q[4];
-creg c[4];
-x q[0];
-x q[1];
-h q[3];
-cx q[2],q[3];
-t q[0];
-t q[1];
-t q[2];
-tdg q[3];
-cx q[0],q[1];
-cx q[2],q[3];
-cx q[3],q[0];
-cx q[1],q[2];
-cx q[0],q[1];
-cx q[2],q[3];
-tdg q[0];
-tdg q[1];
-tdg q[2];
-t q[3];
-cx q[0],q[1];
-cx q[2],q[3];
-s q[3];
-cx q[3],q[0];
-h q[3];
-measure q[0] -> c[0];
-measure q[1] -> c[1];
-measure q[2] -> c[2];
-measure q[3] -> c[3];
-"""
+prog.apply(X, qbits[0])
+prog.apply(X, qbits[1])
+prog.apply(H, qbits[3])
+prog.apply(CNOT, qbits[2], qbits[3])
+prog.apply(T, qbits[0])
+prog.apply(T, qbits[1])
+prog.apply(T, qbits[2])
+prog.apply(S, qbits[3]) #Tdagger
+prog.apply(S, qbits[3]) #Tdagger
+prog.apply(S, qbits[3]) #Tdagger
+prog.apply(T, qbits[3]) #Tdagger
+prog.apply(CNOT, qbits[0], qbits[1])
+prog.apply(CNOT, qbits[2], qbits[3])
+prog.apply(CNOT, qbits[3], qbits[0])
+prog.apply(CNOT, qbits[1], qbits[2])
+prog.apply(CNOT, qbits[0], qbits[1])
+prog.apply(CNOT, qbits[2], qbits[3])
+prog.apply(S, qbits[0]) #Tdagger
+prog.apply(S, qbits[0]) #Tdagger
+prog.apply(S, qbits[0]) #Tdagger
+prog.apply(T, qbits[0]) #Tdagger
+prog.apply(S, qbits[1]) #Tdagger
+prog.apply(S, qbits[1]) #Tdagger
+prog.apply(S, qbits[1]) #Tdagger
+prog.apply(T, qbits[1]) #Tdagger
+prog.apply(S, qbits[2]) #Tdagger
+prog.apply(S, qbits[2]) #Tdagger
+prog.apply(S, qbits[2]) #Tdagger
+prog.apply(T, qbits[2]) #Tdagger
+prog.apply(T, qbits[3])
+prog.apply(CNOT, qbits[0], qbits[1])
+prog.apply(CNOT, qbits[2], qbits[3])
+prog.apply(S, qbits[3])
+prog.apply(CNOT, qbits[3], qbits[0])
+prog.apply(H, qbits[3])
 
-parser = OqasmParser()
-circuit = parser.compile(qasm_code)
+for i in range(4):
+    prog.measure(qbits[i])
 
-qpu = Linalg()
+circuit = prog.to_circ()
+qpu = PyLinalg()
 job = Job(circuit=circuit, nbshots=1024)
 result = qpu.submit(job)
 
-counts = {}
-for sample in result:
-    bitstring = "".join(str(b) for b in sample.state)
-    counts[bitstring] = int(sample.probability * result.nbshots)
+print(result[0].state)
 
-print(counts)
 print(circuit)
