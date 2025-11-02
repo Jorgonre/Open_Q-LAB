@@ -1,7 +1,7 @@
 Benchmark
-Duración: 4.93s
+Duración: 5.15s
 
 Circuit:
 (0, 0): ───X^0.5───M('m')───
 Results:
-m=10000010010101010111
+m=00000001010101111000

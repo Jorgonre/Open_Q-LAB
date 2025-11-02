@@ -13,10 +13,14 @@ RUN pip install qiskit[visualization]
 RUN pip install qiskit-ibm-runtime
 RUN pip install qiskit-aer
 RUN pip install myqlm
+RUN pip install myqlm-contrib
 RUN pip install cirq
 RUN python -m pip install cirq-core[contrib]
 RUN pip install pennylane
 RUN python -m pip install jax~=0.6.0
+RUN pip install myqlm[full]
+RUN pip install myqlm[full] myqlm-contrib
+RUN pip install myqlm-interop[all]
 
 # Crear carpeta donde copiarás el código luego
 RUN mkdir /workspace

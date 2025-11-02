@@ -1,5 +1,5 @@
 Benchmark
-Duración: 3.56s
+Duración: 3.32s
 
 State |00> amplitude (0.7071067811865475+0j)
 State |11> amplitude (0.7071067811865475+0j)
