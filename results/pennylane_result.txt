@@ -1,4 +1,4 @@
 Benchmark
-Duración: 6.48s
+Duración: 6.62s
 
 0.85154057

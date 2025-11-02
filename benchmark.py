@@ -1,5 +1,6 @@
 import subprocess
 import os
+import csv
 from datetime import datetime
 
 # Lista de frameworks que vamos a probar
@@ -75,13 +76,16 @@ def main():
     #for fw in FRAMEWORKS:
     duracion = run_framework()
     if duracion is not None:
-        resultados[os.path] = duracion
+        framework_name = os.path.basename(os.getcwd())
+        resultados[framework_name] = duracion
 
     print("\n=== RESUMEN FINAL ===")
     for fw, dur in resultados.items():
         print(f"{fw}: {dur:.2f} segundos")
 
     print(f"\nResultados guardados en: {os.path.abspath(RESULTS_DIR)}")
+    
+    save_to_csv(resultados)
 
 
 if __name__ == "__main__":
