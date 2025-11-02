@@ -1,4 +1,6 @@
 from qat.interop.openqasm import OqasmParser
+from qat.qpus import Linalg
+from qat.core import Job
 
 qasm_code = """
 OPENQASM 2.0;
@@ -36,7 +38,16 @@ measure q[3] -> c[3];
 """
 
 parser = OqasmParser()
+circuit = parser.compile(qasm_code)
 
-circuit=parser.parse(qasm_code)
+qpu = Linalg()
+job = Job(circuit=circuit, nbshots=1024)
+result = qpu.submit(job)
 
+counts = {}
+for sample in result:
+    bitstring = "".join(str(b) for b in sample.state)
+    counts[bitstring] = int(sample.probability * result.nbshots)
+
+print(counts)
 print(circuit)
