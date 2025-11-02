@@ -19,7 +19,8 @@ def run_framework():
     start_time = datetime.now()
 
     # Ruta del script dentro de cada carpeta
-    script_path = os.path.join("circuito_prueba.py")
+    circuito_nombre = "circuito_prueba.py"
+    script_path = os.path.join(circuito_nombre)
 
     if not os.path.exists(script_path):
         print(f"No se encontró {script_path}, saltando...")
@@ -50,7 +51,7 @@ def run_framework():
         print(f"Error ejecutando {script_path}:\n{e.stderr}")
         return None
 
-def save_to_csv(resultados):
+def save_to_csv(resultados,circuito_nombre):
     """Guarda los resultados en un archivo CSV dentro de /results."""
     csv_file = os.path.join(RESULTS_DIR, "benchmark_results.csv")
     file_exists = os.path.exists(csv_file)
@@ -60,10 +61,10 @@ def save_to_csv(resultados):
 
         # Si el archivo no existía, escribir encabezados
         if not file_exists:
-            writer.writerow(["Framework", "Duración (s)", "Fecha y hora"])
+            writer.writerow(["Framework", "Circuito", "Duración (s)", "Fecha y hora"])
 
         for fw, dur in resultados.items():
-            writer.writerow([fw, f"{dur:.2f}", datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
+            writer.writerow([fw, circuito_nombre, f"{dur:.2f}", datetime.now().strftime("%Y-%m-%d %H:%M:%S")])
 
     print(f"\nResultados guardados en CSV: {csv_file}")
 
@@ -85,7 +86,7 @@ def main():
 
     print(f"\nResultados guardados en: {os.path.abspath(RESULTS_DIR)}")
     
-    save_to_csv(resultados)
+    save_to_csv(resultados,"circuito_prueba.py")
 
 
 if __name__ == "__main__":
