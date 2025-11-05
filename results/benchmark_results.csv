@@ -4,3 +4,9 @@ cirq,circuito_prueba.py,5.15,2025-11-02 15:57:03
 pennylane,circuito_prueba.py,6.49,2025-11-02 15:57:05
 qiskit,adder_n4.py,1.60,2025-11-02 19:09:43
 myqlm,adder_n4.py,2.24,2025-11-02 19:09:43
+myqlm,adder_n4.py,10.14,2025-11-05 12:09:26
+qiskit,adder_n4.py,12.92,2025-11-05 12:09:28
+cirq,adder_n4.py,27.00,2025-11-05 12:09:42
+qiskit,adder_n4.py,3.23,2025-11-05 12:16:01
+myqlm,adder_n4.py,3.90,2025-11-05 12:16:01
+cirq,adder_n4.py,5.01,2025-11-05 12:16:02
