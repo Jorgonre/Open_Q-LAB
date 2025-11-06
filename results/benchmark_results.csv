@@ -10,3 +10,7 @@ cirq,adder_n4.py,27.00,2025-11-05 12:09:42
 qiskit,adder_n4.py,3.23,2025-11-05 12:16:01
 myqlm,adder_n4.py,3.90,2025-11-05 12:16:01
 cirq,adder_n4.py,5.01,2025-11-05 12:16:02
+myqlm,adder_n4.py,10.41,2025-11-06 10:12:05
+qiskit,adder_n4.py,15.64,2025-11-06 10:12:10
+cirq,adder_n4.py,24.52,2025-11-06 10:12:19
+pennylane,adder_n4.py,34.36,2025-11-06 10:12:29
