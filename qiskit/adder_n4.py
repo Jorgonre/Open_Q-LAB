@@ -8,7 +8,7 @@ creg_c = ClassicalRegister(4, 'c')
 circuit = QuantumCircuit(qreg_q, creg_c)
  
 circuit.h(qreg_q[3])
-circuit.x(qreg_q[1])
+circuit.x(qreg_q[1]) #Probar sin puertas Pauli o con una sola
 circuit.x(qreg_q[0])
 circuit.t(qreg_q[1])
 circuit.t(qreg_q[0])
