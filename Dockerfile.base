@@ -21,6 +21,7 @@ RUN python -m pip install jax~=0.6.0
 RUN pip install myqlm[full]
 RUN pip install myqlm[full] myqlm-contrib
 RUN pip install myqlm-interop[all]
+RUN pip install pytket
 
 # Crear carpeta donde copiarás el código luego
 RUN mkdir /workspace

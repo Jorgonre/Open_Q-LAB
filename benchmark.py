@@ -4,7 +4,7 @@ import csv
 from datetime import datetime
 
 # Lista de frameworks que vamos a probar
-FRAMEWORKS = ["qiskit", "cirq", "pennylane", "myqlm"]
+FRAMEWORKS = ["qiskit", "cirq", "pennylane", "myqlm", "tket"]
 
 # Carpeta donde se guardarán los resultados
 RESULTS_DIR = os.path.join(os.path.dirname(os.getcwd()), "results")
@@ -19,7 +19,7 @@ def run_framework():
     start_time = datetime.now()
 
     # Ruta del script dentro de cada carpeta
-    circuito_nombre = "adder_n4.py"
+    circuito_nombre = "circuito_prueba.py"
     script_path = os.path.join(circuito_nombre)
 
     if not os.path.exists(script_path):
@@ -86,7 +86,7 @@ def main():
 
     print(f"\nResultados guardados en: {os.path.abspath(RESULTS_DIR)}")
     
-    save_to_csv(resultados,"adder_n4.py")
+    save_to_csv(resultados,"circuito_prueba.py")
 
 
 if __name__ == "__main__":

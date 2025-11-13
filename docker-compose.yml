@@ -26,3 +26,10 @@ services:
       - .:/app
     working_dir: /app/myqlm
     command: python /app/benchmark.py
+
+  tket:
+    image: quantum-base:latest
+    volumes:
+      - .:/app
+    working_dir: /app/tket
+    command: python /app/benchmark.py
