@@ -1,51 +1,51 @@
 from pytket import Circuit
+from pytket.extensions.qiskit import AerBackend
 
-circ = Circuit(3)
-q = circ.add_q_register("q", 4)
+circ = Circuit(4)
 
-circ.X(q[0])
-circ.X(q[1])
-circ.H(q[3])
+circ.X(0)
+circ.X(1)
+circ.H(3)
+circ.CX(2, 3)
+circ.T(0)
+circ.T(1)
+circ.T(2)
+circ.S(3)
+circ.S(3)
+circ.S(3)
+circ.T(3)
+circ.CX(0, 1)
+circ.CX(2, 3)
+circ.CX(3, 0)
+circ.CX(1, 2)
+circ.CX(0, 1)
+circ.CX(2, 3)
+circ.S(0)
+circ.S(0)
+circ.S(0)
+circ.T(0)
+circ.S(1)
+circ.S(1)
+circ.S(1)
+circ.T(1)
+circ.S(2)
+circ.S(2)
+circ.S(2)
+circ.T(2)
+circ.T(3)
+circ.CX(0, 1)
+circ.CX(2, 3)
+circ.S(3)
+circ.CX(3, 0)
+circ.H(3)
+circ.measure_all()
 
-circ.CX(q[2],q[3])
+print("Circuito:")
+print(circ)
 
-circ.T(q[0])
-circ.T(q[1])
-circ.T(q[2])
-circ.S(q[3]) #Tdagger
-circ.S(q[3]) #Tdagger
-circ.S(q[3]) #Tdagger
-circ.T(q[3]) #Tdagger
+backend = AerBackend()
+compiled = backend.get_compiled_circuit(circ)
+result = backend.run_circuit(compiled, n_shots=1024)
 
-circ.CX(q[0],q[1])
-circ.CX(q[2],q[3])
-
-circ.CX(q[3],q[0])
-
-circ.CX(q[1],q[2])
-
-circ.CX(q[0],q[1])
-circ.CX(q[2],q[3])
-
-circ.S(q[0]) #Tdagger
-circ.S(q[0]) #Tdagger
-circ.S(q[0]) #Tdagger
-circ.T(q[0]) #Tdagger
-circ.S(q[1]) #Tdagger
-circ.S(q[1]) #Tdagger
-circ.S(q[1]) #Tdagger
-circ.T(q[1]) #Tdagger
-circ.S(q[2]) #Tdagger
-circ.S(q[2]) #Tdagger
-circ.S(q[2]) #Tdagger
-circ.T(q[2]) #Tdagger
-circ.T(q[3])
-
-circ.CX(q[0],q[1])
-circ.CX(q[2],q[3])
-
-circ.S(q[3])
-
-circ.CX(q[3],q[0])
-
-circ.H(q[3])
+print("\nResultados:")
+print(result.get_counts())

@@ -19,7 +19,7 @@ def run_framework():
     start_time = datetime.now()
 
     # Ruta del script dentro de cada carpeta
-    circuito_nombre = "circuito_prueba.py"
+    circuito_nombre = "adder_n4.py"
     script_path = os.path.join(circuito_nombre)
 
     if not os.path.exists(script_path):
@@ -86,7 +86,7 @@ def main():
 
     print(f"\nResultados guardados en: {os.path.abspath(RESULTS_DIR)}")
     
-    save_to_csv(resultados,"circuito_prueba.py")
+    save_to_csv(resultados,"adder_n4.py")
 
 
 if __name__ == "__main__":

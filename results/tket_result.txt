@@ -1,3 +1,8 @@
 Benchmark
-Duración: 1.15s
+Duración: 7.46s
 
+Circuito:
+<tket::Circuit, qubits=4, gates=39>
+
+Resultados:
+Counter({(1, 0, 0, 1): 1024})
