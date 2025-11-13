@@ -1,0 +1,4 @@
+Benchmark pennylane - circuito_prueba.py
+Duración: 10.43s
+
+0.85154057

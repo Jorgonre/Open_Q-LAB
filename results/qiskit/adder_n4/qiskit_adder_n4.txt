@@ -1,0 +1,4 @@
+Benchmark qiskit - adder_n4.py
+Duración: 3.05s
+
+{'1001': 1024}

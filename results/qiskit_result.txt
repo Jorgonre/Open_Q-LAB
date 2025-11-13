@@ -1,4 +1,0 @@
-Benchmark
-Duración: 3.16s
-
-{'1001': 1024}
