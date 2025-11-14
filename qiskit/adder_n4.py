@@ -4,8 +4,15 @@ from qiskit.visualization import plot_histogram
 from numpy import pi
 import time
 from qiskit import transpile
+import psutil
+import os
 
- # Medir tiempo de construcción
+process = psutil.Process(os.getpid())
+
+process.cpu_percent(interval=None)  # Establece línea base
+
+start_time = time.time()
+# Medir tiempo de construcción
 start_build = time.time()
 
 qreg_q = QuantumRegister(4, 'q')
@@ -48,13 +55,22 @@ build_time = time.time() - start_build
 start_transpile = time.time()
 
 sim = AerSimulator()
- 
-job = sim.run(circuit, shots=1024)  
+transpiled = transpile(circuit, backend=sim)
+
+job = sim.run(transpiled, shots=1024)  
 result = job.result()
- 
+
 transpile_time = time.time() - start_transpile
 
+# Medir uso de recursos
+cpu_usage = process.cpu_percent(interval=0.2)
+ram_usage_mb = process.memory_info().rss / (1024 * 1024)
+
+
 counts = result.get_counts()
+
+total_time = time.time() - start_time
+
 print(counts)
  
 plot_histogram(counts)
@@ -79,4 +95,9 @@ print(f"Depth:{depth}")
 print(f"Gate_1q:{num_1q}")
 print(f"Gate_2q:{num_2q}")
 print(f"Total_gates:{total_gates}")
+print(f"Build_time:{build_time:.4f}")
+print(f"Transpile_time:{transpile_time:.4f}")
+print(f"Total_time:{total_time:.4f}")
+print(f"CPU_usage:{cpu_usage:.2f}")
+print(f"RAM_usage_MB:{ram_usage_mb:.2f}")
 print("# --- END_METRICS ---")

@@ -1,7 +1,7 @@
 Benchmark cirq - circuito_prueba.py
-Duración: 7.40s
+Duración: 7.27s
 
 Circuit:
 (0, 0): ───X^0.5───M('m')───
 Results:
-m=11001000110101000111
+m=11010011110101001100

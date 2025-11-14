@@ -23,6 +23,7 @@ RUN pip install myqlm[full] myqlm-contrib
 RUN pip install myqlm-interop[all]
 RUN pip install pytket
 RUN pip install pytket pytket-qiskit
+RUN pip install psutil
 
 # Crear carpeta donde copiarás el código luego
 RUN mkdir /workspace

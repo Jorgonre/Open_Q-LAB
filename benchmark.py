@@ -2,9 +2,12 @@ import subprocess
 import os
 import csv
 from datetime import datetime
+import psutil
 
 # Lista de frameworks
 FRAMEWORKS = ["qiskit", "cirq", "pennylane", "myqlm", "tket"]
+
+NUM_ITERATIONS = 1
 
 # Carpeta principal de resultados
 RESULTS_DIR = os.path.join(os.path.dirname(os.getcwd()), "results")
@@ -16,7 +19,12 @@ def extract_metrics_from_txt(path_txt):
         "depth": None,
         "gate_1q": None,
         "gate_2q": None,
-        "total_gates": None
+        "total_gates": None,
+        "build_time": None,
+        "transpile_time": None,
+        "total_time": None,
+        "cpu_usage": None,
+        "ram_usage_mb": None
     }
 
     inside = False
@@ -30,7 +38,7 @@ def extract_metrics_from_txt(path_txt):
                 continue
             if line == "# --- END_METRICS ---":
                 break
-
+            
             if inside:
                 if "Qubits:" in line:
                     metrics["qubits"] = int(line.split(":")[1])
@@ -42,6 +50,16 @@ def extract_metrics_from_txt(path_txt):
                     metrics["gate_2q"] = int(line.split(":")[1])
                 elif "Total_gates:" in line:
                     metrics["total_gates"] = int(line.split(":")[1])
+                elif "Build_time:" in line:
+                    metrics["build_time"] = float(line.split(":")[1])
+                elif "Transpile_time:" in line:
+                    metrics["transpile_time"] = float(line.split(":")[1])
+                elif "Total_time:" in line:
+                    metrics["total_time"] = float(line.split(":")[1])
+                elif "CPU_usage:" in line:
+                    metrics["cpu_usage"] = float(line.split(":")[1])
+                elif "RAM_usage_MB:" in line:
+                    metrics["ram_usage_mb"] = float(line.split(":")[1])
 
     return metrics
 
@@ -60,6 +78,8 @@ def run_framework(circuito_nombre):
         return None
 
     try:
+        process = psutil.Process()
+
         result = subprocess.run(
             ["python", script_path],
             capture_output=True,
@@ -105,7 +125,7 @@ def save_to_csv(resultados, circuito_nombre):
         hora = datetime.now().strftime("%H%M%S")
 
         # Nombre del archivo CSV
-        csv_filename = f"{fecha}_{hora}_{fw}_{circuito_base}_{metrics['qubits']}_{0}.csv"
+        csv_filename = f"{fecha}_{hora}_{fw}_{circuito_base}_{metrics['qubits']}_{NUM_ITERATIONS}.csv"
         csv_path = os.path.join(csv_dir, csv_filename)
 
         # Crear y escribir el CSV con el formato del Excel
@@ -121,8 +141,8 @@ def save_to_csv(resultados, circuito_nombre):
             writer.writerow([
                 fw, fecha, hora, circuito_base, metrics["qubits"],
                 metrics["gate_1q"], metrics["gate_2q"], metrics["total_gates"],
-                "N/A", "N/A",
-                "N/A", "N/A", f"{dur:.2f}"
+                metrics["cpu_usage"], metrics["ram_usage_mb"],
+                metrics["build_time"], metrics["transpile_time"], metrics["total_time"]
             ])
 
         print(f"Resultado guardado en: {csv_path}")
