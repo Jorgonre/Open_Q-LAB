@@ -47,3 +47,25 @@ counts = result.get_counts()
 print(counts)
  
 plot_histogram(counts)
+
+# Contar operaciones
+ops = circuit.count_ops()
+
+# Clasificar puertas
+one_qubit_gates = ['x', 'h', 't', 'tdg', 's']
+two_qubit_gates = ['cx']
+
+num_1q = sum(ops.get(gate, 0) for gate in one_qubit_gates)
+num_2q = sum(ops.get(gate, 0) for gate in two_qubit_gates)
+total_gates = sum(ops.values())
+num_qubits = circuit.num_qubits
+depth = circuit.depth()
+
+
+print("# --- METRICS ---")
+print(f"Qubits:{num_qubits}")
+print(f"Depth:{depth}")
+print(f"Gate_1q:{num_1q}")
+print(f"Gate_2q:{num_2q}")
+print(f"Total_gates:{total_gates}")
+print("# --- END_METRICS ---")
