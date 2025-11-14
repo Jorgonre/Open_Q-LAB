@@ -1,5 +1,5 @@
 Benchmark myqlm - circuito_prueba.py
-Duración: 4.05s
+Duración: 4.33s
 
 State |00> amplitude (0.7071067811865475+0j)
 State |11> amplitude (0.7071067811865475+0j)

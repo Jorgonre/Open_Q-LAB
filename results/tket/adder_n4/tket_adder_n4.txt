@@ -1,5 +1,5 @@
 Benchmark tket - adder_n4.py
-Duración: 9.50s
+Duración: 10.12s
 
 Circuito:
 <tket::Circuit, qubits=4, gates=39>

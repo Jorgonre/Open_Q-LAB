@@ -1,18 +1,11 @@
 Benchmark qiskit - adder_n4.py
-Duración: 3.42s
+Duración: 3.55s
 
 {'1001': 1024}
 # --- METRICS ---
-
 Qubits:4
-
 Depth:14
-
 Gate_1q:16
-
 Gate_2q:10
-
-Total_gates:30
-
+Total_gates:26
 # --- END_METRICS ---
-

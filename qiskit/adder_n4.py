@@ -2,7 +2,12 @@ from qiskit import QuantumRegister, ClassicalRegister, QuantumCircuit
 from qiskit_aer import AerSimulator
 from qiskit.visualization import plot_histogram
 from numpy import pi
- 
+import time
+from qiskit import transpile
+
+ # Medir tiempo de construcción
+start_build = time.time()
+
 qreg_q = QuantumRegister(4, 'q')
 creg_c = ClassicalRegister(4, 'c')
 circuit = QuantumCircuit(qreg_q, creg_c)
@@ -38,11 +43,17 @@ circuit.measure(qreg_q[0], creg_c[0])
 circuit.measure(qreg_q[1], creg_c[1])
 circuit.measure(qreg_q[3], creg_c[3])
 
+build_time = time.time() - start_build
+
+start_transpile = time.time()
+
 sim = AerSimulator()
  
 job = sim.run(circuit, shots=1024)  
 result = job.result()
  
+transpile_time = time.time() - start_transpile
+
 counts = result.get_counts()
 print(counts)
  
@@ -57,7 +68,7 @@ two_qubit_gates = ['cx']
 
 num_1q = sum(ops.get(gate, 0) for gate in one_qubit_gates)
 num_2q = sum(ops.get(gate, 0) for gate in two_qubit_gates)
-total_gates = sum(ops.values())
+total_gates = num_1q + num_2q
 num_qubits = circuit.num_qubits
 depth = circuit.depth()
 

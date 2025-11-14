@@ -9,10 +9,41 @@ FRAMEWORKS = ["qiskit", "cirq", "pennylane", "myqlm", "tket"]
 # Carpeta principal de resultados
 RESULTS_DIR = os.path.join(os.path.dirname(os.getcwd()), "results")
 
-# === CONFIGURACIÓN ===
-NUM_QBITS = 4
-NUM_ITERATIONS = 10
-# ======================
+def extract_metrics_from_txt(path_txt):
+    """Extrae las métricas entre los delimitadores METRICS del archivo de salida."""
+    metrics = {
+        "qubits": None,
+        "depth": None,
+        "gate_1q": None,
+        "gate_2q": None,
+        "total_gates": None
+    }
+
+    inside = False
+
+    with open(path_txt, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+
+            if line == "# --- METRICS ---":
+                inside = True
+                continue
+            if line == "# --- END_METRICS ---":
+                break
+
+            if inside:
+                if "Qubits:" in line:
+                    metrics["qubits"] = int(line.split(":")[1])
+                elif "Depth:" in line:
+                    metrics["depth"] = int(line.split(":")[1])
+                elif "Gate_1q:" in line:
+                    metrics["gate_1q"] = int(line.split(":")[1])
+                elif "Gate_2q:" in line:
+                    metrics["gate_2q"] = int(line.split(":")[1])
+                elif "Total_gates:" in line:
+                    metrics["total_gates"] = int(line.split(":")[1])
+
+    return metrics
 
 def ensure_results_dir():
     """Crea la carpeta 'results' si no existe."""
@@ -62,15 +93,19 @@ def save_to_csv(resultados, circuito_nombre):
     """Guarda resultados con el formato del Excel de referencia."""
     for fw, dur in resultados.items():
         circuito_base = os.path.splitext(circuito_nombre)[0]
+        txt_path = os.path.join(RESULTS_DIR, fw, circuito_base, f"{fw}_{circuito_base}.txt")
+
+        # Extraer métricas del archivo .txt
+        metrics = extract_metrics_from_txt(txt_path)
+
         csv_dir = os.path.join(RESULTS_DIR, fw, circuito_base)
         os.makedirs(csv_dir, exist_ok=True)
 
-        # Fecha y hora sin guiones
         fecha = datetime.now().strftime("%Y%m%d")
         hora = datetime.now().strftime("%H%M%S")
 
         # Nombre del archivo CSV
-        csv_filename = f"{fecha}_{hora}_{fw}_{circuito_base}_{NUM_QBITS}_{NUM_ITERATIONS}.csv"
+        csv_filename = f"{fecha}_{hora}_{fw}_{circuito_base}_{metrics['qubits']}_{0}.csv"
         csv_path = os.path.join(csv_dir, csv_filename)
 
         # Crear y escribir el CSV con el formato del Excel
@@ -84,10 +119,10 @@ def save_to_csv(resultados, circuito_nombre):
             ])
 
             writer.writerow([
-                fw, fecha, hora, circuito_base, NUM_QBITS,
-                "N/A", "N/A", "N/A",  # Gates (rellenables después)
-                "N/A", "N/A",         # RAM y CPU
-                "N/A", "N/A", f"{dur:.2f}"  # Tiempos
+                fw, fecha, hora, circuito_base, metrics["qubits"],
+                metrics["gate_1q"], metrics["gate_2q"], metrics["total_gates"],
+                "N/A", "N/A",
+                "N/A", "N/A", f"{dur:.2f}"
             ])
 
         print(f"Resultado guardado en: {csv_path}")
