@@ -1,5 +1,5 @@
 Benchmark pennylane - adder_n4.py
-Duración: 2.68s
+Duración: 3.70s
 
 q0: 0.000 |0>  +  1.000 |1>
 q1: 1.000 |0>  +  0.000 |1>
@@ -11,3 +11,15 @@ Circuito (texto):
 1: ──X──T─╰X─────────────│──╭●─╰X──S──S──S──T─╰X────│─────┤ ├Sample
 2: ────╭●──T──────────╭●─│──╰X─╭●──S──S──S──T─╭●────│─────┤ ├Sample
 3: ──H─╰X──S──S──S──T─╰X─╰●────╰X──T──────────╰X──S─╰●──H─┤ ╰Sample
+# --- METRICS ---
+Qubits:4
+Depth:17
+Gate_1q:25
+Gate_2q:10
+Total_gates:35
+Build_time:0.0098
+Transpile_time:0.0490
+Total_time:0.1142
+CPU_usage:84.90
+RAM_usage_MB:361.18
+# --- END_METRICS ---

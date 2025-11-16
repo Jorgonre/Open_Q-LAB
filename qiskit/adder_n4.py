@@ -19,29 +19,35 @@ qreg_q = QuantumRegister(4, 'q')
 creg_c = ClassicalRegister(4, 'c')
 circuit = QuantumCircuit(qreg_q, creg_c)
  
+circuit.x(qreg_q[0]) #Probar sin puertas Pauli o con una sola
+circuit.x(qreg_q[1])
 circuit.h(qreg_q[3])
-circuit.x(qreg_q[1]) #Probar sin puertas Pauli o con una sola
-circuit.x(qreg_q[0])
-circuit.t(qreg_q[1])
-circuit.t(qreg_q[0])
+
 circuit.cx(qreg_q[2], qreg_q[3])
+circuit.t(qreg_q[0])
+circuit.t(qreg_q[1])
+
 circuit.cx(qreg_q[0], qreg_q[1])
 circuit.t(qreg_q[2])
 circuit.tdg(qreg_q[3])
+
 circuit.cx(qreg_q[2], qreg_q[3])
+
 circuit.cx(qreg_q[3], qreg_q[0])
+
 circuit.cx(qreg_q[1], qreg_q[2])
+
 circuit.cx(qreg_q[0], qreg_q[1])
 circuit.cx(qreg_q[2], qreg_q[3])
+
+circuit.tdg(qreg_q[0])
 circuit.tdg(qreg_q[1])
 circuit.tdg(qreg_q[2])
 circuit.t(qreg_q[3])
-circuit.s(qreg_q[0])
-circuit.s(qreg_q[0])
-circuit.s(qreg_q[0])
+
 circuit.cx(qreg_q[2], qreg_q[3])
-circuit.t(qreg_q[0])
 circuit.cx(qreg_q[0], qreg_q[1])
+
 circuit.measure(qreg_q[2], creg_c[2])
 circuit.s(qreg_q[3])
 circuit.cx(qreg_q[3], qreg_q[0])
@@ -63,9 +69,8 @@ result = job.result()
 transpile_time = time.time() - start_transpile
 
 # Medir uso de recursos
-cpu_usage = process.cpu_percent(interval=0.2)
+cpu_usage = process.cpu_percent(None)
 ram_usage_mb = process.memory_info().rss / (1024 * 1024)
-
 
 counts = result.get_counts()
 

@@ -64,29 +64,40 @@ qpu = PyLinalg()
 job = Job(circuit=circuit, nbshots=1024)
 result = qpu.submit(job)
 
-cpu_usage = process.cpu_percent(interval=0.2)
+cpu_usage = process.cpu_percent(None)
 ram_usage_mb = process.memory_info().rss / (1024 * 1024)
 
 transpile_time = time.time() - start_transpile
 total_time = time.time() - start_time
 
 num_qubits = circuit.nbqbits
-layers = []
+
+# Calcula depth estilo Qiskit
+last_layer_for_qubit = {}
+depth = 0
+
 for op in circuit.ops:
-    # Verifica si op puede ir en una capa existente
-    colocado = False
-    for layer in layers:
-        if not any(q in layer for q in op.qbits):
-            layer.update(op.qbits)
-            colocado = True
-            break
-    if not colocado:
-        layers.append(set(op.qbits))
-depth = len(layers)
+    qubits = op.qbits
+    
+    # capa mínima donde puede ir esta operación
+    min_layer = 0
+    for q in qubits:
+        if q in last_layer_for_qubit:
+            min_layer = max(min_layer, last_layer_for_qubit[q] + 1)
+
+    # asignar operación a la capa min_layer
+    depth = max(depth, min_layer)
+    
+    # actualizar última capa donde se usa cada qubit
+    for q in qubits:
+        last_layer_for_qubit[q] = min_layer
+
+depth = depth + 1  # capas empiezan en 0
+
 gate_counts = circuit.ops
-num_1q = sum(1 for g in gate_counts if len(g.qbits) == 1)
+num_1q = sum(1 for g in gate_counts if len(g.qbits) == 1) - 4  #Resta por measure gates
 num_2q = sum(1 for g in gate_counts if len(g.qbits) == 2)
-total_gates = len(gate_counts)
+total_gates = num_1q + num_2q
 
 print(result[0].state)
 
