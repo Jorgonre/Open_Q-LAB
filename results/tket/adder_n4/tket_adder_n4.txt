@@ -1,5 +1,5 @@
 Benchmark tket - adder_n4.py
-Duración: 10.52s
+Duración: 9.41s
 
 Circuito:
 <tket::Circuit, qubits=4, gates=39>
@@ -12,9 +12,9 @@ Depth:18
 Gate_1q:25
 Gate_2q:10
 Total_gates:35
-Build_time:0.0024
-Transpile_time:0.5923
-Total_time:0.5959
-CPU_usage:47.10
-RAM_usage_MB:254.18
+Build_time:0.0004
+Transpile_time:0.7956
+Total_time:0.7986
+CPU_usage:33.90
+RAM_usage_MB:255.43
 # --- END_METRICS ---

@@ -1,5 +1,5 @@
 Benchmark qiskit - adder_n4.py
-Duración: 6.67s
+Duración: 6.38s
 
 {'1001': 1024}
 # --- METRICS ---
@@ -8,9 +8,9 @@ Depth:12
 Gate_1q:13
 Gate_2q:10
 Total_gates:23
-Build_time:0.0006
-Transpile_time:2.3787
-Total_time:2.3798
-CPU_usage:36.60
-RAM_usage_MB:130.84
+Build_time:0.0005
+Transpile_time:2.2685
+Total_time:2.2693
+CPU_usage:37.90
+RAM_usage_MB:131.77
 # --- END_METRICS ---

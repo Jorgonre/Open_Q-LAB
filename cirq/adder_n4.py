@@ -5,6 +5,30 @@ import psutil
 import time
 import os
 
+def optimize_circuit(circuit, context=None, k=2):
+    # Merge 2-qubit connected components into circuit operations.
+    optimized_circuit = cirq.merge_k_qubit_unitaries(
+        circuit, k=k, rewriter=lambda op: op.with_tags("merged"), context=context
+    )
+
+    # Drop operations with negligible effect / close to identity.
+    optimized_circuit = cirq.drop_negligible_operations(optimized_circuit, context=context)
+
+    # Expand all remaining merged connected components.
+    optimized_circuit = cirq.expand_composite(
+        optimized_circuit, no_decomp=lambda op: "merged" not in op.tags, context=context
+    )
+
+    # Synchronize terminal measurements to be in the same moment.
+    optimized_circuit = cirq.synchronize_terminal_measurements(optimized_circuit, context=context)
+
+    # Assert the original and optimized circuit are equivalent.
+    cirq.testing.assert_circuits_with_terminal_measurements_are_equivalent(
+        circuit, optimized_circuit
+    )
+
+    return optimized_circuit
+
 process = psutil.Process(os.getpid())
 
 process.cpu_percent(interval=None)  # Establece línea base
@@ -77,11 +101,15 @@ build_time = time.time() - start_build
 
 start_transpile = time.time()
 
+context = cirq.TransformerContext(logger=cirq.TransformerLogger())
+optimized_circuit = optimize_circuit(circuit, context)
+
+# El tiempo de transpilación es el tiempo que toma esta optimización
+transpile_time = time.time() - start_transpile
+
 # Resultados
 sim = cirq.Simulator()
-result = sim.run(circuit, repetitions=1024)
-
-transpile_time = time.time() - start_transpile  #Por lo que tengo entendido cirq no transpila, solo simula, por eso este tiempo es tan bajo
+result = sim.run(optimized_circuit, repetitions=1024)
 
 #print("Resultados:")
 #print(result)
