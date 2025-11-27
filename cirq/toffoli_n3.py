@@ -37,7 +37,7 @@ start_time = time.time()
 # Medir tiempo de construcción
 start_build = time.time()
 
-q = cirq.LineQubit(3)
+q = cirq.LineQubit.range(3)
 
 circuit = cirq.Circuit()
 
@@ -108,7 +108,7 @@ result = sim.run(optimized_circuit, repetitions=1024)
 cpu_usage = process.cpu_percent(None)
 ram_usage_mb = process.memory_info().rss / (1024 * 1024)
 
-for i in range(4):
+for i in range(3):
     data = result.measurements[f"m{i}"].flatten()
     counts = Counter(data)
     total = sum(counts.values())
@@ -120,7 +120,7 @@ total_time = time.time() - start_time
 
 # --- CONTAR PUERTAS EN CIRQ (VERSIÓN SIMPLE Y CORRECTA) ---
 
-num_1q = -4 #No contamos las measurements gates
+num_1q = -3 #No contamos las measurements gates
 num_2q = 0
 
 for moment in circuit:
