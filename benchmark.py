@@ -21,7 +21,7 @@ def extract_metrics_from_txt(path_txt):
         "gate_2q": None,
         "total_gates": None,
         "build_time": None,
-        "transpile_time": None,
+        "transpile_execution_time": None,
         "total_time": None,
         "cpu_usage": None,
         "ram_usage_mb": None
@@ -52,8 +52,8 @@ def extract_metrics_from_txt(path_txt):
                     metrics["total_gates"] = int(line.split(":")[1])
                 elif "Build_time:" in line:
                     metrics["build_time"] = float(line.split(":")[1])
-                elif "Transpile_time:" in line:
-                    metrics["transpile_time"] = float(line.split(":")[1])
+                elif "Transpile_execution_time:" in line:
+                    metrics["transpile_execution_time"] = float(line.split(":")[1])
                 elif "Total_time:" in line:
                     metrics["total_time"] = float(line.split(":")[1])
                 elif "CPU_usage:" in line:
@@ -124,6 +124,15 @@ def save_to_csv(resultados, circuito_nombre):
         fecha = datetime.now().strftime("%Y%m%d")
         hora = datetime.now().strftime("%H%M%S")
 
+        # --------------------------------------------
+        # Elegir nombre de columna según framework
+        # --------------------------------------------
+        if fw.lower() in ["qiskit", "myqlm","tket"]:
+            transpile_col_name = "TRANSPILE+EXECUTION-TIME(s)"
+        else:
+            transpile_col_name = "EXECUTION-TIME(s)"
+        # --------------------------------------------
+
         # Nombre del archivo CSV
         csv_filename = f"{fecha}_{hora}_{fw}_{circuito_base}_{metrics['qubits']}_{NUM_ITERATIONS}.csv"
         csv_path = os.path.join(csv_dir, csv_filename)
@@ -131,21 +140,25 @@ def save_to_csv(resultados, circuito_nombre):
         # Crear y escribir el CSV con el formato del Excel
         with open(csv_path, "w", newline="", encoding="utf-8") as csvfile:
             writer = csv.writer(csvfile)
+
+            # Encabezado
             writer.writerow([
-                "FRAMEWORK", "DATE", "HOUR", "CIRCUIT", "QUBITS",
+                "FRAMEWORK", "DATE(Y-M-D)", "HOUR", "CIRCUIT", "QUBITS",
                 "1-GATE", "2-GATES", "TOTAL-GATES",
-                "RAM", "CPU",
-                "BUILD-TIME", "TRANSPILE-TIME", "TOTAL-TIME"
+                "RAM(MB)", "CPU(MB)",
+                "BUILD-TIME(s)", transpile_col_name, "TOTAL-TIME(s)"
             ])
 
+            # Datos
             writer.writerow([
                 fw, fecha, hora, circuito_base, metrics["qubits"],
                 metrics["gate_1q"], metrics["gate_2q"], metrics["total_gates"],
                 metrics["cpu_usage"], metrics["ram_usage_mb"],
-                metrics["build_time"], metrics["transpile_time"], metrics["total_time"]
+                metrics["build_time"], metrics["transpile_execution_time"], metrics["total_time"]
             ])
 
         print(f"Resultado guardado en: {csv_path}")
+
 
 
 def main():

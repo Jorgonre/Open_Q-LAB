@@ -59,7 +59,7 @@ print("Circuito:")
 print(circ)
 
 backend = AerBackend()
-compiled = backend.get_compiled_circuit(circ)
+compiled = backend.get_compiled_circuit(circ) #Momento de la transpilación.
 result = backend.run_circuit(compiled, n_shots=1024)
 
 transpile_time = time.time() - start_transpile
@@ -99,7 +99,7 @@ print(f"Gate_1q:{num_1q}")
 print(f"Gate_2q:{num_2q}")
 print(f"Total_gates:{total_gates}")
 print(f"Build_time:{build_time:.4f}")
-print(f"Transpile_time:{transpile_time:.4f}")
+print(f"Transpile_execution_time:{transpile_time:.4f}")
 print(f"Total_time:{total_time:.4f}")
 print(f"CPU_usage:{cpu_usage:.2f}")
 print(f"RAM_usage_MB:{ram_usage_mb:.2f}")
