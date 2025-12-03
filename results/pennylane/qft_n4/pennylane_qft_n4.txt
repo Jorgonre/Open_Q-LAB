@@ -1,3 +1,3 @@
 Benchmark pennylane - qft_n4.py
-Duración: 0.02s
+Duración: 0.04s
 

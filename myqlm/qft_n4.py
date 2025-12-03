@@ -1,5 +1,5 @@
-from qat.lang.AQASM import Program, H, CNOT, X, T, S, AbstractGate, PH
-from qat.qpus import PyLinalg
+from qat.lang import Program, H, CNOT, X, T, S, AbstractGate, PH, qrout
+from qat.qpus import PyLinalg, get_default_qpu
 from qat.core import Job
 import psutil
 import os
@@ -21,42 +21,47 @@ BARRIER.set_matrix_generator(lambda: np.eye(2))
 prog = Program()
 qbits = prog.qalloc(4)
 
-prog.apply(X, qbits[0])
-prog.apply(X, qbits[2])
+@qrout
+def qft():
+    """
+    Esta función devuelve automáticamente una QRoutine
+    con la lógica que has definido.
+    """
+    
+    # --- Parte 1: Inicialización y Barreras ---
+    # Nota: Dentro de @qrout se usa: PUERTA(params)(qubits)
+    X(0)
+    X(2)
+    
+    BARRIER()(0)
+    BARRIER()(1)
+    BARRIER()(2)
+    BARRIER()(3)
 
-for q in qbits: prog.apply(BARRIER(), q)
+    
+    H(0)
+    PH(np.pi / 2).ctrl()(1, 0) # Sintaxis: Puerta.ctrl()(control, objetivo)
 
-prog.apply(H, qbits[0])
+    H(1)
+    PH(np.pi / 4).ctrl()(2, 0)
+    PH(np.pi / 2).ctrl()(2, 1)
 
-prog.apply(PH(np.pi / 2).ctrl(), qbits[1], qbits[0]) #control phase
+    H(2)
+    PH(np.pi / 8).ctrl()(3, 0)
+    PH(np.pi / 4).ctrl()(3, 1)
+    PH(np.pi / 2).ctrl()(3, 2)
 
-prog.apply(H, qbits[1])
-
-prog.apply(PH(np.pi / 4).ctrl(), qbits[2], qbits[0]) #control phase
-
-prog.apply(PH(np.pi / 2).ctrl(), qbits[2], qbits[1]) #control phase
-
-prog.apply(H, qbits[2])
-
-prog.apply(PH(np.pi / 8).ctrl(), qbits[3], qbits[0])
-
-prog.apply(PH(np.pi / 4).ctrl(), qbits[3], qbits[1])
-
-prog.apply(PH(np.pi / 2).ctrl(), qbits[3], qbits[2])
-
-prog.apply(H, qbits[3])
+    H(3)
 
 build_time = time.time() - start_build
 
-for i in range(4):
-    prog.measure(qbits[i])
+#for i in range(4):
+#    prog.measure(qbits[i])
 
 start_transpile = time.time()
 
-circuit = prog.to_circ()
-qpu = PyLinalg()
-job = Job(circuit=circuit, nbshots=1024)
-result = qpu.submit(job)
+job = qft.to_job()
+result = get_default_qpu().submit(job)
 
 cpu_usage = process.cpu_percent(None)
 ram_usage_mb = process.memory_info().rss / (1024 * 1024)
@@ -64,13 +69,13 @@ ram_usage_mb = process.memory_info().rss / (1024 * 1024)
 transpile_time = time.time() - start_transpile
 total_time = time.time() - start_time
 
-num_qubits = circuit.nbqbits
+num_qubits = qft.nbqbits
 
 # Calcula depth estilo Qiskit
 last_layer_for_qubit = {}
 depth = 0
 
-for op in circuit.ops:
+for op in qft.ops:
     qubits = op.qbits
     
     # capa mínima donde puede ir esta operación
@@ -88,16 +93,15 @@ for op in circuit.ops:
 
 depth = depth + 1  # capas empiezan en 0
 
-gate_counts = circuit.ops
+gate_counts = qft.ops
 num_1q = sum(1 for g in gate_counts if len(g.qbits) == 1) - 4  #Resta por measure gates
 num_2q = sum(1 for g in gate_counts if len(g.qbits) == 2)
 total_gates = num_1q + num_2q
 
-print("Resultados de la QFT (Amplitudes y Probabilidades):")
 for sample in result:
-    print(f"Estado: {sample.state} | Probabilidad: {sample.probability:.4f} | Amplitud: {sample.amplitude}")
+    print(sample.state, sample.probability)
 
-print(circuit)
+print(qft)
 
 print("# --- METRICS ---")
 print(f"Qubits:{num_qubits}")
