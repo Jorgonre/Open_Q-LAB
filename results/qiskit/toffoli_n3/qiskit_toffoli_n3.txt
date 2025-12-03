@@ -1,5 +1,5 @@
 Benchmark qiskit - toffoli_n3.py
-Duración: 6.04s
+Duración: 6.13s
 
 {'111': 1024}
 # --- METRICS ---
@@ -8,9 +8,9 @@ Depth:13
 Gate_1q:12
 Gate_2q:6
 Total_gates:18
-Build_time:0.0005
-Transpile_execution_time:2.1615
-Total_time:2.1622
-CPU_usage:38.40
-RAM_usage_MB:131.70
+Build_time:0.0004
+Transpile_execution_time:2.3260
+Total_time:2.3267
+CPU_usage:34.40
+RAM_usage_MB:131.11
 # --- END_METRICS ---

@@ -1,5 +1,5 @@
 Benchmark cirq - adder_n4.py
-Duración: 6.85s
+Duración: 7.03s
 
 q0: 0.000 |0⟩  +  1.000 |1⟩
 q1: 1.000 |0⟩  +  0.000 |1⟩
@@ -22,9 +22,9 @@ Depth:18
 Gate_1q:25
 Gate_2q:10
 Total_gates:35
-Build_time:0.0080
-Transpile_execution_time:0.0533
-Total_time:0.0878
-CPU_usage:46.10
-RAM_usage_MB:201.01
+Build_time:0.0084
+Transpile_execution_time:0.0482
+Total_time:0.0940
+CPU_usage:44.00
+RAM_usage_MB:200.86
 # --- END_METRICS ---

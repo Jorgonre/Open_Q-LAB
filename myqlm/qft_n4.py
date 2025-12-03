@@ -16,16 +16,15 @@ start_build = time.time()
 
 BARRIER = AbstractGate("BARRIER", [], arity=1)
 
+BARRIER.set_matrix_generator(lambda: np.eye(2))
+
 prog = Program()
 qbits = prog.qalloc(4)
 
 prog.apply(X, qbits[0])
 prog.apply(X, qbits[2])
 
-prog.apply(BARRIER(), qbits[0])
-prog.apply(BARRIER(), qbits[1])
-prog.apply(BARRIER(), qbits[2])
-prog.apply(BARRIER(), qbits[3])
+for q in qbits: prog.apply(BARRIER(), q)
 
 prog.apply(H, qbits[0])
 
@@ -94,7 +93,9 @@ num_1q = sum(1 for g in gate_counts if len(g.qbits) == 1) - 4  #Resta por measur
 num_2q = sum(1 for g in gate_counts if len(g.qbits) == 2)
 total_gates = num_1q + num_2q
 
-print(result[0].state)
+print("Resultados de la QFT (Amplitudes y Probabilidades):")
+for sample in result:
+    print(f"Estado: {sample.state} | Probabilidad: {sample.probability:.4f} | Amplitud: {sample.amplitude}")
 
 print(circuit)
 

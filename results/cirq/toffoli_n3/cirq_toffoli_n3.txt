@@ -1,5 +1,5 @@
 Benchmark cirq - toffoli_n3.py
-Duración: 6.27s
+Duración: 6.74s
 
 q0: 0.000 |0⟩  +  1.000 |1⟩
 q1: 0.000 |0⟩  +  1.000 |1⟩
@@ -17,9 +17,9 @@ Depth:22
 Gate_1q:24
 Gate_2q:6
 Total_gates:30
-Build_time:0.0047
-Transpile_execution_time:0.0720
-Total_time:0.1011
-CPU_usage:30.00
-RAM_usage_MB:200.28
+Build_time:0.0014
+Transpile_execution_time:0.0192
+Total_time:0.0316
+CPU_usage:97.50
+RAM_usage_MB:200.11
 # --- END_METRICS ---
