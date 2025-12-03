@@ -60,7 +60,7 @@ build_time = time.time() - start_build
 
 start_transpile = time.time()
 
-job = qft.to_job()
+job = qft.to_job(nbshots=1024)
 result = get_default_qpu().submit(job)
 
 cpu_usage = process.cpu_percent(None)
