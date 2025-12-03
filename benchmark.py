@@ -166,7 +166,7 @@ def main():
     ensure_results_dir()
 
     resultados = {}
-    circuitos = ["circuito_prueba.py", "adder_n4.py","toffoli_n3.py"]
+    circuitos = ["circuito_prueba.py", "adder_n4.py","toffoli_n3.py","qft_n4.py"]
 
     for circuito in circuitos:
         duracion = run_framework(circuito)

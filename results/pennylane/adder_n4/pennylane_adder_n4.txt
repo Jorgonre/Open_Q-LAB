@@ -1,5 +1,5 @@
 Benchmark pennylane - adder_n4.py
-Duración: 7.25s
+Duración: 9.63s
 
 q0: 0.000 |0>  +  1.000 |1>
 q1: 1.000 |0>  +  0.000 |1>
@@ -17,9 +17,9 @@ Depth:17
 Gate_1q:25
 Gate_2q:10
 Total_gates:35
-Build_time:0.0055
-Transpile_execution_time:0.0243
-Total_time:0.0611
-CPU_usage:100.50
-RAM_usage_MB:363.65
+Build_time:0.0167
+Transpile_execution_time:0.1207
+Total_time:0.2695
+CPU_usage:36.40
+RAM_usage_MB:362.88
 # --- END_METRICS ---
