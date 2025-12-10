@@ -1,0 +1,30 @@
+Benchmark myqlm - bell_n4.py
+Duración: 14.42s
+
+|1000> 0.2607421875
+|1001> 0.1591796875
+|0010> 0.328125
+|0011> 0.0556640625
+|0110> 0.044921875
+|0001> 0.029296875
+|0000> 0.03515625
+|1100> 0.021484375
+|1110> 0.0224609375
+|0100> 0.0078125
+|0111> 0.0146484375
+|1111> 0.0146484375
+|1101> 0.0029296875
+|0101> 0.0029296875
+<qat.lang.decorator._BaseWrapper object at 0x7a29c1e5ff90>
+# --- METRICS ---
+Qubits:4
+Depth:8
+Gate_1q:9
+Gate_2q:6
+Total_gates:15
+Build_time:0.0004
+Transpile_execution_time:9.6866
+Total_time:9.6870
+CPU_usage:8.70
+RAM_usage_MB:162.99
+# --- END_METRICS ---
