@@ -1,4 +1,5 @@
 import cirq
+from cirq.circuits.qasm_output import QasmUGate
 import numpy as np
 from collections import Counter
 import psutil
@@ -41,28 +42,51 @@ q = cirq.LineQubit.range(4)
 
 circuit = cirq.Circuit()
 
-circuit.append(cirq.X(q[0]))
-circuit.append(cirq.X(q[2]))
-
-circuit.append(cirq.H(q[0]), strategy=cirq.InsertStrategy.NEW) #Para añadir la barrera
-
-circuit.append(cirq.cphase(np.pi / 2).on(q[1], q[0]))
-
+circuit.append(cirq.H(q[0]))
 circuit.append(cirq.H(q[1]))
-
-circuit.append(cirq.cphase(np.pi / 4).on(q[2], q[0]))
-
-circuit.append(cirq.cphase(np.pi / 2).on(q[2], q[1]))
-
-circuit.append(cirq.H(q[2]))
-
-circuit.append(cirq.cphase(np.pi / 8).on(q[3], q[0]))
-
-circuit.append(cirq.cphase(np.pi / 4).on(q[3], q[1]))
-
-circuit.append(cirq.cphase(np.pi / 2).on(q[3], q[2]))
-
 circuit.append(cirq.H(q[3]))
+
+circuit.append(cirq.CNOT(q[0], q[2]))
+circuit.append(QasmUGate(theta=0.5, phi=0.0, lmda=0.75).on(q[3]))
+
+circuit.append(cirq.Rx(rads = np.pi * (-0.25)).on(q[0]))
+circuit.append(QasmUGate(theta=0.5, phi=0.0, lmda=0.75).on(q[1]))
+circuit.append(cirq.Ry(rads = np.pi * (-0.5)).on(q[2]))
+circuit.append(cirq.Rx(rads = np.pi * (0.5)).on(q[3]))
+
+circuit.append(cirq.Ry(rads = np.pi * (-0.5)).on(q[0]))
+circuit.append(cirq.Rx(rads = np.pi * (0.5)).on(q[1]))
+circuit.append(QasmUGate(theta=0.5, phi=0.0, lmda=0.25).on(q[2]))
+
+circuit.append(QasmUGate(theta=0.5, phi=0.0, lmda=0.25).on(q[0]))
+circuit.append(cirq.CNOT(q[3], q[2]))
+
+circuit.append(cirq.CNOT(q[1], q[0]))
+circuit.append(cirq.Ry(rads = np.pi * (0.5)).on(q[2]))
+circuit.append(cirq.Rx(rads = np.pi * (0.25)).on(q[3]))
+
+circuit.append(cirq.Ry(rads = np.pi * (0.5)).on(q[0]))
+circuit.append(cirq.Rx(rads = np.pi * (0.25)).on(q[1]))
+circuit.append(cirq.CNOT(q[2], q[3]))
+
+circuit.append(cirq.CNOT(q[0], q[1]))
+circuit.append(cirq.Rx(rads = np.pi * (-0.5)).on(q[2]))
+
+circuit.append(cirq.Rx(rads = np.pi * (-0.5)).on(q[0]))
+circuit.append(cirq.Rz(rads = np.pi * (0.5)).on(q[2]))
+
+circuit.append(cirq.Rz(rads = np.pi * (0.5)).on(q[0]))
+circuit.append(cirq.CNOT(q[3], q[2]))
+
+circuit.append(cirq.CNOT(q[1], q[0]))
+circuit.append(QasmUGate(theta=0.5, phi=1.0, lmda=1.0).on(q[2]))
+circuit.append(QasmUGate(theta=0.5, phi=0.5, lmda=1.0).on(q[3]))
+
+circuit.append(QasmUGate(theta=0.5, phi=1.0, lmda=1.0).on(q[0]))
+circuit.append(QasmUGate(theta=0.5, phi=0.5, lmda=1.0).on(q[1]))
+circuit.append(cirq.Ry(rads = np.pi * (0.5)).on(q[2]))
+
+circuit.append(cirq.Ry(rads = np.pi * (0.5)).on(q[0]))
 
 circuit.append(cirq.measure(q[0], key="m0"))
 circuit.append(cirq.measure(q[1], key="m1"))
@@ -97,6 +121,29 @@ for i in range(4):
     p0 = counts.get(0, 0) / total
     p1 = counts.get(1, 0) / total
     print(f"q{i}: {p0:.3f} |0⟩  +  {p1:.3f} |1⟩")
+
+# 1. Sacamos los arrays crudos de ceros y unos
+# .flatten() asegura que sea una lista plana [0, 1, 0...] sin corchetes extra
+m0 = result.measurements['m0'].flatten()
+m1 = result.measurements['m1'].flatten()
+m2 = result.measurements['m2'].flatten()
+m3 = result.measurements['m3'].flatten()
+
+# 2. Construimos la lista de cadenas (ej: "1010") disparo a disparo
+bitstrings = []
+for i in range(1024):
+    # Ordenamos como q3 q2 q1 q0 (Big Endian) para que se lea natural
+    # str(int(...)) asegura que sea "0" o "1" limpio
+    s = str(int(m0[i])) + str(int(m1[i])) + str(int(m2[i])) + str(int(m3[i]))
+    bitstrings.append(s)
+
+# 3. Contamos cuántas veces sale cada una
+counts = Counter(bitstrings)
+
+# 4. Imprimimos con print normal y corriente
+for estado, cantidad in counts.items():
+    probabilidad = cantidad / 1024
+    print(f"|{estado}> {probabilidad}")
 
 total_time = time.time() - start_time
 
