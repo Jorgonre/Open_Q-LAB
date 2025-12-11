@@ -44,17 +44,53 @@ def bell():
     RY(np.pi*(-0.5))(2)
     RX(np.pi*(0.5))(3)
 
-    #Hecho hasta aquí -> Depth 3 en circuito
+    RY(np.pi*(-0.5))(0)
+    RX(np.pi*(0.5))(1)
+    RZ(np.pi * 0.25)(2) #Equivalencia de la U
+    RY(np.pi * 0.5)(2) #Equivalencia de la U
+    RZ(0)(2) #Equivalencia de la U
 
-    PH(np.pi / 4).ctrl()(2, 0)
-    PH(np.pi / 2).ctrl()(2, 1)
+    RZ(np.pi * 0.25)(0) #Equivalencia de la U
+    RY(np.pi * 0.5)(0) #Equivalencia de la U
+    RZ(0)(0) #Equivalencia de la U
+    CNOT(3,2)
 
-    H(2)
-    PH(np.pi / 8).ctrl()(3, 0)
-    PH(np.pi / 4).ctrl()(3, 1)
-    PH(np.pi / 2).ctrl()(3, 2)
+    CNOT(1,0)
+    RY(np.pi * 0.5)(2)
+    RX(np.pi * 0.25)(3)
 
-    H(3)
+    RY(np.pi * 0.5)(0)
+    RX(np.pi * 0.25)(1)
+    CNOT(2,3)
+
+    CNOT(0,1)
+    RX(np.pi * (-0.5))(2)
+
+    RX(np.pi * (-0.5))(0)
+    RZ(np.pi * (0.5))(2)
+
+    RZ(np.pi * (0.5))(0)
+    CNOT(3,2)
+
+    CNOT(1,0)
+
+    RZ(np.pi * 1)(2) #Equivalencia de la U
+    RY(np.pi * 0.5)(2) #Equivalencia de la U
+    RZ(np.pi * 1)(2) #Equivalencia de la U
+    RZ(np.pi * 1)(3) #Equivalencia de la U
+    RY(np.pi * 0.5)(3) #Equivalencia de la U
+    RZ(np.pi * 0.5)(3) #Equivalencia de la U
+
+    RZ(np.pi * 1)(0) #Equivalencia de la U
+    RY(np.pi * 0.5)(0) #Equivalencia de la U
+    RZ(np.pi * 1)(0) #Equivalencia de la U
+    RZ(np.pi * 1)(1) #Equivalencia de la U
+    RY(np.pi * 0.5)(1) #Equivalencia de la U
+    RZ(np.pi * 0.5)(1) #Equivalencia de la U
+    RY(np.pi * 0.5)(2)
+
+    RY(np.pi * 0.5)(0)
+
 
 build_time = time.time() - start_build
 
