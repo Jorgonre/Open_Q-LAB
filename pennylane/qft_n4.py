@@ -85,7 +85,7 @@ ops = specs["resources"].gate_types
 
 # Clasificar puertas
 one_qubit_gates = ["PauliX", "Hadamard", "T", "S"]
-two_qubit_gates = ["CNOT"]
+two_qubit_gates = ["CNOT", "ControlledPhaseShift"]
 
 num_1q = sum(ops.get(g, 0) for g in one_qubit_gates)
 num_2q = sum(ops.get(g, 0) for g in two_qubit_gates)

@@ -1,3 +1,3 @@
 Benchmark tket - bell_n4.py
-Duración: 0.08s
+Duración: 0.05s
 
