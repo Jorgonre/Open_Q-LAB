@@ -1,3 +1,3 @@
 Benchmark qiskit - circuito_prueba.py
-Duración: 8.30s
+Duración: 5.26s
 

@@ -1,5 +1,5 @@
 Benchmark tket - toffoli_n3.py
-Duración: 9.25s
+Duración: 9.04s
 
 Circuito:
 <tket::Circuit, qubits=3, gates=33>
@@ -13,8 +13,8 @@ Gate_1q:24
 Gate_2q:6
 Total_gates:30
 Build_time:0.0003
-Transpile_execution_time:0.5040
-Total_time:0.5065
-CPU_usage:21.80
-RAM_usage_MB:255.39
+Transpile_execution_time:0.2737
+Total_time:0.2832
+CPU_usage:43.80
+RAM_usage_MB:255.61
 # --- END_METRICS ---

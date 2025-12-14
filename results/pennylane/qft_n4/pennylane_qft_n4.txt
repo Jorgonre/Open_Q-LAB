@@ -1,9 +1,9 @@
 Benchmark pennylane - qft_n4.py
-Duración: 8.07s
+Duración: 2.97s
 
-q0: 0.520 |0>  +  0.480 |1>
-q1: 0.502 |0>  +  0.498 |1>
-q2: 0.509 |0>  +  0.491 |1>
+q0: 0.500 |0>  +  0.500 |1>
+q1: 0.500 |0>  +  0.500 |1>
+q2: 0.506 |0>  +  0.494 |1>
 q3: 0.490 |0>  +  0.510 |1>
 
 Circuito (texto):
@@ -15,11 +15,11 @@ Circuito (texto):
 Qubits:4
 Depth:9
 Gate_1q:6
-Gate_2q:0
-Total_gates:6
-Build_time:0.0081
-Transpile_execution_time:0.0291
-Total_time:0.0642
-CPU_usage:80.50
-RAM_usage_MB:363.05
+Gate_2q:6
+Total_gates:12
+Build_time:0.0046
+Transpile_execution_time:0.0339
+Total_time:0.0833
+CPU_usage:77.90
+RAM_usage_MB:363.56
 # --- END_METRICS ---

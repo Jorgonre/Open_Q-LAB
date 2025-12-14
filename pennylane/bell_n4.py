@@ -76,6 +76,8 @@ samples = np.array(samples)
 if samples.ndim == 1 and num_wires > 1:
     samples = samples.reshape((1024, 4))
 
+transpile_time = time.time() - start_transpile
+
 bitstrings = []
 for row in samples:
     # Convertimos a string y unimos: [1, 0] -> "10"
@@ -89,8 +91,6 @@ total_shots = len(samples) # Debería ser 1024
 for state, count in counts.items():
     prob = count / total_shots
     print(f"|{state}> {prob}")
-
-transpile_time = time.time() - start_transpile
 
 # Medir uso de recursos
 cpu_usage = process.cpu_percent(None)
