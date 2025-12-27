@@ -57,6 +57,8 @@ if samples.ndim == 1 and num_wires > 1:
 
 transpile_time = time.time() - start_transpile
 
+total_time = time.time() - start_time
+
 # Medir uso de recursos
 cpu_usage = process.cpu_percent(None)
 ram_usage_mb = process.memory_info().rss / (1024 * 1024)
@@ -68,8 +70,6 @@ for wire in range(4):
     p0 = counts.get(0, 0) / total
     p1 = counts.get(1, 0) / total
     print(f"q{wire}: {p0:.3f} |0>  +  {p1:.3f} |1>")
-
-total_time = time.time() - start_time
 
 # Obtener especificaciones del circuito
 specs = qml.specs(circuit)()

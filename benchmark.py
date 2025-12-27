@@ -6,7 +6,7 @@ import psutil
 
 # --- CONFIGURACIÓN ---
 FRAMEWORKS = ["qiskit", "cirq", "pennylane", "myqlm", "tket"]
-NUM_ITERATIONS = 10  # Cambiado a 10 iteraciones
+NUM_ITERATIONS = 10  
 # ---------------------
 
 # Carpeta principal de resultados
@@ -167,7 +167,7 @@ def main():
     # Obtener nombre del framework basado en la carpeta actual
     framework_name = os.path.basename(os.getcwd())
 
-    circuitos = ["circuito_prueba.py", "adder_n4.py","toffoli_n3.py","qft_n4.py", "bell_n4.py"]
+    circuitos = ["adder_n4.py","toffoli_n3.py","qft_n4.py", "bell_n4.py"]
     # circuitos = ["bell_n4.py"] # Descomentar para pruebas rápidas
 
     for circuito in circuitos:

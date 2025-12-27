@@ -1,7 +1,0 @@
-Benchmark cirq - circuito_prueba.py - Iteration 10
-Duración script python: 6.81s
-
-Circuit:
-(0, 0): ───X^0.5───M('m')───
-Results:
-m=01001010000110100011

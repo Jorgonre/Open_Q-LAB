@@ -1,5 +1,0 @@
-Benchmark myqlm - circuito_prueba.py - Iteration 10
-Duración script python: 4.40s
-
-State |00> amplitude (0.7071067811865475+0j)
-State |11> amplitude (0.7071067811865475+0j)

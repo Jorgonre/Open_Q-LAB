@@ -1,3 +1,0 @@
-Benchmark tket - circuito_prueba.py
-Duración: 0.36s
-

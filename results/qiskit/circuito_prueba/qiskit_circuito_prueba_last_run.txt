@@ -1,3 +1,0 @@
-Benchmark qiskit - circuito_prueba.py - Iteration 10
-Duración script python: 5.40s
-

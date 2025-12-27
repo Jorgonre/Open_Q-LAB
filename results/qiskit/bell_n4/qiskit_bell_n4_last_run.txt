@@ -1,7 +1,7 @@
 Benchmark qiskit - bell_n4.py - Iteration 10
-Duración script python: 4.96s
+Duración script python: 4.87s
 
-{'0 1 0 0': 20, '1 0 1 0': 17, '1 1 0 0': 28, '1 1 0 1': 105, '1 0 0 0': 104, '0 1 1 0': 26, '1 0 0 1': 13, '0 1 0 1': 102, '1 1 1 0': 105, '0 0 0 0': 94, '0 0 1 0': 122, '1 1 1 1': 23, '0 0 0 1': 20, '1 0 1 1': 108, '0 1 1 1': 117, '0 0 1 1': 20}
+{'1 0 1 0': 21, '0 1 0 0': 16, '1 1 0 0': 20, '1 0 1 1': 119, '0 0 1 1': 21, '0 1 1 1': 102, '1 1 1 0': 106, '0 0 0 0': 100, '0 0 1 0': 116, '0 1 0 1': 119, '1 0 0 1': 24, '1 1 0 1': 106, '1 0 0 0': 104, '0 1 1 0': 12, '1 1 1 1': 24, '0 0 0 1': 14}
 # --- METRICS ---
 Qubits:4
 Depth:14
@@ -9,8 +9,8 @@ Gate_1q:26
 Gate_2q:7
 Total_gates:33
 Build_time:0.0006
-Transpile_execution_time:1.9246
-Total_time:1.9255
-CPU_usage:43.10
-RAM_usage_MB:131.39
+Transpile_execution_time:1.6705
+Total_time:1.6714
+CPU_usage:44.90
+RAM_usage_MB:131.44
 # --- END_METRICS ---

@@ -78,6 +78,8 @@ if samples.ndim == 1 and num_wires > 1:
 
 transpile_time = time.time() - start_transpile
 
+total_time = time.time() - start_time
+
 bitstrings = []
 for row in samples:
     # Convertimos a string y unimos: [1, 0] -> "10"
@@ -103,8 +105,6 @@ for wire in range(4):
     p0 = counts.get(0, 0) / total
     p1 = counts.get(1, 0) / total
     print(f"q{wire}: {p0:.3f} |0>  +  {p1:.3f} |1>")
-
-total_time = time.time() - start_time
 
 # Obtener especificaciones del circuito
 specs = qml.specs(circuit)()
