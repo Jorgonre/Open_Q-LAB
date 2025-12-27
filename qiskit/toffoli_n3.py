@@ -64,14 +64,13 @@ job = sim.run(transpiled, shots=1024)
 result = job.result()
 
 transpile_time = time.time() - start_transpile
+total_time = time.time() - start_time
 
 # Medir uso de recursos
 cpu_usage = process.cpu_percent(None)
 ram_usage_mb = process.memory_info().rss / (1024 * 1024)
 
 counts = result.get_counts()
-
-total_time = time.time() - start_time
 
 print(counts)
  

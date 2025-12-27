@@ -1,10 +1,10 @@
 Benchmark cirq - qft_n4.py - Iteration 10
-Duración script python: 5.07s
+Duración script python: 5.59s
 
-q0: 0.490 |0⟩  +  0.510 |1⟩
-q1: 0.507 |0⟩  +  0.493 |1⟩
-q2: 0.489 |0⟩  +  0.511 |1⟩
-q3: 0.481 |0⟩  +  0.519 |1⟩
+q0: 0.500 |0⟩  +  0.500 |1⟩
+q1: 0.494 |0⟩  +  0.506 |1⟩
+q2: 0.492 |0⟩  +  0.508 |1⟩
+q3: 0.468 |0⟩  +  0.532 |1⟩
 
 Circuito traducido:
                       ┌───────┐   ┌────────────┐   ┌─────────────┐
@@ -22,9 +22,9 @@ Depth:9
 Gate_1q:6
 Gate_2q:6
 Total_gates:12
-Build_time:0.0053
-Transpile_execution_time:0.0275
-Total_time:0.0557
-CPU_usage:36.60
-RAM_usage_MB:200.10
+Build_time:0.0014
+Transpile_execution_time:0.0187
+Total_time:0.0202
+CPU_usage:55.90
+RAM_usage_MB:199.80
 # --- END_METRICS ---

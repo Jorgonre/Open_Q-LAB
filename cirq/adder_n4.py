@@ -107,6 +107,8 @@ optimized_circuit = optimize_circuit(circuit, context)
 # El tiempo de transpilación es el tiempo que toma esta optimización
 transpile_time = time.time() - start_transpile
 
+total_time = time.time() - start_time
+
 # Resultados
 sim = cirq.Simulator()
 result = sim.run(optimized_circuit, repetitions=1024)
@@ -125,8 +127,6 @@ for i in range(4):
     p0 = counts.get(0, 0) / total
     p1 = counts.get(1, 0) / total
     print(f"q{i}: {p0:.3f} |0⟩  +  {p1:.3f} |1⟩")
-
-total_time = time.time() - start_time
 
 # --- CONTAR PUERTAS EN CIRQ (VERSIÓN SIMPLE Y CORRECTA) ---
 
