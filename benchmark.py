@@ -4,10 +4,10 @@ import csv
 from datetime import datetime
 import psutil
 
-# Lista de frameworks
+# --- CONFIGURACIÓN ---
 FRAMEWORKS = ["qiskit", "cirq", "pennylane", "myqlm", "tket"]
-
-NUM_ITERATIONS = 1
+NUM_ITERATIONS = 10  # Cambiado a 10 iteraciones
+# ---------------------
 
 # Carpeta principal de resultados
 RESULTS_DIR = os.path.join(os.path.dirname(os.getcwd()), "results")
@@ -15,24 +15,18 @@ RESULTS_DIR = os.path.join(os.path.dirname(os.getcwd()), "results")
 def extract_metrics_from_txt(path_txt):
     """Extrae las métricas entre los delimitadores METRICS del archivo de salida."""
     metrics = {
-        "qubits": None,
-        "depth": None,
-        "gate_1q": None,
-        "gate_2q": None,
-        "total_gates": None,
-        "build_time": None,
-        "transpile_execution_time": None,
-        "total_time": None,
-        "cpu_usage": None,
-        "ram_usage_mb": None
+        "qubits": None, "depth": None, "gate_1q": None, "gate_2q": None,
+        "total_gates": None, "build_time": None, "transpile_execution_time": None,
+        "total_time": None, "cpu_usage": None, "ram_usage_mb": None
     }
 
     inside = False
+    if not os.path.exists(path_txt):
+        return metrics
 
     with open(path_txt, "r", encoding="utf-8") as f:
         for line in f:
             line = line.strip()
-
             if line == "# --- METRICS ---":
                 inside = True
                 continue
@@ -40,36 +34,32 @@ def extract_metrics_from_txt(path_txt):
                 break
             
             if inside:
-                if "Qubits:" in line:
-                    metrics["qubits"] = int(line.split(":")[1])
-                elif "Depth:" in line:
-                    metrics["depth"] = int(line.split(":")[1])
-                elif "Gate_1q:" in line:
-                    metrics["gate_1q"] = int(line.split(":")[1])
-                elif "Gate_2q:" in line:
-                    metrics["gate_2q"] = int(line.split(":")[1])
-                elif "Total_gates:" in line:
-                    metrics["total_gates"] = int(line.split(":")[1])
-                elif "Build_time:" in line:
-                    metrics["build_time"] = float(line.split(":")[1])
-                elif "Transpile_execution_time:" in line:
-                    metrics["transpile_execution_time"] = float(line.split(":")[1])
-                elif "Total_time:" in line:
-                    metrics["total_time"] = float(line.split(":")[1])
-                elif "CPU_usage:" in line:
-                    metrics["cpu_usage"] = float(line.split(":")[1])
-                elif "RAM_usage_MB:" in line:
-                    metrics["ram_usage_mb"] = float(line.split(":")[1])
-
+                try:
+                    parts = line.split(":")
+                    if len(parts) < 2: continue
+                    val = parts[1].strip()
+                    
+                    if "Qubits" in line: metrics["qubits"] = int(val)
+                    elif "Depth" in line: metrics["depth"] = int(val)
+                    elif "Gate_1q" in line: metrics["gate_1q"] = int(val)
+                    elif "Gate_2q" in line: metrics["gate_2q"] = int(val)
+                    elif "Total_gates" in line: metrics["total_gates"] = int(val)
+                    elif "Build_time" in line: metrics["build_time"] = float(val)
+                    elif "Transpile_execution_time" in line: metrics["transpile_execution_time"] = float(val)
+                    elif "Total_time" in line: metrics["total_time"] = float(val)
+                    elif "CPU_usage" in line: metrics["cpu_usage"] = float(val)
+                    elif "RAM_usage_MB" in line: metrics["ram_usage_mb"] = float(val)
+                except ValueError:
+                    continue
     return metrics
 
 def ensure_results_dir():
     """Crea la carpeta 'results' si no existe."""
     os.makedirs(RESULTS_DIR, exist_ok=True)
 
-def run_framework(circuito_nombre):
-    """Ejecuta el benchmark y guarda la salida."""
-    print(f"\nEjecutando benchmark...\n")
+def run_framework(circuito_nombre, iteration_idx):
+    """Ejecuta el benchmark y guarda la salida en un txt temporal (que se sobrescribe)."""
+    print(f"   > Ejecutando iteración {iteration_idx + 1}/{NUM_ITERATIONS}...")
     start_time = datetime.now()
 
     script_path = os.path.join(circuito_nombre)
@@ -78,8 +68,7 @@ def run_framework(circuito_nombre):
         return None
 
     try:
-        process = psutil.Process()
-
+        # Ejecutar script
         result = subprocess.run(
             ["python", script_path],
             capture_output=True,
@@ -88,102 +77,125 @@ def run_framework(circuito_nombre):
         )
 
         duration = (datetime.now() - start_time).total_seconds()
-        print(f"Completado en {duration:.2f}s\n")
 
         framework_name = os.path.basename(os.getcwd())
         circuito_base = os.path.splitext(circuito_nombre)[0]
         framework_result_dir = os.path.join(RESULTS_DIR, framework_name, circuito_base)
         os.makedirs(framework_result_dir, exist_ok=True)
 
-        # Guardar salida completa
-        result_file = os.path.join(framework_result_dir, f"{framework_name}_{circuito_base}.txt")
+        # Guardar salida completa (se sobrescribe en cada iteración para ahorrar espacio o tener el último log)
+        result_file = os.path.join(framework_result_dir, f"{framework_name}_{circuito_base}_last_run.txt")
         with open(result_file, "w") as f:
-            f.write(f"Benchmark {framework_name} - {circuito_nombre}\n")
-            f.write(f"Duración: {duration:.2f}s\n\n")
+            f.write(f"Benchmark {framework_name} - {circuito_nombre} - Iteration {iteration_idx+1}\n")
+            f.write(f"Duración script python: {duration:.2f}s\n\n")
             f.write(result.stdout)
 
-        return duration
+        return result_file
 
     except subprocess.CalledProcessError as e:
         print(f"Error ejecutando {script_path}:\n{e.stderr}")
         return None
 
+def save_batch_to_csv(lista_metricas, framework_name, circuito_nombre):
+    """
+    Recibe una lista de diccionarios (uno por iteración) y guarda todo en un solo CSV.
+    """
+    if not lista_metricas:
+        return
 
-def save_to_csv(resultados, circuito_nombre):
-    """Guarda resultados con el formato del Excel de referencia."""
-    for fw, dur in resultados.items():
-        circuito_base = os.path.splitext(circuito_nombre)[0]
-        txt_path = os.path.join(RESULTS_DIR, fw, circuito_base, f"{fw}_{circuito_base}.txt")
+    circuito_base = os.path.splitext(circuito_nombre)[0]
+    csv_dir = os.path.join(RESULTS_DIR, framework_name, circuito_base)
+    os.makedirs(csv_dir, exist_ok=True)
 
-        # Extraer métricas del archivo .txt
-        metrics = extract_metrics_from_txt(txt_path)
+    # Fecha y hora del inicio del batch para el nombre del archivo
+    fecha = datetime.now().strftime("%Y%m%d")
+    hora = datetime.now().strftime("%H%M%S")
+    
+    # Tomamos los qubits de la primera iteración válida para el nombre del archivo
+    qubits_val = lista_metricas[0]["qubits"] if lista_metricas[0]["qubits"] is not None else 0
 
-        csv_dir = os.path.join(RESULTS_DIR, fw, circuito_base)
-        os.makedirs(csv_dir, exist_ok=True)
+    # Nombre del archivo CSV
+    csv_filename = f"{fecha}_{hora}_{framework_name}_{circuito_base}_{qubits_val}_{NUM_ITERATIONS}iter.csv"
+    csv_path = os.path.join(csv_dir, csv_filename)
 
-        fecha = datetime.now().strftime("%Y%m%d")
-        hora = datetime.now().strftime("%H%M%S")
+    # Definir nombre de columna dinámica
+    if framework_name.lower() in ["qiskit", "myqlm", "tket"]:
+        transpile_col_name = "TRANSPILE+EXECUTION-TIME(s)"
+    else:
+        transpile_col_name = "EXECUTION-TIME(s)"
 
-        # --------------------------------------------
-        # Elegir nombre de columna según framework
-        # --------------------------------------------
-        if fw.lower() in ["qiskit", "myqlm","tket"]:
-            transpile_col_name = "TRANSPILE+EXECUTION-TIME(s)"
-        else:
-            transpile_col_name = "EXECUTION-TIME(s)"
-        # --------------------------------------------
+    with open(csv_path, "w", newline="", encoding="utf-8") as csvfile:
+        writer = csv.writer(csvfile)
 
-        # Nombre del archivo CSV
-        csv_filename = f"{fecha}_{hora}_{fw}_{circuito_base}_{metrics['qubits']}_{NUM_ITERATIONS}.csv"
-        csv_path = os.path.join(csv_dir, csv_filename)
+        # Escribir Encabezado UNA SOLA VEZ
+        writer.writerow([
+            "FRAMEWORK", "DATE(Y-M-D)", "HOUR", "CIRCUIT", "ITERATION", "QUBITS",
+            "1-GATE", "2-GATES", "TOTAL-GATES",
+            "RAM(MB)", "CPU(%)",
+            "BUILD-TIME(s)", transpile_col_name, "TOTAL-TIME(s)"
+        ])
 
-        # Crear y escribir el CSV con el formato del Excel
-        with open(csv_path, "w", newline="", encoding="utf-8") as csvfile:
-            writer = csv.writer(csvfile)
-
-            # Encabezado
+        # Escribir todas las filas (una por iteración)
+        for idx, metrics in enumerate(lista_metricas):
+            # Recalcular hora para cada fila si quieres precisión de milisegundos, 
+            # o usar la misma del archivo. Aquí uso la actual de escritura.
+            current_time = datetime.now().strftime("%H:%M:%S")
+            
             writer.writerow([
-                "FRAMEWORK", "DATE(Y-M-D)", "HOUR", "CIRCUIT", "QUBITS",
-                "1-GATE", "2-GATES", "TOTAL-GATES",
-                "RAM(MB)", "CPU(MB)",
-                "BUILD-TIME(s)", transpile_col_name, "TOTAL-TIME(s)"
+                framework_name, 
+                fecha, 
+                current_time, 
+                circuito_base, 
+                idx + 1,  # Número de iteración
+                metrics["qubits"],
+                metrics["gate_1q"], 
+                metrics["gate_2q"], 
+                metrics["total_gates"],
+                metrics["ram_usage_mb"], # Ojo: Asegúrate que el orden coincida con el encabezado
+                metrics["cpu_usage"],
+                metrics["build_time"], 
+                metrics["transpile_execution_time"], 
+                metrics["total_time"]
             ])
 
-            # Datos
-            writer.writerow([
-                fw, fecha, hora, circuito_base, metrics["qubits"],
-                metrics["gate_1q"], metrics["gate_2q"], metrics["total_gates"],
-                metrics["cpu_usage"], metrics["ram_usage_mb"],
-                metrics["build_time"], metrics["transpile_execution_time"], metrics["total_time"]
-            ])
-
-        print(f"Resultado guardado en: {csv_path}")
-
-
+    print(f"--> CSV guardado con {len(lista_metricas)} iteraciones en: {csv_filename}")
 
 def main():
-    print("=== BENCHMARK DE FRAMEWORKS CUÁNTICOS ===")
+    print("=== BENCHMARK DE FRAMEWORKS CUÁNTICOS (MULTI-ITERACIÓN) ===")
     ensure_results_dir()
+    
+    # Obtener nombre del framework basado en la carpeta actual
+    framework_name = os.path.basename(os.getcwd())
 
-    resultados = {}
     circuitos = ["circuito_prueba.py", "adder_n4.py","toffoli_n3.py","qft_n4.py", "bell_n4.py"]
-
-    #circuitos = ["bell_n4.py"]
+    # circuitos = ["bell_n4.py"] # Descomentar para pruebas rápidas
 
     for circuito in circuitos:
-        duracion = run_framework(circuito)
-        if duracion is not None:
-            framework_name = os.path.basename(os.getcwd())
-            resultados[framework_name] = duracion
+        print(f"\nProcesando circuito: {circuito}")
+        
+        batch_metrics = [] # Lista para acumular las métricas de las 10 iteraciones
 
-        print("\n=== RESUMEN PARCIAL ===")
-        for fw, dur in resultados.items():
-            print(f"{fw}: {dur:.2f} segundos")
+        for i in range(NUM_ITERATIONS):
+            # 1. Ejecutar y generar el txt temporal
+            txt_path = run_framework(circuito, i)
+            
+            if txt_path:
+                # 2. Leer las métricas de ese txt inmediatamente
+                metrics = extract_metrics_from_txt(txt_path)
+                
+                # Si falló la lectura de métricas (diccionario con Nones), advertir
+                if metrics["total_time"] is None:
+                    print(f"   [!] Advertencia: No se extrajeron métricas en iteración {i+1}")
+                
+                batch_metrics.append(metrics)
+            else:
+                print(f"   [!] Error en la ejecución de la iteración {i+1}")
 
-        save_to_csv(resultados, circuito)
+        # 3. Al terminar las 10 iteraciones, guardar todo en un único CSV
+        if batch_metrics:
+            save_batch_to_csv(batch_metrics, framework_name, circuito)
 
-    print(f"\nResultados guardados en: {os.path.abspath(RESULTS_DIR)}")
-
+    print(f"\nTodos los resultados guardados en: {os.path.abspath(RESULTS_DIR)}")
 
 if __name__ == "__main__":
     main()

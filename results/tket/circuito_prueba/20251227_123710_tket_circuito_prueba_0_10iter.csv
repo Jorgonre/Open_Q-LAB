@@ -1,0 +1,11 @@
+FRAMEWORK,DATE(Y-M-D),HOUR,CIRCUIT,ITERATION,QUBITS,1-GATE,2-GATES,TOTAL-GATES,RAM(MB),CPU(%),BUILD-TIME(s),TRANSPILE+EXECUTION-TIME(s),TOTAL-TIME(s)
+tket,20251227,12:37:10,circuito_prueba,1,,,,,,,,,
+tket,20251227,12:37:10,circuito_prueba,2,,,,,,,,,
+tket,20251227,12:37:10,circuito_prueba,3,,,,,,,,,
+tket,20251227,12:37:10,circuito_prueba,4,,,,,,,,,
+tket,20251227,12:37:10,circuito_prueba,5,,,,,,,,,
+tket,20251227,12:37:10,circuito_prueba,6,,,,,,,,,
+tket,20251227,12:37:10,circuito_prueba,7,,,,,,,,,
+tket,20251227,12:37:10,circuito_prueba,8,,,,,,,,,
+tket,20251227,12:37:10,circuito_prueba,9,,,,,,,,,
+tket,20251227,12:37:10,circuito_prueba,10,,,,,,,,,

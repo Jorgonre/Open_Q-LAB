@@ -1,0 +1,16 @@
+Benchmark qiskit - qft_n4.py - Iteration 10
+Duración script python: 5.72s
+
+{'1111': 53, '0100': 55, '1101': 57, '1110': 58, '1010': 63, '0010': 72, '0000': 59, '0101': 64, '1001': 71, '0110': 62, '1000': 77, '1100': 70, '0001': 61, '0011': 63, '0111': 78, '1011': 61}
+# --- METRICS ---
+Qubits:4
+Depth:9
+Gate_1q:6
+Gate_2q:6
+Total_gates:12
+Build_time:0.0019
+Transpile_execution_time:1.9785
+Total_time:1.9808
+CPU_usage:39.40
+RAM_usage_MB:131.28
+# --- END_METRICS ---

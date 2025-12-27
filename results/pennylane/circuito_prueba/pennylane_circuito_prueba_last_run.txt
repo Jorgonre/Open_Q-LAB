@@ -1,0 +1,4 @@
+Benchmark pennylane - circuito_prueba.py - Iteration 10
+Duración script python: 11.43s
+
+0.85154057

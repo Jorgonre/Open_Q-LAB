@@ -1,0 +1,11 @@
+FRAMEWORK,DATE(Y-M-D),HOUR,CIRCUIT,ITERATION,QUBITS,1-GATE,2-GATES,TOTAL-GATES,RAM(MB),CPU(%),BUILD-TIME(s),EXECUTION-TIME(s),TOTAL-TIME(s)
+pennylane,20251227,12:39:37,circuito_prueba,1,,,,,,,,,
+pennylane,20251227,12:39:37,circuito_prueba,2,,,,,,,,,
+pennylane,20251227,12:39:37,circuito_prueba,3,,,,,,,,,
+pennylane,20251227,12:39:37,circuito_prueba,4,,,,,,,,,
+pennylane,20251227,12:39:37,circuito_prueba,5,,,,,,,,,
+pennylane,20251227,12:39:37,circuito_prueba,6,,,,,,,,,
+pennylane,20251227,12:39:37,circuito_prueba,7,,,,,,,,,
+pennylane,20251227,12:39:37,circuito_prueba,8,,,,,,,,,
+pennylane,20251227,12:39:37,circuito_prueba,9,,,,,,,,,
+pennylane,20251227,12:39:37,circuito_prueba,10,,,,,,,,,

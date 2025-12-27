@@ -1,0 +1,16 @@
+Benchmark qiskit - adder_n4.py - Iteration 10
+Duración script python: 5.69s
+
+{'1001': 1024}
+# --- METRICS ---
+Qubits:4
+Depth:12
+Gate_1q:13
+Gate_2q:10
+Total_gates:23
+Build_time:0.0006
+Transpile_execution_time:2.3247
+Total_time:2.3257
+CPU_usage:36.10
+RAM_usage_MB:131.34
+# --- END_METRICS ---

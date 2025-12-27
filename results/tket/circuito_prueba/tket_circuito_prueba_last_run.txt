@@ -1,0 +1,3 @@
+Benchmark tket - circuito_prueba.py - Iteration 10
+Duración script python: 0.32s
+
