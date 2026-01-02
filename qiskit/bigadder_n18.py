@@ -15,37 +15,60 @@ start_time = time.time()
 # Medir tiempo de construcción
 start_build = time.time()
 
-qreg_q = QuantumRegister(4, 'q')
-creg_c = ClassicalRegister(4, 'c')
-circuit = QuantumCircuit(qreg_q, creg_c)
+def majority(qc, a, b, c):
+    """Puerta Majority: calcula el acarreo (carry)"""
+    qc.cx(c, b)
+    qc.cx(c, a)
+    qc.ccx(a, b, c)
 
-# quantum Fourier transform
-circuit.x(qreg_q[0])
-circuit.x(qreg_q[2])
+def unmaj(qc, a, b, c):
+    """Puerta Unmajority: deshace el cálculo (uncomputation)"""
+    qc.ccx(a, b, c)
+    qc.cx(c, a)
+    qc.cx(a, b)
 
-circuit.barrier(qreg_q)
+def add4(qc, a, b, cin, cout):
+    """
+    Suma dos registros de 4 qubits (a y b).
+    El resultado se guarda en b.
+    cin: qubit de acarreo de entrada
+    cout: qubit de acarreo de salida
+    """
+    # Majority steps (calculando acarreos hacia adelante)
+    majority(qc, cin, b[0], a[0])
+    majority(qc, a[0], b[1], a[1])
+    majority(qc, a[1], b[2], a[2])
+    majority(qc, a[2], b[3], a[3])
+    
+    # Escribir el resultado en el acarreo de salida
+    qc.cx(a[3], cout)
+    
+    # Unmajority steps (deshaciendo cambios intermedios y calculando suma)
+    unmaj(qc, a[2], b[3], a[3])
+    unmaj(qc, a[1], b[2], a[2])
+    unmaj(qc, a[0], b[1], a[1])
+    unmaj(qc, cin, b[0], a[0])
 
-circuit.h(qreg_q[0])
+qreg_carry = QuantumRegister(2, 'carry')
+qreg_a = QuantumRegister(8, 'a')
+qreg_b = QuantumRegister(8, 'b')
+creg_ans = ClassicalRegister(8, 'ans')
+creg_carryout = ClassicalRegister(1, 'carryout')
 
-circuit.cp(pi / 2, qreg_q[1], qreg_q[0])
+circuit = QuantumCircuit(qreg_carry, qreg_a, qreg_b, creg_ans, creg_carryout)
+ 
+circuit.x(qreg_a)
 
-circuit.h(qreg_q[1])
+circuit.x(qreg_b) #Todas las b a 1
+#circuit.x(qreg_b[6]) #Invierte b[6]
 
-circuit.cp(pi / 4, qreg_q[2], qreg_q[0])
+add4(circuit, qreg_a[0:4], qreg_b[0:4], qreg_carry[0], qreg_carry[1])
 
-circuit.cp(pi / 2, qreg_q[2], qreg_q[1])
+add4(circuit, qreg_a[4:8], qreg_b[4:8], qreg_carry[0], qreg_carry[1])
 
-circuit.h(qreg_q[2])
+circuit.measure(qreg_b, creg_ans)
 
-circuit.cp(pi / 8, qreg_q[3], qreg_q[0])
-
-circuit.cp(pi / 4, qreg_q[3], qreg_q[1])
-
-circuit.cp(pi / 2, qreg_q[3], qreg_q[2])
-
-circuit.h(qreg_q[3])
-
-circuit.measure(qreg_q, creg_c)
+circuit.measure(qreg_carry[0], creg_carryout)
 
 build_time = time.time() - start_build
 
@@ -75,7 +98,7 @@ ops = circuit.count_ops()
 
 # Clasificar puertas
 one_qubit_gates = ['x', 'h', 't', 'tdg', 's']
-two_qubit_gates = ['cx','cp']
+two_qubit_gates = ['cx']
 
 num_1q = sum(ops.get(gate, 0) for gate in one_qubit_gates)
 num_2q = sum(ops.get(gate, 0) for gate in two_qubit_gates)
