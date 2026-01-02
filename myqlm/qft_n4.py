@@ -25,7 +25,7 @@ qbits = prog.qalloc(4)
 def qft():
     """
     Esta función devuelve automáticamente una QRoutine
-    con la lógica que has definido.
+    con la lógica definida.
     """
     
     # --- Parte 1: Inicialización y Barreras ---
