@@ -19,6 +19,7 @@ qreg_q = QuantumRegister(11, 'q')
 creg_c = ClassicalRegister(11, 'c')
 circuit = QuantumCircuit(qreg_q, creg_c)
 
+#circuit.x(qreg_q[0]) #Si se añade, los resultados varían con el resultado de q10 siendo |0> en vez de |1>
 circuit.z(qreg_q[0])
 circuit.h(qreg_q[0])
 # secret unitary: hz
