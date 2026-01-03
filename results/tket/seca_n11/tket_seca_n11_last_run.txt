@@ -1,3 +1,20 @@
 Benchmark tket - seca_n11.py - Iteration 1
-Duración script python: 0.04s
+Duración script python: 13.27s
 
+Circuito:
+<tket::Circuit, qubits=11, gates=88>
+
+Resultados:
+Counter({(1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1): 269, (1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1): 269, (0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1): 263, (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1): 223})
+# --- METRICS ---
+Qubits:11
+Depth:38
+Gate_1q:18
+Gate_2q:19
+Total_gates:37
+Build_time:0.0029
+Transpile_execution_time:2.7522
+Total_time:2.7589
+CPU_usage:45.40
+RAM_usage_MB:256.20
+# --- END_METRICS ---
