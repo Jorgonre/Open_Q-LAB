@@ -172,7 +172,7 @@ for op in seca.ops:
 depth = depth + 1  # capas empiezan en 0
 
 gate_counts = seca.ops
-num_1q = sum(1 for g in gate_counts if len(g.qbits) == 1) - 4  #Resta por measure gates
+num_1q = sum(1 for g in gate_counts if len(g.qbits) == 1) - 11  #Resta por measure gates
 num_2q = sum(1 for g in gate_counts if len(g.qbits) == 2)
 total_gates = num_1q + num_2q
 

@@ -141,9 +141,9 @@ num_2q = 0
 
 for cmd in circ.get_commands():
     optype = cmd.op.type
-    if optype in [OpType.X, OpType.H, OpType.T, OpType.S, OpType.U3, OpType.Rx, OpType.Ry, OpType.Rz]:
+    if optype in [OpType.X, OpType.H, OpType.T, OpType.S, OpType.U3, OpType.Rx, OpType.Ry, OpType.Rz, OpType.Z]:
         num_1q += 1
-    elif optype in [OpType.CX,OpType.CU1]:
+    elif optype in [OpType.CX,OpType.CZ]:
         num_2q += 1
 
 # Número de qubits

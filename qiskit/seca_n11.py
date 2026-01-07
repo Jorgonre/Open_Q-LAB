@@ -150,12 +150,12 @@ num_1q = 0
 num_2q = 0
 num_multi_q = 0
 
-# Iteramos sobre cada instrucción del circuito TRANSPILED (el físico real)
-for instruction in transpiled.data:
+# Iteramos sobre cada instrucción del circuito 
+for instruction in circuit.data:
     operation = instruction.operation
     
     # Ignoramos lo que no sea puerta lógica
-    if operation.name in ['barrier', 'measure']:
+    if operation.name in ['measure']:
         continue
     
     # Clasificamos según el número de qubits que toca la puerta

@@ -1,11 +1,11 @@
 Benchmark pennylane - seca_n11.py - Iteration 1
-Duración script python: 15.78s
+Duración script python: 13.11s
 
-|00000000001> 0.2734375
-|10000000001> 0.2197265625
-|00000000011> 0.25390625
+|00000000011> 0.248046875
 |10000000011> 0.2529296875
-q0: 0.527 |0>  +  0.473 |1>
+|10000000001> 0.236328125
+|00000000001> 0.2626953125
+q0: 0.511 |0>  +  0.489 |1>
 q1: 1.000 |0>  +  0.000 |1>
 q2: 1.000 |0>  +  0.000 |1>
 q3: 1.000 |0>  +  0.000 |1>
@@ -14,7 +14,7 @@ q5: 1.000 |0>  +  0.000 |1>
 q6: 1.000 |0>  +  0.000 |1>
 q7: 1.000 |0>  +  0.000 |1>
 q8: 1.000 |0>  +  0.000 |1>
-q9: 0.493 |0>  +  0.507 |1>
+q9: 0.499 |0>  +  0.501 |1>
 q10: 0.000 |0>  +  1.000 |1>
 
 Circuito (texto):
@@ -44,12 +44,12 @@ Circuito (texto):
 # --- METRICS ---
 Qubits:11
 Depth:44
-Gate_1q:18
-Gate_2q:19
-Total_gates:37
-Build_time:0.0562
-Transpile_execution_time:0.1877
-Total_time:0.2439
-CPU_usage:66.90
-RAM_usage_MB:400.30
+Gate_1q:26
+Gate_2q:36
+Total_gates:62
+Build_time:0.0498
+Transpile_execution_time:0.1183
+Total_time:0.1681
+CPU_usage:76.70
+RAM_usage_MB:397.13
 # --- END_METRICS ---

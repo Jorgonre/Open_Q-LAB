@@ -170,8 +170,8 @@ depth = specs["resources"].depth
 ops = specs["resources"].gate_types
 
 # Clasificar puertas
-one_qubit_gates = ["PauliX", "Hadamard", "T", "S", "RX", "RY", "RZ", "U3"]
-two_qubit_gates = ["CNOT"]
+one_qubit_gates = ["PauliX", "Hadamard", "T", "S", "RX", "RY", "RZ", "U3", "PauliZ"]
+two_qubit_gates = ["CNOT", "CZ"]
 
 num_1q = sum(ops.get(g, 0) for g in one_qubit_gates)
 num_2q = sum(ops.get(g, 0) for g in two_qubit_gates)
