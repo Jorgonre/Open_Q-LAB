@@ -48,9 +48,9 @@ def add4(prog, a, b, cin, cout):
 
 prog = Program()
 
+q_carry = prog.qalloc(2)
 q_a = prog.qalloc(8)
 q_b = prog.qalloc(8)
-q_carry = prog.qalloc(2)
 
 for i in range(8):
     prog.apply(X, q_a[i])
@@ -62,8 +62,8 @@ add4(prog, q_a[4:8], q_b[4:8], q_carry[1], q_carry[0])
 
 build_time = time.time() - start_build
 
-c_b = prog.calloc(8)
 c_carry = prog.calloc(1)
+c_b = prog.calloc(8)
 
 for i in range(8):
     prog.measure(q_b[i], c_b[i])
@@ -74,7 +74,8 @@ start_transpile = time.time()
 
 circuit = prog.to_circ()
 qpu = PyLinalg()
-job = Job(circuit=circuit, nbshots=1024)
+qubits_medidos = list(range(10, 18)) + [0] 
+job = Job(circuit=circuit, nbshots=1024, qubits=qubits_medidos)
 result = qpu.submit(job)
 
 cpu_usage = process.cpu_percent(None)
@@ -112,7 +113,7 @@ num_1q = sum(1 for g in gate_counts if len(g.qbits) == 1) - 9  #Resta por measur
 num_2q = sum(1 for g in gate_counts if len(g.qbits) == 2)
 total_gates = num_1q + num_2q
 
-print(result[0])
+print(f"{result[0].state}: {result[0].probability}")
 
 #print(circuit)
 
