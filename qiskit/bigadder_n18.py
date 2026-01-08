@@ -64,7 +64,7 @@ circuit.x(qreg_b) #Todas las b a 1
 
 add4(circuit, qreg_a[0:4], qreg_b[0:4], qreg_carry[0], qreg_carry[1])
 
-add4(circuit, qreg_a[4:8], qreg_b[4:8], qreg_carry[0], qreg_carry[1])
+add4(circuit, qreg_a[4:8], qreg_b[4:8], qreg_carry[1], qreg_carry[0])
 
 circuit.measure(qreg_b, creg_ans)
 
