@@ -19,7 +19,7 @@ BARRIER = AbstractGate("BARRIER", [], arity=1)
 BARRIER.set_matrix_generator(lambda: np.eye(2))
 
 prog = Program()
-qbits = prog.qalloc(4)
+qbits = prog.qalloc(11)
 
 @qrout
 def seca():
