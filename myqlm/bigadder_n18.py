@@ -14,40 +14,37 @@ start_time = time.time()
 # Medir tiempo de construcción
 start_build = time.time()
 
-@qrout
-def majority(qc, a, b, c):
+def majority(prog, a, b, c):
     """Puerta Majority: calcula el acarreo (carry)"""
-    CNOT(c,b)
-    CNOT(c,a)
-    CCNOT(a,b,c)
+    prog.apply(CNOT,c,b)
+    prog.apply(CNOT,c,a)
+    prog.apply(CCNOT,a,b,c)
 
-@qrout
-def unmajority(qc, a, b, c):
+def unmajority(prog, a, b, c):
     """Puerta Majority: calcula el acarreo (carry)"""
-    CCNOT(a,b,c)
-    CNOT(c,a)
-    CNOT(a,b)
+    prog.apply(CCNOT,a,b,c)
+    prog.apply(CNOT,c,a)
+    prog.apply(CNOT,a,b)
 
-@qrout
-def add4(qc, a, b, cin, cout):
+def add4(prog, a, b, cin, cout):
     """
     Suma dos registros de 4 qubits (a y b).
     El resultado se guarda en b.
     cin: qubit de acarreo de entrada
     cout: qubit de acarreo de salida
     """
-    majority(qc, cin, b[0], a[0])
-    majority(qc, a[0], b[1], a[1])
-    majority(qc, a[1], b[2], a[2])
-    majority(qc, a[2], b[3], a[3])
+    majority(prog, cin, b[0], a[0])
+    majority(prog, a[0], b[1], a[1])
+    majority(prog, a[1], b[2], a[2])
+    majority(prog, a[2], b[3], a[3])
 
     #acarreo de salida
-    CNOT(a[3], cout)
+    prog.apply(CNOT,a[3], cout)
 
-    unmajority(qc, a[2], b[3], a[3])
-    unmajority(qc, a[1], b[2], a[2])
-    unmajority(qc, a[0], b[1], a[1])
-    unmajority(qc, cin, b[0], a[0])
+    unmajority(prog, a[2], b[3], a[3])
+    unmajority(prog, a[1], b[2], a[2])
+    unmajority(prog, a[0], b[1], a[1])
+    unmajority(prog, cin, b[0], a[0])
 
 prog = Program()
 
@@ -59,9 +56,9 @@ for i in range(8):
     prog.apply(X, q_a[i])
     prog.apply(X, q_b[i])
 
-prog.apply(add4, prog, q_a[0:4], q_b[0:4], q_carry[0], q_carry[1])
+add4(prog, q_a[0:4], q_b[0:4], q_carry[0], q_carry[1])
     
-prog.apply(add4, prog, q_a[4:8], q_b[4:8], q_carry[1], q_carry[0])
+add4(prog, q_a[4:8], q_b[4:8], q_carry[1], q_carry[0])
 
 build_time = time.time() - start_build
 
@@ -86,13 +83,13 @@ ram_usage_mb = process.memory_info().rss / (1024 * 1024)
 transpile_time = time.time() - start_transpile
 total_time = time.time() - start_time
 
-num_qubits = bigadder.nbqbits
+num_qubits = circuit.nbqbits
 
 # Calcula depth estilo Qiskit
 last_layer_for_qubit = {}
 depth = 0
 
-for op in seca.ops:
+for op in circuit.ops:
     qubits = op.qbits
     
     # capa mínima donde puede ir esta operación
@@ -110,15 +107,14 @@ for op in seca.ops:
 
 depth = depth + 1  # capas empiezan en 0
 
-gate_counts = seca.ops
-num_1q = sum(1 for g in gate_counts if len(g.qbits) == 1) - 11  #Resta por measure gates
+gate_counts = circuit.ops
+num_1q = sum(1 for g in gate_counts if len(g.qbits) == 1) - 9  #Resta por measure gates
 num_2q = sum(1 for g in gate_counts if len(g.qbits) == 2)
 total_gates = num_1q + num_2q
 
-for sample in result:
-    print(sample.state, sample.probability)
+print(result[0])
 
-print(seca)
+#print(circuit)
 
 print("# --- METRICS ---")
 print(f"Qubits:{num_qubits}")
