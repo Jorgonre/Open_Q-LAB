@@ -162,7 +162,7 @@ for estado, cantidad in counts.items():
     probabilidad = cantidad / 1024
     print(f"|{estado}> {probabilidad}")
 
-# --- CONTAR PUERTAS EN CIRQ (VERSIÓN SIMPLE Y CORRECTA) ---
+# --- CONTAR PUERTAS EN CIRQ  ---
 
 num_1q = -9 #No contamos las measurements gates
 num_2q = 0

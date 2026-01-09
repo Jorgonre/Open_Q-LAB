@@ -1,16 +1,16 @@
 Benchmark myqlm - bigadder_n18.py - Iteration 1
-Duración script python: 220.88s
+Duración script python: 133.77s
 
-|011111111>: None
+|000000000>: None
 # --- METRICS ---
 Qubits:18
-Depth:37
-Gate_1q:16
+Depth:36
+Gate_1q:0
 Gate_2q:34
-Total_gates:50
-Build_time:0.0004
-Transpile_execution_time:219.8069
-Total_time:219.8074
-CPU_usage:164.70
-RAM_usage_MB:84.92
+Total_gates:34
+Build_time:0.0008
+Transpile_execution_time:122.2816
+Total_time:122.2825
+CPU_usage:169.30
+RAM_usage_MB:84.99
 # --- END_METRICS ---
