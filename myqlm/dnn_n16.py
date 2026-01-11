@@ -1,53 +1,27 @@
-from qat.lang import Program, H, CNOT, X, T, S, AbstractGate, PH, qroRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() t, CSIGN, Z, CCNOT
-from qat.qpRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() s import PyLinalg, get_defaRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() lt_qpRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() 
+from qat.lang import Program, H, CNOT, X, T, S, AbstractGate, PH, qrout, CSIGN, Z, CCNOT, RZ, RX, RY
+from qat.qpus import PyLinalg, get_default_qpu
 from qat.core import Job
-import psRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() til
+import psutil
 import os
 import time
-import nRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() mpy as np
+import numpy as np
 
-process = psRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() til.Process(os.getnp.pid())
+process = psutil.Process(os.getpid())
 
-process.cpRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() _percent(interval=None)  # Establece línea base
+process.cpu_percent(interval=None)  # Establece línea base
 
 start_time = time.time()
-# Medir tiempo de constrRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() cción
-start_bRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() ild = time.time()
+# Medir tiempo de construcción
+start_build = time.time()
 
 prog = Program()
 qbits = prog.qalloc(11)
 
-@qroRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() t
+@qrout
 def dnn():
-    # 16 QRZ(np.pi * )()
-    RY(np.pi * )()
-    RZ(np.pi * )() BIT DEEP ( Ideal - can then train proper ML if this is efficient)
+    # 16 QUBIT DEEP ( Ideal - can then train proper ML if this is efficient)
     # Generated from Cirq v0.8.0
-    # QRZ(np.pi * )()
-    RY(np.pi * )()
-    RZ(np.pi * )() bits: (0, 0), (0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (0, 6), (0, 7), (0, 8), (0, 9), (0, 10), (0, 11), (0, 12), (0, 13), (0, 14), (0, 15)
+    # Qubits: (0, 0), (0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (0, 6), (0, 7), (0, 8), (0, 9), (0, 10), (0, 11), (0, 12), (0, 13), (0, 14), (0, 15)
     RX(np.pi * 0.3501408748)(0)
     RY(np.pi * 0.3501408748)(0)
     RZ(np.pi * 0.3501408748)(0)
@@ -1281,7 +1255,7 @@ def dnn():
     RY(np.pi * 0.3501408748)(0)
     RZ(np.pi * 0.3501408748)(0)
     # Gate: CNOT**1.1
-    RY(np.pi * -0.5, 1)
+    RY(np.pi * -0.5)(1)
     RZ(np.pi * 0.25)(0)
     RY(np.pi * 0.5)(0)
     RZ(np.pi * 0)(0)
@@ -1293,7 +1267,7 @@ def dnn():
     RZ(np.pi * 1.0)(1)
     RX(np.pi * 0.5)(0)
     CNOT(0, 1)
-    RX(np.pi * 0.05, 0)
+    RX(np.pi * 0.05)(0)
     RY(np.pi * 0.5)(1)
     CNOT(1, 0)
     RX(np.pi * -0.5)(1)
@@ -1307,7 +1281,7 @@ def dnn():
     RZ(np.pi * 1.8)(1)
     RY(np.pi * 0.5)(1)
     # Gate: CNOT**1.1
-    RY(np.pi * -0.5, 3)
+    RY(np.pi * -0.5)(3)
     RZ(np.pi * 0.25)(2)
     RY(np.pi * 0.5)(2)
     RZ(np.pi * 0)(2)
@@ -1316,7 +1290,7 @@ def dnn():
     RZ(np.pi * 1.0)(3)
     RX(np.pi * 0.5)(2)
     CNOT(2, 3)
-    RX(np.pi * 0.05, 2)
+    RX(np.pi * 0.05)(2)
     RY(np.pi * 0.5)(3)
     CNOT(3, 2)
     RX(np.pi * -0.5)(3)
@@ -1330,7 +1304,7 @@ def dnn():
     RZ(np.pi * 1.8)(3)
     RY(np.pi * 0.5)(3)
     # Gate: CNOT**1.1
-    RY(np.pi * -0.5, 5)
+    RY(np.pi * -0.5)(5)
     RZ(np.pi * 0.25)(4)
     RY(np.pi * 0.5)(4)
     RZ(np.pi * 0)(4)
@@ -1339,7 +1313,7 @@ def dnn():
     RZ(np.pi * 1.0)(5)
     RX(np.pi * 0.5)(4)
     CNOT(4, 5)
-    RX(np.pi * 0.05, 4)
+    RX(np.pi * 0.05)(4)
     RY(np.pi * 0.5)(5)
     CNOT(5, 4)
     RX(np.pi * -0.5)(5)
@@ -1353,7 +1327,7 @@ def dnn():
     RZ(np.pi * 1.8)(5)
     RY(np.pi * 0.5)(5)
     # Gate: CNOT**1.1
-    RY(np.pi * -0.5, 7)
+    RY(np.pi * -0.5)(7)
     RZ(np.pi * 0.25)(6)
     RY(np.pi * 0.5)(6)
     RZ(np.pi * 0)(6)
@@ -1362,7 +1336,7 @@ def dnn():
     RZ(np.pi * 1.0)(7)
     RX(np.pi * 0.5)(6)
     CNOT(6, 7)
-    RX(np.pi * 0.05, 6)
+    RX(np.pi * 0.05)(6)
     RY(np.pi * 0.5)(7)
     CNOT(7, 6)
     RX(np.pi * -0.5)(7)
@@ -1376,7 +1350,7 @@ def dnn():
     RZ(np.pi * 1.8)(7)
     RY(np.pi * 0.5)(7)
     # Gate: CNOT**1.1
-    RY(np.pi * -0.5, 9)
+    RY(np.pi * -0.5)(9)
     RZ(np.pi * 0.25)(8)
     RY(np.pi * 0.5)(8)
     RZ(np.pi * 0)(8)
@@ -1385,7 +1359,7 @@ def dnn():
     RZ(np.pi * 1.0)(9)
     RX(np.pi * 0.5)(8)
     CNOT(8, 9)
-    RX(np.pi * 0.05, 8)
+    RX(np.pi * 0.05)(8)
     RY(np.pi * 0.5)(9)
     CNOT(9, 8)
     RX(np.pi * -0.5)(9)
@@ -1399,7 +1373,7 @@ def dnn():
     RZ(np.pi * 1.8)(9)
     RY(np.pi * 0.5)(9)
     # Gate: CNOT**1.1
-    RY(np.pi * -0.5, 11)
+    RY(np.pi * -0.5)(11)
     RZ(np.pi * 0.25)(10)
     RY(np.pi * 0.5)(10)
     RZ(np.pi * 0)(10)
@@ -1408,7 +1382,7 @@ def dnn():
     RZ(np.pi * 1.0)(11)
     RX(np.pi * 0.5)(10)
     CNOT(10, 11)
-    RX(np.pi * 0.05, 10)
+    RX(np.pi * 0.05)(10)
     RY(np.pi * 0.5)(11)
     CNOT(11, 10)
     RX(np.pi * -0.5)(11)
@@ -1422,7 +1396,7 @@ def dnn():
     RZ(np.pi * 1.8)(11)
     RY(np.pi * 0.5)(11)
     # Gate: CNOT**1.1
-    RY(np.pi * -0.5, 13)
+    RY(np.pi * -0.5)(13)
     RZ(np.pi * 0.25)(12)
     RY(np.pi * 0.5)(12)
     RZ(np.pi * 0)(12)
@@ -1431,7 +1405,7 @@ def dnn():
     RZ(np.pi * 1.0)(13)
     RX(np.pi * 0.5)(12)
     CNOT(12, 13)
-    RX(np.pi * 0.05, 12)
+    RX(np.pi * 0.05)(12)
     RY(np.pi * 0.5)(13)
     CNOT(13, 12)
     RX(np.pi * -0.5)(13)
@@ -1445,7 +1419,7 @@ def dnn():
     RZ(np.pi * 1.8)(13)
     RY(np.pi * 0.5)(13)
     # Gate: CNOT**1.1
-    RY(np.pi * -0.5, 15)
+    RY(np.pi * -0.5)(15)
     RZ(np.pi * 0.25)(14)
     RY(np.pi * 0.5)(14)
     RZ(np.pi * 0)(14)
@@ -1454,7 +1428,7 @@ def dnn():
     RZ(np.pi * 1.0)(15)
     RX(np.pi * 0.5)(14)
     CNOT(14, 15)
-    RX(np.pi * 0.05, 14)
+    RX(np.pi * 0.05)(14)
     RY(np.pi * 0.5)(15)
     CNOT(15, 14)
     RX(np.pi * -0.5)(15)
@@ -1479,7 +1453,7 @@ def dnn():
     RZ(np.pi * 1.0)(1)
     RX(np.pi * 0.5)(0)
     CNOT(0, 1)
-    RX(np.pi * 0.05, 0)
+    RX(np.pi * 0.05)(0)
     RY(np.pi * 0.5)(1)
     CNOT(1, 0)
     RX(np.pi * -0.5)(1)
@@ -1500,7 +1474,7 @@ def dnn():
     RZ(np.pi * 1.0)(3)
     RX(np.pi * 0.5)(2)
     CNOT(2, 3)
-    RX(np.pi * 0.05, 2)
+    RX(np.pi * 0.05)(2)
     RY(np.pi * 0.5)(3)
     CNOT(3, 2)
     RX(np.pi * -0.5)(3)
@@ -1521,7 +1495,7 @@ def dnn():
     RZ(np.pi * 1.0)(5)
     RX(np.pi * 0.5)(4)
     CNOT(4, 5)
-    RX(np.pi * 0.05, 4)
+    RX(np.pi * 0.05)(4)
     RY(np.pi * 0.5)(5)
     CNOT(5, 4)
     RX(np.pi * -0.5)(5)
@@ -1542,7 +1516,7 @@ def dnn():
     RZ(np.pi * 1.0)(7)
     RX(np.pi * 0.5)(6)
     CNOT(6, 7)
-    RX(np.pi * 0.05, 6)
+    RX(np.pi * 0.05)(6)
     RY(np.pi * 0.5)(7)
     CNOT(7, 6)
     RX(np.pi * -0.5)(7)
@@ -1563,7 +1537,7 @@ def dnn():
     RZ(np.pi * 1.0)(9)
     RX(np.pi * 0.5)(8)
     CNOT(8, 9)
-    RX(np.pi * 0.05, 8)
+    RX(np.pi * 0.05)(8)
     RY(np.pi * 0.5)(9)
     CNOT(9, 8)
     RX(np.pi * -0.5)(9)
@@ -1584,7 +1558,7 @@ def dnn():
     RZ(np.pi * 1.0)(11)
     RX(np.pi * 0.5)(10)
     CNOT(10, 11)
-    RX(np.pi * 0.05, 10)
+    RX(np.pi * 0.05)(10)
     RY(np.pi * 0.5)(11)
     CNOT(11, 10)
     RX(np.pi * -0.5)(11)
@@ -1605,7 +1579,7 @@ def dnn():
     RZ(np.pi * 1.0)(13)
     RX(np.pi * 0.5)(12)
     CNOT(12, 13)
-    RX(np.pi * 0.05, 12)
+    RX(np.pi * 0.05)(12)
     RY(np.pi * 0.5)(13)
     CNOT(13, 12)
     RX(np.pi * -0.5)(13)
@@ -1626,7 +1600,7 @@ def dnn():
     RZ(np.pi * 1.0)(15)
     RX(np.pi * 0.5)(14)
     CNOT(14, 15)
-    RX(np.pi * 0.05, 14)
+    RX(np.pi * 0.05)(14)
     RY(np.pi * 0.5)(15)
     CNOT(15, 14)
     RX(np.pi * -0.5)(15)
@@ -1639,7 +1613,7 @@ def dnn():
     RY(np.pi * 0.5)(15)
     RZ(np.pi * 1.8)(15)
     # Gate: CNOT**1.1
-    RY(np.pi * -0.5, 2)
+    RY(np.pi * -0.5)(2)
     RZ(np.pi * 0.25)(1)
     RY(np.pi * 0.5)(1)
     RZ(np.pi * 0)(1)
@@ -1648,7 +1622,7 @@ def dnn():
     RZ(np.pi * 1.0)(2)
     RX(np.pi * 0.5)(1)
     CNOT(1, 2)
-    RX(np.pi * 0.05, 1)
+    RX(np.pi * 0.05)(1)
     RY(np.pi * 0.5)(2)
     CNOT(2, 1)
     RX(np.pi * -0.5)(2)
@@ -1662,7 +1636,7 @@ def dnn():
     RZ(np.pi * 1.8)(2)
     RY(np.pi * 0.5)(2)
     # Gate: CNOT**1.1
-    RY(np.pi * -0.5, 4)
+    RY(np.pi * -0.5)(4)
     RZ(np.pi * 0.25)(3)
     RY(np.pi * 0.5)(3)
     RZ(np.pi * 0)(3)
@@ -1671,7 +1645,7 @@ def dnn():
     RZ(np.pi * 1.0)(4)
     RX(np.pi * 0.5)(3)
     CNOT(3, 4)
-    RX(np.pi * 0.05, 3)
+    RX(np.pi * 0.05)(3)
     RY(np.pi * 0.5)(4)
     CNOT(4, 3)
     RX(np.pi * -0.5)(4)
@@ -1685,7 +1659,7 @@ def dnn():
     RZ(np.pi * 1.8)(4)
     RY(np.pi * 0.5)(4)
     # Gate: CNOT**1.1
-    RY(np.pi * -0.5, 6)
+    RY(np.pi * -0.5)(6)
     RZ(np.pi * 0.25)(5)
     RY(np.pi * 0.5)(5)
     RZ(np.pi * 0)(5)
@@ -1694,7 +1668,7 @@ def dnn():
     RZ(np.pi * 1.0)(6)
     RX(np.pi * 0.5)(5)
     CNOT(5, 6)
-    RX(np.pi * 0.05, 5)
+    RX(np.pi * 0.05)(5)
     RY(np.pi * 0.5)(6)
     CNOT(6, 5)
     RX(np.pi * -0.5)(6)
@@ -1708,7 +1682,7 @@ def dnn():
     RZ(np.pi * 1.8)(6)
     RY(np.pi * 0.5)(6)
     # Gate: CNOT**1.1
-    RY(np.pi * -0.5, 8)
+    RY(np.pi * -0.5)(8)
     RZ(np.pi * 0.25)(7)
     RY(np.pi * 0.5)(7)
     RZ(np.pi * 0)(7)
@@ -1717,7 +1691,7 @@ def dnn():
     RZ(np.pi * 1.0)(8)
     RX(np.pi * 0.5)(7)
     CNOT(7, 8)
-    RX(np.pi * 0.05, 7)
+    RX(np.pi * 0.05)(7)
     RY(np.pi * 0.5)(8)
     CNOT(8, 7)
     RX(np.pi * -0.5)(8)
@@ -1731,7 +1705,7 @@ def dnn():
     RZ(np.pi * 1.8)(8)
     RY(np.pi * 0.5)(8)
     # Gate: CNOT**1.1
-    RY(np.pi * -0.5, 10)
+    RY(np.pi * -0.5)(10)
     RZ(np.pi * 0.25)(9)
     RY(np.pi * 0.5)(9)
     RZ(np.pi * 0)(9)
@@ -1740,7 +1714,7 @@ def dnn():
     RZ(np.pi * 1.0)(10)
     RX(np.pi * 0.5)(9)
     CNOT(9, 10)
-    RX(np.pi * 0.05, 9)
+    RX(np.pi * 0.05)(9)
     RY(np.pi * 0.5)(10)
     CNOT(10, 9)
     RX(np.pi * -0.5)(10)
@@ -1754,7 +1728,7 @@ def dnn():
     RZ(np.pi * 1.8)(10)
     RY(np.pi * 0.5)(10)
     # Gate: CNOT**1.1
-    RY(np.pi * -0.5, 12)
+    RY(np.pi * -0.5)(12)
     RZ(np.pi * 0.25)(11)
     RY(np.pi * 0.5)(11)
     RZ(np.pi * 0)(11)
@@ -1763,7 +1737,7 @@ def dnn():
     RZ(np.pi * 1.0)(12)
     RX(np.pi * 0.5)(11)
     CNOT(11, 12)
-    RX(np.pi * 0.05, 11)
+    RX(np.pi * 0.05)(11)
     RY(np.pi * 0.5)(12)
     CNOT(12, 11)
     RX(np.pi * -0.5)(12)
@@ -1777,7 +1751,7 @@ def dnn():
     RZ(np.pi * 1.8)(12)
     RY(np.pi * 0.5)(12)
     # Gate: CNOT**1.1
-    RY(np.pi * -0.5, 14)
+    RY(np.pi * -0.5)(14)
     RZ(np.pi * 0.25)(13)
     RY(np.pi * 0.5)(13)
     RZ(np.pi * 0)(13)
@@ -1786,7 +1760,7 @@ def dnn():
     RZ(np.pi * 1.0)(14)
     RX(np.pi * 0.5)(13)
     CNOT(13, 14)
-    RX(np.pi * 0.05, 13)
+    RX(np.pi * 0.05)(13)
     RY(np.pi * 0.5)(14)
     CNOT(14, 13)
     RX(np.pi * -0.5)(14)
@@ -1800,7 +1774,7 @@ def dnn():
     RZ(np.pi * 1.8)(14)
     RY(np.pi * 0.5)(14)
     # Gate: CNOT**1.1
-    RY(np.pi * -0.5, 0)
+    RY(np.pi * -0.5)(0)
     RZ(np.pi * 0.25)(15)
     RY(np.pi * 0.5)(15)
     RZ(np.pi * 0)(15)
@@ -1809,7 +1783,7 @@ def dnn():
     RZ(np.pi * 1.0)(0)
     RX(np.pi * 0.5)(15)
     CNOT(15, 0)
-    RX(np.pi * 0.05, 15)
+    RX(np.pi * 0.05)(15)
     RY(np.pi * 0.5)(0)
     CNOT(0, 15)
     RX(np.pi * -0.5)(0)
@@ -1831,7 +1805,7 @@ def dnn():
     RZ(np.pi * 1.0)(2)
     RX(np.pi * 0.5)(1)
     CNOT(1, 2)
-    RX(np.pi * 0.05, 1)
+    RX(np.pi * 0.05)(1)
     RY(np.pi * 0.5)(2)
     CNOT(2, 1)
     RX(np.pi * -0.5)(2)
@@ -1852,7 +1826,7 @@ def dnn():
     RZ(np.pi * 1.0)(4)
     RX(np.pi * 0.5)(3)
     CNOT(3, 4)
-    RX(np.pi * 0.05, 3)
+    RX(np.pi * 0.05)(3)
     RY(np.pi * 0.5)(4)
     CNOT(4, 3)
     RX(np.pi * -0.5)(4)
@@ -1873,7 +1847,7 @@ def dnn():
     RZ(np.pi * 1.0)(6)
     RX(np.pi * 0.5)(5)
     CNOT(5, 6)
-    RX(np.pi * 0.05, 5)
+    RX(np.pi * 0.05)(5)
     RY(np.pi * 0.5)(6)
     CNOT(6, 5)
     RX(np.pi * -0.5)(6)
@@ -1894,7 +1868,7 @@ def dnn():
     RZ(np.pi * 1.0)(8)
     RX(np.pi * 0.5)(7)
     CNOT(7, 8)
-    RX(np.pi * 0.05, 7)
+    RX(np.pi * 0.05)(7)
     RY(np.pi * 0.5)(8)
     CNOT(8, 7)
     RX(np.pi * -0.5)(8)
@@ -1915,7 +1889,7 @@ def dnn():
     RZ(np.pi * 1.0)(10)
     RX(np.pi * 0.5)(9)
     CNOT(9, 10)
-    RX(np.pi * 0.05, 9)
+    RX(np.pi * 0.05)(9)
     RY(np.pi * 0.5)(10)
     CNOT(10, 9)
     RX(np.pi * -0.5)(10)
@@ -1936,7 +1910,7 @@ def dnn():
     RZ(np.pi * 1.0)(12)
     RX(np.pi * 0.5)(11)
     CNOT(11, 12)
-    RX(np.pi * 0.05, 11)
+    RX(np.pi * 0.05)(11)
     RY(np.pi * 0.5)(12)
     CNOT(12, 11)
     RX(np.pi * -0.5)(12)
@@ -1957,7 +1931,7 @@ def dnn():
     RZ(np.pi * 1.0)(14)
     RX(np.pi * 0.5)(13)
     CNOT(13, 14)
-    RX(np.pi * 0.05, 13)
+    RX(np.pi * 0.05)(13)
     RY(np.pi * 0.5)(14)
     CNOT(14, 13)
     RX(np.pi * -0.5)(14)
@@ -1978,7 +1952,7 @@ def dnn():
     RZ(np.pi * 1.0)(0)
     RX(np.pi * 0.5)(15)
     CNOT(15, 0)
-    RX(np.pi * 0.05, 15)
+    RX(np.pi * 0.05)(15)
     RY(np.pi * 0.5)(0)
     CNOT(0, 15)
     RX(np.pi * -0.5)(0)
@@ -3226,165 +3200,65 @@ def dnn():
     RY(np.pi * 0.3501408748)(0)
     RZ(np.pi * 0.3501408748)(0)
 
-bRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() ild_time = time.time() - start_bRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() ild
+build_time = time.time() - start_build
 
 #for i in range(4):
-#    prog.measRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() re(qbitsi)
+#    prog.measure(qbitsi)
 
-start_transnp.pile = time.time()
+start_transpile = time.time()
 
 job = dnn.to_job(nbshots=1024)
-resRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() lt = get_defaRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() lt_qpRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() ().sRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() bmit(job)
+result = get_default_qpu().submit(job)
 
-cpRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() _RZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() sage = process.cpRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() _percent(None)
-ram_RZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() sage_mb = process.memoRY_info().rss / (1024 * 1024)
+cpu_usage = process.cpu_percent(None)
+ram_usage_mb = process.memory_info().rss / (1024 * 1024)
 
-transnp.pile_time = time.time() - start_transnp.pile
+transpile_time = time.time() - start_transpile
 total_time = time.time() - start_time
 
-nRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() m_qRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() bits = dnn.nbqbits
+num_qubits = dnn.nbqbits
 
-# CalcRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() la depth estilo Qiskit
-last_layer_for_qRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() bit = {}
+# Calcula depth estilo Qiskit
+last_layer_for_qubit = {}
 depth = 0
 
 for op in dnn.ops:
-    qRZ(np.pi * )()
-    RY(np.pi * )()
-    RZ(np.pi * )() bits = op.qbits
+    qubits = op.qbits
     
-    # capa mínima donde pRZ(np.pi * )()
-    RY(np.pi * )()
-    RZ(np.pi * )() ede ir esta operación
+    # capa mínima donde puede ir esta operación
     min_layer = 0
-    for q in qRZ(np.pi * )()
-    RY(np.pi * )()
-    RZ(np.pi * )() bits:
-        if q in last_layer_for_qRZ(np.pi * )()
-        RY(np.pi * )()
-        RZ(np.pi * )() bit:
-            min_layer = max(min_layer, last_layer_for_qRZ(np.pi * )()
-            RY(np.pi * )()
-            RZ(np.pi * )() bitq + 1)
+    for q in qubits:
+        if q in last_layer_for_qubit:
+            min_layer = max(min_layer, last_layer_for_qubitq + 1)
 
     # asignar operación a la capa min_layer
     depth = max(depth, min_layer)
     
-    # actRZ(np.pi * )()
-    RY(np.pi * )()
-    RZ(np.pi * )() alizar última capa donde se RZ(np.pi * )()
-    RY(np.pi * )()
-    RZ(np.pi * )() sa cada qRZ(np.pi * )()
-    RY(np.pi * )()
-    RZ(np.pi * )() bit
-    for q in qRZ(np.pi * )()
-    RY(np.pi * )()
-    RZ(np.pi * )() bits:
-        last_layer_for_qRZ(np.pi * )()
-        RY(np.pi * )()
-        RZ(np.pi * )() bitq = min_layer
+    # actualizar última capa donde se usa cada qubit
+    for q in qubits:
+        last_layer_for_qubitq = min_layer
 
 depth = depth + 1  # capas emnp.piezan en 0
 
-gate_coRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() nts = dnn.ops
-nRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() m_1q = sRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() m(1 for g in gate_coRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() nts if len(g.qbits) == 1) - 11  #Resta por measRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() re gates
-nRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() m_2q = sRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() m(1 for g in gate_coRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() nts if len(g.qbits) == 2)
-total_gates = nRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() m_1q + nRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() m_2q
+gate_counts = dnn.ops
+num_1q = sum(1 for g in gate_counts if len(g.qbits) == 1) - 16  #Resta por measure gates
+num_2q = sum(1 for g in gate_counts if len(g.qbits) == 2)
+total_gates = num_1q + num_2q
 
-for sample in resRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() lt:
+for sample in result:
     print(sample.state, sample.probability)
 
 print(dnn)
 
 print("# --- METRICS ---")
-print(f"QRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() bits:{nRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() m_qRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() bits}")
+print(f"Qubits:{num_qubits}")
 print(f"Depth:{depth}")
-print(f"Gate_1q:{nRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() m_1q}")
-print(f"Gate_2q:{nRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() m_2q}")
+print(f"Gate_1q:{num_1q}")
+print(f"Gate_2q:{num_2q}")
 print(f"Total_gates:{total_gates}")
-print(f"BRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() ild_time:{bRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() ild_time:.4f}")
-print(f"Transnp.pile_execRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() tion_time:{transnp.pile_time:.4f}")
+print(f"Build_time:{build_time:.4f}")
+print(f"Transpile_execution_time:{transpile_time:.4f}")
 print(f"Total_time:{total_time:.4f}")
-print(f"CPRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() _RZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() sage:{cpRZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() _RZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() sage:.2f}")
-print(f"RAM_RZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() sage_MB:{ram_RZ(np.pi * )()
-RY(np.pi * )()
-RZ(np.pi * )() sage_mb:.2f}")
+print(f"CPU_usage:{cpu_usage:.2f}")
+print(f"RAM_usage_MB:{ram_usage_mb:.2f}")
 print("# --- END_METRICS ---")
