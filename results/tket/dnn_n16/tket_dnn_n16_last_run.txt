@@ -1,3 +1,3 @@
 Benchmark tket - dnn_n16.py - Iteration 1
-Duración script python: 0.02s
+Duración script python: 0.05s
 
