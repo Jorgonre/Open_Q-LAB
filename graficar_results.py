@@ -347,35 +347,67 @@ def plot_boxplot_CPU(df):
     print(f"\nGráfica de boxplot de CPU guardada en: {os.path.abspath(OUTPUT_IMAGE_BOXPLOT_CPU)}")
 
 if __name__ == "__main__":
-    df_results_time = get_latest_data_time(RESULTS_DIR)
-    df_results_RAM = get_latest_data_RAM(RESULTS_DIR)
-    df_results_CPU = get_latest_data_CPU(RESULTS_DIR)
-    if not df_results_time.empty:
-        plot_time(df_results_time)
-    else:
-        print("No hay datos.")
+    print("--- 1. CARGANDO DATOS COMPLETOS ---")
+    df_full_time = get_latest_data_time(RESULTS_DIR)
+    df_full_ram = get_latest_data_RAM(RESULTS_DIR)
+    df_full_cpu = get_latest_data_CPU(RESULTS_DIR)
+
+    if df_full_time.empty:
+        print("Error: No se han encontrado datos.")
+        exit()
+
+    # Muestra qué circuitos hay disponibles para que puedas copiar y pegar
+    circuitos_disponibles = df_full_time["CIRCUIT"].unique()
+    print(f"\nCircuitos encontrados en los CSVs:\n{circuitos_disponibles}\n")
+
+    # --- 2. CONFIGURACIÓN DE LISTAS ---
+    # Rellena estas listas con los nombres exactos que te han salido arriba
     
-    if not df_results_RAM.empty:
-        plot_RAM(df_results_RAM)
-    else:
-        print("No hay datos.")
-    
-    if not df_results_CPU.empty:
-        plot_CPU(df_results_CPU)
-    else:
-        print("No hay datos.")
-    
-    if not df_results_time.empty:
-        plot_boxplot_time(df_results_time)
-    else:
-        print("No hay datos.")
-    
-    if not df_results_RAM.empty:
-        plot_boxplot_RAM(df_results_RAM)
-    else:
-        print("No hay datos.")
-    
-    if not df_results_CPU.empty:
-        plot_boxplot_CPU(df_results_CPU)
-    else:
-        print("No hay datos.")
+    LISTA_SMALL = [
+        
+        "toffoli_n3", "adder_n4", "bell_n4", "qft_n4"
+    ]
+
+    LISTA_MEDIUM = [
+        "seca_n11", "dnn_n16", "bigadder_n18"
+    ]
+
+    # Diccionario para iterar automáticamente, comentar si solo se quiere 1
+    configuraciones = {
+        "SMALL": LISTA_SMALL,
+        #"MEDIUM": LISTA_MEDIUM
+    }
+
+    for categoria, lista_nombres in configuraciones.items():
+        print(f"\n--- PROCESANDO CATEGORÍA: {categoria} ---")
+        
+        if not lista_nombres:
+            print(f"Saltando {categoria} (Lista vacía).")
+            continue
+
+        # Filtramos los DataFrames
+        df_time_filtro = df_full_time[df_full_time["CIRCUIT"].isin(lista_nombres)]
+        df_ram_filtro = df_full_ram[df_full_ram["CIRCUIT"].isin(lista_nombres)]
+        df_cpu_filtro = df_full_cpu[df_full_cpu["CIRCUIT"].isin(lista_nombres)]
+
+        if df_time_filtro.empty:
+            print(f"No hay datos para la lista {categoria}. Revisa los nombres.")
+            continue
+
+        # Actualizamos Nombres de Archivo Globales para esta iteración
+        OUTPUT_IMAGE_TIME = f"grafica_tiempo_{categoria}.png"
+        OUTPUT_IMAGE_RAM = f"grafica_RAM_{categoria}.png"
+        OUTPUT_IMAGE_CPU = f"grafica_CPU_{categoria}.png"
+        OUTPUT_IMAGE_BOXPLOT_TIME = f"grafica_boxplot_tiempo_{categoria}.png"
+        OUTPUT_IMAGE_BOXPLOT_RAM = f"grafica_boxplot_RAM_{categoria}.png"
+        OUTPUT_IMAGE_BOXPLOT_CPU = f"grafica_boxplot_CPU_{categoria}.png"
+
+        # Graficamos (Barras)
+        plot_time(df_time_filtro)
+        plot_RAM(df_ram_filtro)
+        plot_CPU(df_cpu_filtro)
+
+        # Graficamos (Boxplots)
+        plot_boxplot_time(df_time_filtro)
+        plot_boxplot_RAM(df_ram_filtro)
+        plot_boxplot_CPU(df_cpu_filtro)
