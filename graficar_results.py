@@ -374,8 +374,8 @@ if __name__ == "__main__":
 
     # Diccionario para iterar automáticamente, comentar si solo se quiere 1
     configuraciones = {
-        "SMALL": LISTA_SMALL,
-        #"MEDIUM": LISTA_MEDIUM
+        #"SMALL": LISTA_SMALL,
+        "MEDIUM": LISTA_MEDIUM
     }
 
     for categoria, lista_nombres in configuraciones.items():

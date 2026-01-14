@@ -1,5 +1,5 @@
-Benchmark pennylane - bigadder_n18.py - Iteration 1
-Duración script python: 39.25s
+Benchmark pennylane - bigadder_n18.py - Iteration 10
+Duración script python: 9.57s
 
 |011111111> 1.0
 q0: 1.000 |0>  +  0.000 |1>
@@ -65,9 +65,9 @@ Depth:36
 Gate_1q:16
 Gate_2q:34
 Total_gates:50
-Build_time:0.4941
-Transpile_execution_time:2.5337
-Total_time:3.0278
-CPU_usage:31.30
-RAM_usage_MB:404.10
+Build_time:0.3218
+Transpile_execution_time:0.0896
+Total_time:0.4114
+CPU_usage:53.60
+RAM_usage_MB:404.87
 # --- END_METRICS ---
