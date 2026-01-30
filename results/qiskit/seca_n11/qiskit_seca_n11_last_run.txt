@@ -1,16 +1,16 @@
 Benchmark qiskit - seca_n11.py - Iteration 10
-Duración script python: 8.03s
+Duración script python: 8.04s
 
-{'11000000000': 259, '10000000000': 239, '11000000001': 279, '10000000001': 247}
+{'10000000000': 255, '11000000000': 262, '10000000001': 242, '11000000001': 265}
 # --- METRICS ---
 Qubits:11
 Depth:39
 Gate_1q:26
 Gate_2q:36
 Total_gates:77
-Build_time:0.0012
-Transpile_execution_time:4.5083
-Total_time:4.5095
-CPU_usage:35.20
-RAM_usage_MB:131.83
+Build_time:0.0031
+Transpile_execution_time:4.3399
+Total_time:4.3430
+CPU_usage:36.40
+RAM_usage_MB:131.79
 # --- END_METRICS ---

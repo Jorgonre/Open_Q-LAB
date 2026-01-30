@@ -1,5 +1,5 @@
 Benchmark tket - bigadder_n18.py - Iteration 10
-Duración script python: 13.56s
+Duración script python: 12.80s
 
 Circuito:
 <tket::Circuit, qubits=18, gates=75>
@@ -12,9 +12,9 @@ Depth:37
 Gate_1q:16
 Gate_2q:34
 Total_gates:50
-Build_time:0.0026
-Transpile_execution_time:5.0509
-Total_time:5.0693
-CPU_usage:40.20
-RAM_usage_MB:257.05
+Build_time:0.0006
+Transpile_execution_time:5.3858
+Total_time:5.4011
+CPU_usage:37.30
+RAM_usage_MB:257.27
 # --- END_METRICS ---

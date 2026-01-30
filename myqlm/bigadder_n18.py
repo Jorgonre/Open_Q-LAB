@@ -73,7 +73,7 @@ prog.measure(q_carry[0], c_carry[0])
 start_transpile = time.time()
 
 circuit = prog.to_circ()
-qpu = PyLinalg()
+qpu = get_default_qpu()
 qubits_medidos = list(range(10, 18)) + [0] 
 job = Job(circuit=circuit, nbshots=1024, qubits=qubits_medidos)
 result = qpu.submit(job)
