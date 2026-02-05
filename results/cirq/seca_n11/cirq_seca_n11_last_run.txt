@@ -1,7 +1,7 @@
-Benchmark cirq - seca_n11.py - Iteration 10
-Duración script python: 6.76s
+Benchmark cirq - seca_n11.py - Iteration 1
+Duración script python: 6.62s
 
-q0: 0.491 |0⟩  +  0.509 |1⟩
+q0: 0.507 |0⟩  +  0.493 |1⟩
 q1: 1.000 |0⟩  +  0.000 |1⟩
 q2: 1.000 |0⟩  +  0.000 |1⟩
 q3: 1.000 |0⟩  +  0.000 |1⟩
@@ -10,12 +10,12 @@ q5: 1.000 |0⟩  +  0.000 |1⟩
 q6: 1.000 |0⟩  +  0.000 |1⟩
 q7: 1.000 |0⟩  +  0.000 |1⟩
 q8: 1.000 |0⟩  +  0.000 |1⟩
-q9: 0.494 |0⟩  +  0.506 |1⟩
+q9: 0.507 |0⟩  +  0.493 |1⟩
 q10: 0.000 |0⟩  +  1.000 |1⟩
-|00000000011> 0.25390625
-|10000000011> 0.251953125
-|00000000001> 0.2373046875
-|10000000001> 0.2568359375
+|00000000011> 0.23828125
+|00000000001> 0.2685546875
+|10000000011> 0.2548828125
+|10000000001> 0.23828125
 
 Circuito traducido:
                            ┌──┐                                   ┌──┐       ┌────────┐   ┌────────┐   ┌────────┐   ┌──┐   ┌──┐           ┌──┐                           ┌──┐
@@ -46,10 +46,11 @@ Qubits:11
 Depth:38
 Gate_1q:26
 Gate_2q:36
-Total_gates:62
-Build_time:0.0095
-Transpile_execution_time:0.0849
-Total_time:0.0944
-CPU_usage:31.70
-RAM_usage_MB:200.15
+Gate_3q:8
+Total_gates:70
+Build_time:0.0056
+Transpile_execution_time:0.0462
+Total_time:0.0518
+CPU_usage:57.80
+RAM_usage_MB:199.35
 # --- END_METRICS ---

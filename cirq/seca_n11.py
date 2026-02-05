@@ -203,6 +203,7 @@ for estado, cantidad in counts.items():
 
 num_1q = -11 #No contamos las measurements gates
 num_2q = 0
+num_3q = 0
 
 for moment in circuit:
     for op in moment.operations:
@@ -212,8 +213,10 @@ for moment in circuit:
             num_1q += 1
         elif qubit_count == 2:
             num_2q += 1
+        elif qubit_count == 3:
+            num_3q += 1
 
-total_gates = num_1q + num_2q
+total_gates = num_1q + num_2q + num_3q
 
 # Número de qubits
 num_qubits = len(circuit.all_qubits())
@@ -230,6 +233,7 @@ print(f"Qubits:{num_qubits}")
 print(f"Depth:{depth}")
 print(f"Gate_1q:{num_1q}")
 print(f"Gate_2q:{num_2q}")
+print(f"Gate_3q:{num_3q}")
 print(f"Total_gates:{total_gates}")
 print(f"Build_time:{build_time:.4f}")
 print(f"Transpile_execution_time:{transpile_time:.4f}")

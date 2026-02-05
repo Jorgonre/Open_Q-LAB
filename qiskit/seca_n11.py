@@ -143,12 +143,12 @@ print(counts)
  
 plot_histogram(counts)
 
-# --- INICIO DEL NUEVO BLOQUE DE CONTEO ---
+# --- INICIO DEL BLOQUE DE CONTEO ---
 
 # Inicializamos contadores
 num_1q = 0
 num_2q = 0
-num_multi_q = 0
+num_3q = 0
 
 # Iteramos sobre cada instrucción del circuito 
 for instruction in circuit.data:
@@ -163,10 +163,10 @@ for instruction in circuit.data:
         num_1q += 1
     elif operation.num_qubits == 2:
         num_2q += 1
-    else:
-        num_multi_q += 1
+    elif operation.num_qubits == 3:
+        num_3q += 1
 
-total_gates = num_1q + num_2q + num_multi_q
+total_gates = num_1q + num_2q + num_3q
 num_qubits = circuit.num_qubits # Qubits lógicos originales
 depth = circuit.depth()      # Profundidad del circuito físico
 
@@ -176,6 +176,7 @@ print(f"Qubits:{num_qubits}")
 print(f"Depth:{depth}")
 print(f"Gate_1q:{num_1q}")
 print(f"Gate_2q:{num_2q}")
+print(f"Gate_3q:{num_3q}")
 print(f"Total_gates:{total_gates}")
 print(f"Build_time:{build_time:.4f}")
 print(f"Transpile_execution_time:{transpile_time:.4f}")

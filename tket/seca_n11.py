@@ -138,6 +138,7 @@ total_time = time.time() - start_time
 # --- Contar operaciones sin Counter ---
 num_1q = 0
 num_2q = 0
+num_3q = 0
 
 for cmd in circ.get_commands():
     optype = cmd.op.type
@@ -145,6 +146,8 @@ for cmd in circ.get_commands():
         num_1q += 1
     elif optype in [OpType.CX,OpType.CZ]:
         num_2q += 1
+    elif optype in [OpType.CCX]:
+        num_3q += 1
 
 # Número de qubits
 num_qubits = circ.n_qubits
@@ -159,6 +162,7 @@ print(f"Qubits:{num_qubits}")
 print(f"Depth:{depth}")
 print(f"Gate_1q:{num_1q}")
 print(f"Gate_2q:{num_2q}")
+print(f"Gate_3q:{num_3q}")
 print(f"Total_gates:{total_gates}")
 print(f"Build_time:{build_time:.4f}")
 print(f"Transpile_execution_time:{transpile_time:.4f}")

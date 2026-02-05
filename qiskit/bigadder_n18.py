@@ -93,16 +93,28 @@ print(counts)
  
 plot_histogram(counts)
 
-# Contar operaciones
-ops = circuit.count_ops()
+# Inicializamos contadores
+num_1q = 0
+num_2q = 0
+num_3q = 0
 
-# Clasificar puertas
-one_qubit_gates = ['x', 'h', 't', 'tdg', 's']
-two_qubit_gates = ['cx']
+# Iteramos sobre cada instrucción del circuito 
+for instruction in circuit.data:
+    operation = instruction.operation
+    
+    # Ignoramos lo que no sea puerta lógica
+    if operation.name in ['measure']:
+        continue
+    
+    # Clasificamos según el número de qubits que toca la puerta
+    if operation.num_qubits == 1:
+        num_1q += 1
+    elif operation.num_qubits == 2:
+        num_2q += 1
+    elif operation.num_qubits == 3:
+        num_3q += 1
 
-num_1q = sum(ops.get(gate, 0) for gate in one_qubit_gates)
-num_2q = sum(ops.get(gate, 0) for gate in two_qubit_gates)
-total_gates = num_1q + num_2q
+total_gates = num_1q + num_2q + num_3q
 num_qubits = circuit.num_qubits
 depth = circuit.depth()
 
@@ -112,6 +124,7 @@ print(f"Qubits:{num_qubits}")
 print(f"Depth:{depth}")
 print(f"Gate_1q:{num_1q}")
 print(f"Gate_2q:{num_2q}")
+print(f"Gate_3q:{num_3q}")
 print(f"Total_gates:{total_gates}")
 print(f"Build_time:{build_time:.4f}")
 print(f"Transpile_execution_time:{transpile_time:.4f}")

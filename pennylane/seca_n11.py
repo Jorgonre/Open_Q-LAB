@@ -172,10 +172,12 @@ ops = specs["resources"].gate_types
 # Clasificar puertas
 one_qubit_gates = ["PauliX", "Hadamard", "T", "S", "RX", "RY", "RZ", "U3", "PauliZ"]
 two_qubit_gates = ["CNOT", "CZ"]
+three_qubit_gates = ["Toffoli"]
 
 num_1q = sum(ops.get(g, 0) for g in one_qubit_gates)
 num_2q = sum(ops.get(g, 0) for g in two_qubit_gates)
-total_gates = num_1q + num_2q
+num_3q = sum(ops.get(g, 0) for g in three_qubit_gates)
+total_gates = num_1q + num_2q + num_3q
 
 print("\nCircuito (texto):")
 drawer = qml.draw(circuit)
@@ -186,6 +188,7 @@ print(f"Qubits:{num_qubits}")
 print(f"Depth:{depth}")
 print(f"Gate_1q:{num_1q}")
 print(f"Gate_2q:{num_2q}")
+print(f"Gate_3q:{num_3q}")
 print(f"Total_gates:{total_gates}")
 print(f"Build_time:{build_time:.4f}")
 print(f"Transpile_execution_time:{transpile_time:.4f}")

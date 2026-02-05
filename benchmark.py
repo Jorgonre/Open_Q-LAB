@@ -15,7 +15,7 @@ RESULTS_DIR = os.path.join(os.path.dirname(os.getcwd()), "results")
 def extract_metrics_from_txt(path_txt):
     """Extrae las métricas entre los delimitadores METRICS del archivo de salida."""
     metrics = {
-        "qubits": None, "depth": None, "gate_1q": None, "gate_2q": None,
+        "qubits": None, "depth": None, "gate_1q": None, "gate_2q": None, "gate_3q": 0,
         "total_gates": None, "build_time": None, "transpile_execution_time": None,
         "total_time": None, "cpu_usage": None, "ram_usage_mb": None
     }
@@ -43,6 +43,7 @@ def extract_metrics_from_txt(path_txt):
                     elif "Depth" in line: metrics["depth"] = int(val)
                     elif "Gate_1q" in line: metrics["gate_1q"] = int(val)
                     elif "Gate_2q" in line: metrics["gate_2q"] = int(val)
+                    elif "Gate_3q" in line: metrics["gate_3q"] = int(val)
                     elif "Total_gates" in line: metrics["total_gates"] = int(val)
                     elif "Build_time" in line: metrics["build_time"] = float(val)
                     elif "Transpile_execution_time" in line: metrics["transpile_execution_time"] = float(val)
@@ -130,7 +131,7 @@ def save_batch_to_csv(lista_metricas, framework_name, circuito_nombre):
         # Escribir Encabezado UNA SOLA VEZ
         writer.writerow([
             "FRAMEWORK", "DATE(Y-M-D)", "HOUR", "CIRCUIT", "ITERATION", "QUBITS",
-            "1-GATE", "2-GATES", "TOTAL-GATES",
+            "1-GATE", "2-GATES", "3-GATES", "TOTAL-GATES",
             "RAM(MB)", "CPU(%)",
             "BUILD-TIME(s)", transpile_col_name, "TOTAL-TIME(s)"
         ])
@@ -149,9 +150,10 @@ def save_batch_to_csv(lista_metricas, framework_name, circuito_nombre):
                 idx + 1,  # Número de iteración
                 metrics["qubits"],
                 metrics["gate_1q"], 
-                metrics["gate_2q"], 
+                metrics["gate_2q"],
+                metrics["gate_3q"],  
                 metrics["total_gates"],
-                metrics["ram_usage_mb"], # Ojo: Asegúrate que el orden coincida con el encabezado
+                metrics["ram_usage_mb"],
                 metrics["cpu_usage"],
                 metrics["build_time"], 
                 metrics["transpile_execution_time"], 
@@ -167,9 +169,9 @@ def main():
     # Obtener nombre del framework basado en la carpeta actual
     framework_name = os.path.basename(os.getcwd())
 
-    #circuitos = ["adder_n4.py","toffoli_n3.py","qft_n4.py", "bell_n4.py"] # Circuitos pequeños
-    circuitos = ["seca_n11.py", "bigadder_n18.py", "dnn_n16.py"] #Circuitos medianos
-    #circuitos = ["dnn_n16.py"] # Descomentar para pruebas rápidas
+    circuitos = ["adder_n4.py","toffoli_n3.py","qft_n4.py", "bell_n4.py"] # Circuitos pequeños
+    #circuitos = ["seca_n11.py", "bigadder_n18.py", "dnn_n16.py"] #Circuitos medianos
+    #circuitos = ["bigadder_n18.py"] # Descomentar para pruebas rápidas
 
     for circuito in circuitos:
         print(f"\nProcesando circuito: {circuito}")

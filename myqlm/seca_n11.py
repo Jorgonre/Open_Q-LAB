@@ -172,9 +172,10 @@ for op in seca.ops:
 depth = depth + 1  # capas empiezan en 0
 
 gate_counts = seca.ops
-num_1q = sum(1 for g in gate_counts if len(g.qbits) == 1) - 11  #Resta por measure gates
+num_1q = sum(1 for g in gate_counts if len(g.qbits) == 1) - 77 #Resta barriers
 num_2q = sum(1 for g in gate_counts if len(g.qbits) == 2)
-total_gates = num_1q + num_2q
+num_3q = sum(1 for g in gate_counts if len(g.qbits) == 3)
+total_gates = num_1q + num_2q + num_3q
 
 for sample in result:
     print(sample.state, sample.probability)
@@ -186,6 +187,7 @@ print(f"Qubits:{num_qubits}")
 print(f"Depth:{depth}")
 print(f"Gate_1q:{num_1q}")
 print(f"Gate_2q:{num_2q}")
+print(f"Gate_3q:{num_3q}")
 print(f"Total_gates:{total_gates}")
 print(f"Build_time:{build_time:.4f}")
 print(f"Transpile_execution_time:{transpile_time:.4f}")
