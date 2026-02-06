@@ -15,7 +15,7 @@ start_time = time.time()
 start_build = time.time()
 
 prog = Program()
-qbits = prog.qalloc(11)
+qbits = prog.qalloc(16)
 
 @qrout
 def dnn():
