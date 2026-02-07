@@ -46,8 +46,6 @@ qreg_q0 = cirq.NamedQubit.range(9, prefix='q0')
 
 qreg_q1 = cirq.NamedQubit.range(8, prefix='q1')
 
-creg_c0 = cirq.NamedQubit.range(1, prefix='c0') 
-
 circuit = cirq.Circuit()
 
 circuit.append(cirq.H(qreg_q0[0]))

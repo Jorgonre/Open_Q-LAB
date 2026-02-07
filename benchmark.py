@@ -6,7 +6,7 @@ import psutil
 
 # --- CONFIGURACIÓN ---
 FRAMEWORKS = ["qiskit", "cirq", "pennylane", "myqlm", "tket"]
-NUM_ITERATIONS = 1
+NUM_ITERATIONS = 10
 # ---------------------
 
 # Carpeta principal de resultados

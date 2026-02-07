@@ -369,7 +369,7 @@ if __name__ == "__main__":
     ]
 
     LISTA_MEDIUM = [
-        "seca_n11", "dnn_n16", "bigadder_n18"
+        "seca_n11", "dnn_n16", "qec9xz_n17" , "bigadder_n18"
     ]
 
     # Diccionario para iterar automáticamente, comentar si solo se quiere 1
