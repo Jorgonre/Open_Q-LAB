@@ -1,0 +1,17 @@
+Benchmark qiskit - bigadder_n28.py - Iteration 1
+Duración script python: 109.68s
+
+{'1111000000000000111111111110 0000000000000000000000000000': 1024}
+# --- METRICS ---
+Qubits:28
+Depth:42
+Gate_1q:13
+Gate_2q:51
+Gate_3q:24
+Total_gates:88
+Build_time:0.0016
+Transpile_execution_time:106.1981
+Total_time:106.1996
+CPU_usage:187.20
+RAM_usage_MB:128.06
+# --- END_METRICS ---
