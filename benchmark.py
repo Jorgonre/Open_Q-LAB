@@ -6,7 +6,7 @@ import psutil
 
 # --- CONFIGURACIÓN ---
 FRAMEWORKS = ["qiskit", "cirq", "pennylane", "myqlm", "tket"]
-NUM_ITERATIONS = 10
+NUM_ITERATIONS = 1
 # ---------------------
 
 # Carpeta principal de resultados
@@ -170,8 +170,9 @@ def main():
     framework_name = os.path.basename(os.getcwd())
 
     #circuitos = ["adder_n4.py","toffoli_n3.py","qft_n4.py", "bell_n4.py"] # Circuitos pequeños
-    #circuitos = ["seca_n11.py", "bigadder_n18.py", "dnn_n16.py"] #Circuitos medianos
-    circuitos = ["qec9xz_n17.py"] # Descomentar para pruebas rápidas
+    #circuitos = ["seca_n11.py", "bigadder_n18.py", "dnn_n16.py", "qec9xz_n17.py"] #Circuitos medianos
+    #circuitos = ["vqe_uccsd_n28.py"] # Circuitos grandes
+    circuitos = ["vqe_uccsd_n28.py"] # Descomentar para pruebas rápidas
 
     for circuito in circuitos:
         print(f"\nProcesando circuito: {circuito}")
