@@ -12,6 +12,7 @@ OUTPUT_IMAGE_CPU = "grafica_CPU.png"
 OUTPUT_IMAGE_BOXPLOT_TIME = "grafica_boxplot_tiempo.png"
 OUTPUT_IMAGE_BOXPLOT_RAM = "grafica_boxplot_RAM.png"
 OUTPUT_IMAGE_BOXPLOT_CPU = "grafica_boxplot_CPU.png"
+OUTPUT_IMAGE_GATES = "grafica_gates.png"
 
 def get_latest_data_time(root_dir):
     """carga de datos de total time"""
@@ -79,6 +80,33 @@ def get_latest_data_CPU(root_dir):
                     all_data.append(df)
             except Exception: pass
 
+    if not all_data: return pd.DataFrame()
+    return pd.concat(all_data, ignore_index=True)
+
+def get_latest_data_gates(root_dir):
+    """carga de datos de conteo de puertas"""
+    all_data = []
+    if not os.path.exists(root_dir): return pd.DataFrame()
+
+    for root, dirs, files in os.walk(root_dir):
+        csv_files = [f for f in files if f.endswith(".csv")]
+        if csv_files:
+            full_paths = [os.path.join(root, f) for f in csv_files]
+            latest_file = max(full_paths, key=os.path.getmtime)
+            try:
+                df = pd.read_csv(latest_file)
+                
+                # Buscamos columnas de puertas. Adapta estos nombres si en tu CSV son distintos.
+                cols_to_check = ["1-GATE", "2-GATES", "3-GATES"]
+                
+                # Verificar si al menos una columna de interés existe
+                if any(col in df.columns for col in cols_to_check):
+                    # Rellenar con 0 las que falten para evitar errores
+                    for col in cols_to_check:
+                        if col not in df.columns:
+                            df[col] = 0
+                    all_data.append(df)
+            except Exception: pass
     if not all_data: return pd.DataFrame()
     return pd.concat(all_data, ignore_index=True)
 
@@ -346,11 +374,94 @@ def plot_boxplot_CPU(df):
     plt.savefig(OUTPUT_IMAGE_BOXPLOT_CPU, dpi=300)
     print(f"\nGráfica de boxplot de CPU guardada en: {os.path.abspath(OUTPUT_IMAGE_BOXPLOT_CPU)}")
 
+def plot_gate_composition(df):
+    """
+    Genera un histograma apilado (Stacked Bar Chart) optimizado:
+    - Escala LOGARÍTMICA ajustada para que se vean valores bajos.
+    """
+    if df.empty:
+        print("No hay datos para graficar la composición de puertas.")
+        return
+
+    sns.set_theme(style="whitegrid")
+    
+    # Nombres de columnas en tu CSV
+    cols = ["1-GATE", "2-GATES", "3-GATES"]
+    
+    # Asegurarnos de que existen en el DF filtrado
+    for col in cols:
+        if col not in df.columns:
+            df[col] = 0
+
+    df_grouped = df.groupby(["CIRCUIT", "FRAMEWORK"])[cols].mean().reset_index()
+    # Ordenamos para que los frameworks del mismo circuito estén juntos
+    df_grouped = df_grouped.sort_values(by=["CIRCUIT", "FRAMEWORK"])
+
+    # Necesitamos un índice numérico para manipular la posición de los textos
+    x_pos = np.arange(len(df_grouped))
+    data_plot = df_grouped[cols]
+    
+    # Crear la figura (menos altura que antes para reducir espacios vacíos)
+    fig, ax = plt.subplots(figsize=(12, 7)) 
+    
+    data_plot.plot(kind='bar', stacked=True, ax=ax, width=0.8, 
+                   edgecolor="black", linewidth=0.8, alpha=0.95, 
+                   colormap="Paired", log=True)
+
+    ax.set_ylim(bottom=1)
+    
+    # Etiquetas de Frameworks (pegadas a la barra)
+    ax.set_xticks(x_pos)
+    ax.set_xticklabels(df_grouped["FRAMEWORK"], rotation=0, ha='center', fontsize=9)
+    # Si los nombres son muy largos y se solapan, cambia rotation=0 por rotation=45 y ha='right'
+
+    # Etiquetas de Circuitos (Agrupadas debajo)
+    unique_circuits = df_grouped["CIRCUIT"].unique()
+    
+    start = 0
+    for circuit in unique_circuits:
+        count = len(df_grouped[df_grouped["CIRCUIT"] == circuit])
+        end = start + count
+        center = (start + (end - 1)) / 2
+        
+        ax.text(center, -0.12, circuit, ha='center', va='top', 
+                transform=ax.get_xaxis_transform(), 
+                fontsize=11, fontweight='bold', color='#222222')
+        
+        # Línea separadora vertical sutil
+        if end < len(df_grouped):
+            ax.axvline(x=end - 0.5, color='gray', linestyle=':', alpha=0.6)
+            
+        start = end
+
+    # Títulos y Ejes
+    plt.title("Composición de Puertas Cuánticas (Escala Logarítmica)", fontsize=16, fontweight='bold', pad=15)
+    plt.ylabel("Número de Puertas (Log)", fontsize=12)
+    plt.xlabel("") # Sin etiqueta X genérica
+    
+    # Leyenda
+    handles, labels = ax.get_legend_handles_labels()
+    ax.legend(handles, ["1 Qubit", "2 Qubits", "3 Qubits"], 
+              title="Tipo de Puerta", title_fontsize='10', fontsize='9', loc='upper left')
+
+    # Añadir valores numéricos dentro de las barras
+    for c in ax.containers:
+        labels = [int(v) if v > 0 else "" for v in c.datavalues]
+        ax.bar_label(c, labels=labels, label_type='center', fontsize=8, color='white', weight='bold')
+
+    # Ajuste de márgenes inferior
+    plt.subplots_adjust(bottom=0.15)
+    
+    plt.tight_layout()
+    plt.savefig(OUTPUT_IMAGE_GATES, dpi=300)
+    print(f"\nGráfica de composición de puertas guardada en: {os.path.abspath(OUTPUT_IMAGE_GATES)}")
+
 if __name__ == "__main__":
     print("--- 1. CARGANDO DATOS COMPLETOS ---")
     df_full_time = get_latest_data_time(RESULTS_DIR)
     df_full_ram = get_latest_data_RAM(RESULTS_DIR)
     df_full_cpu = get_latest_data_CPU(RESULTS_DIR)
+    df_full_gates = get_latest_data_gates(RESULTS_DIR)
 
     if df_full_time.empty:
         print("Error: No se han encontrado datos.")
@@ -374,7 +485,7 @@ if __name__ == "__main__":
 
     # Diccionario para iterar automáticamente, comentar si solo se quiere 1
     configuraciones = {
-        #"SMALL": LISTA_SMALL,
+        "SMALL": LISTA_SMALL,
         "MEDIUM": LISTA_MEDIUM
     }
 
@@ -389,6 +500,10 @@ if __name__ == "__main__":
         df_time_filtro = df_full_time[df_full_time["CIRCUIT"].isin(lista_nombres)]
         df_ram_filtro = df_full_ram[df_full_ram["CIRCUIT"].isin(lista_nombres)]
         df_cpu_filtro = df_full_cpu[df_full_cpu["CIRCUIT"].isin(lista_nombres)]
+        df_gates_filtro = pd.DataFrame()
+        
+        if not df_full_gates.empty:
+            df_gates_filtro = df_full_gates[df_full_gates["CIRCUIT"].isin(lista_nombres)]
 
         if df_time_filtro.empty:
             print(f"No hay datos para la lista {categoria}. Revisa los nombres.")
@@ -398,6 +513,7 @@ if __name__ == "__main__":
         OUTPUT_IMAGE_TIME = f"grafica_tiempo_{categoria}.png"
         OUTPUT_IMAGE_RAM = f"grafica_RAM_{categoria}.png"
         OUTPUT_IMAGE_CPU = f"grafica_CPU_{categoria}.png"
+        OUTPUT_IMAGE_GATES = f"grafica_gates_{categoria}.png"
         OUTPUT_IMAGE_BOXPLOT_TIME = f"grafica_boxplot_tiempo_{categoria}.png"
         OUTPUT_IMAGE_BOXPLOT_RAM = f"grafica_boxplot_RAM_{categoria}.png"
         OUTPUT_IMAGE_BOXPLOT_CPU = f"grafica_boxplot_CPU_{categoria}.png"
@@ -411,3 +527,6 @@ if __name__ == "__main__":
         plot_boxplot_time(df_time_filtro)
         plot_boxplot_RAM(df_ram_filtro)
         plot_boxplot_CPU(df_cpu_filtro)
+
+        # Graficamos (Gates)
+        plot_gate_composition(df_gates_filtro)
