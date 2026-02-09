@@ -172,7 +172,7 @@ def main():
     #circuitos = ["adder_n4.py","toffoli_n3.py","qft_n4.py", "bell_n4.py"] # Circuitos pequeños
     #circuitos = ["seca_n11.py", "bigadder_n18.py", "dnn_n16.py", "qec9xz_n17.py"] #Circuitos medianos
     #circuitos = ["vqe_uccsd_n28.py", "bigadder_n28.py"] # Circuitos grandes
-    circuitos = ["bv_n30.py"] # Descomentar para pruebas rápidas
+    circuitos = ["vqe_uccsd_n28.py"] # Descomentar para pruebas rápidas
 
     for circuito in circuitos:
         print(f"\nProcesando circuito: {circuito}")
