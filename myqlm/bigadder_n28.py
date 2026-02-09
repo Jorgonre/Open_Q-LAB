@@ -1,4 +1,4 @@
-from qat.lang.AQASM import Program, H, CNOT, X, T, S
+from qat.lang.AQASM import Program, H, CNOT, X, T, S, CCNOT
 from qat.qpus import PyLinalg
 from qat.core import Job
 import psutil
