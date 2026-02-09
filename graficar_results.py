@@ -447,10 +447,10 @@ def plot_gate_composition(df):
     # Añadir valores numéricos dentro de las barras
     for c in ax.containers:
         labels = [int(v) if v > 0 else "" for v in c.datavalues]
-        ax.bar_label(c, labels=labels, label_type='center', fontsize=8, color='white', weight='bold')
+        ax.bar_label(c, labels=labels, label_type='center', fontsize=5, color='white', weight='bold')
 
     # Ajuste de márgenes inferior
-    plt.subplots_adjust(bottom=0.15)
+    plt.subplots_adjust(bottom=0.1)
     
     plt.tight_layout()
     plt.savefig(OUTPUT_IMAGE_GATES, dpi=300)
