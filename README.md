@@ -38,4 +38,4 @@ Location: results/framework_name/circuit
 ### 4. Visualization
 To generate the comparative plots (Bar charts, Boxplots, and Stacked Gate Counts) from the CSV data, run the visualization script:
 
-python graficar_results.py
+      python graficar_results.py
