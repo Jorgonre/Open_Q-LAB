@@ -28,7 +28,7 @@ First, you must build the common image that contains all the dependencies. This 
 Once the base image is ready, use Docker Compose to launch the benchmarks. This will spin up containers for Qiskit, Cirq, PennyLane, MyQLM, and Tket, executing the benchmark.py script inside each one.
 
       docker-compose up
-      (You can use docker-compose up --build if you need to recreate the service containers).
+(You can use docker-compose up --build if you need to recreate the service containers).
 
 ### 3. View Results
 The containers will print the execution logs to the console. Upon completion, the detailed metrics (Time, RAM, CPU) are saved automatically to a CSV file:
@@ -39,3 +39,4 @@ Location: results/framework_name/circuit
 To generate the comparative plots (Bar charts, Boxplots, and Stacked Gate Counts) from the CSV data, run the visualization script:
 
       python graficar_results.py
+(Requires matplotlib, seaborn, and pandas installed locally if running outside Docker).
