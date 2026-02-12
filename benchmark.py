@@ -177,7 +177,7 @@ def main():
     for circuito in circuitos:
         print(f"\nProcesando circuito: {circuito}")
         
-        batch_metrics = [] # Lista para acumular las métricas de las 10 iteraciones
+        batch_metrics = [] # Lista para acumular las métricas de las iteraciones
 
         for i in range(NUM_ITERATIONS):
             # 1. Ejecutar y generar el txt temporal
@@ -195,7 +195,7 @@ def main():
             else:
                 print(f"   [!] Error en la ejecución de la iteración {i+1}")
 
-        # 3. Al terminar las 10 iteraciones, guardar todo en un único CSV
+        # 3. Al terminar las iteraciones, guardar todo en un único CSV
         if batch_metrics:
             save_batch_to_csv(batch_metrics, framework_name, circuito)
 

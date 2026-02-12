@@ -96,7 +96,7 @@ def get_latest_data_gates(root_dir):
             try:
                 df = pd.read_csv(latest_file)
                 
-                # Buscamos columnas de puertas. Adapta estos nombres si en tu CSV son distintos.
+                # Buscamos columnas de puertas.
                 cols_to_check = ["1-GATE", "2-GATES", "3-GATES"]
                 
                 # Verificar si al menos una columna de interés existe
@@ -254,7 +254,6 @@ def plot_boxplot_time(df):
     fig, ax = plt.subplots(figsize=(14, 8))
 
     # --- CREAR DIAGRAMA DE CAJA Y BIGOTES ---
-    # Esto mostrará automáticamente la mediana, cuartiles y valores atípicos (outliers).
     chart = sns.boxplot(
         data=df,
         x="CIRCUIT",       # Eje X: Circuitos
@@ -298,7 +297,6 @@ def plot_boxplot_RAM(df):
     fig, ax = plt.subplots(figsize=(14, 8))
 
     # --- CREAR DIAGRAMA DE CAJA Y BIGOTES ---
-    # Esto mostrará automáticamente la mediana, cuartiles y valores atípicos (outliers).
     chart = sns.boxplot(
         data=df,
         x="CIRCUIT",       # Eje X: Circuitos
@@ -311,7 +309,6 @@ def plot_boxplot_RAM(df):
     )
 
     # --- ESCALA LOGARÍTMICA ---
-    # Mantenemos la escala logarítmica para visualizar mejor las diferencias
     chart.set_yscale("log")
 
     # Títulos y Etiquetas
@@ -342,7 +339,6 @@ def plot_boxplot_CPU(df):
     fig, ax = plt.subplots(figsize=(14, 8))
 
     # --- CREAR DIAGRAMA DE CAJA Y BIGOTES ---
-    # Esto mostrará automáticamente la mediana, cuartiles y valores atípicos (outliers).
     chart = sns.boxplot(
         data=df,
         x="CIRCUIT",       # Eje X: Circuitos
@@ -401,7 +397,7 @@ def plot_gate_composition(df):
     x_pos = np.arange(len(df_grouped))
     data_plot = df_grouped[cols]
     
-    # Crear la figura (menos altura que antes para reducir espacios vacíos)
+    # Crear la figura
     fig, ax = plt.subplots(figsize=(12, 7)) 
     
     data_plot.plot(kind='bar', stacked=True, ax=ax, width=0.8, 
@@ -410,10 +406,10 @@ def plot_gate_composition(df):
 
     ax.set_ylim(bottom=1)
     
-    # Etiquetas de Frameworks (pegadas a la barra)
+    # Etiquetas de Frameworks
     ax.set_xticks(x_pos)
     ax.set_xticklabels(df_grouped["FRAMEWORK"], rotation=0, ha='center', fontsize=9)
-    # Si los nombres son muy largos y se solapan, cambia rotation=0 por rotation=45 y ha='right'
+    # Si nombres muy largos y se solapan, cambiar rotation y ha='right'
 
     # Etiquetas de Circuitos (Agrupadas debajo)
     unique_circuits = df_grouped["CIRCUIT"].unique()
@@ -467,12 +463,10 @@ if __name__ == "__main__":
         print("Error: No se han encontrado datos.")
         exit()
 
-    # Muestra qué circuitos hay disponibles para que puedas copiar y pegar
     circuitos_disponibles = df_full_time["CIRCUIT"].unique()
     print(f"\nCircuitos encontrados en los CSVs:\n{circuitos_disponibles}\n")
 
     # --- 2. CONFIGURACIÓN DE LISTAS ---
-    # Rellena estas listas con los nombres exactos que te han salido arriba
     
     LISTA_SMALL = [
         
