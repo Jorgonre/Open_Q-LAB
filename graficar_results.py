@@ -398,7 +398,7 @@ def plot_gate_composition(df):
     data_plot = df_grouped[cols]
     
     # Crear la figura
-    fig, ax = plt.subplots(figsize=(12, 7)) 
+    fig, ax = plt.subplots(figsize=(20, 7)) 
     
     data_plot.plot(kind='bar', stacked=True, ax=ax, width=0.8, 
                    edgecolor="black", linewidth=0.8, alpha=0.95, 
@@ -408,7 +408,7 @@ def plot_gate_composition(df):
     
     # Etiquetas de Frameworks
     ax.set_xticks(x_pos)
-    ax.set_xticklabels(df_grouped["FRAMEWORK"], rotation=0, ha='center', fontsize=9)
+    ax.set_xticklabels(df_grouped["FRAMEWORK"], rotation=45, ha='center', fontsize=9)
     # Si nombres muy largos y se solapan, cambiar rotation y ha='right'
 
     # Etiquetas de Circuitos (Agrupadas debajo)
@@ -420,7 +420,7 @@ def plot_gate_composition(df):
         end = start + count
         center = (start + (end - 1)) / 2
         
-        ax.text(center, -0.12, circuit, ha='center', va='top', 
+        ax.text(center, -0.18, circuit, ha='center', va='top', 
                 transform=ax.get_xaxis_transform(), 
                 fontsize=11, fontweight='bold', color='#222222')
         
@@ -466,10 +466,14 @@ if __name__ == "__main__":
     circuitos_disponibles = df_full_time["CIRCUIT"].unique()
     print(f"\nCircuitos encontrados en los CSVs:\n{circuitos_disponibles}\n")
 
-    # --- 2. CONFIGURACIÓN DE LISTAS ---
+    if not df_full_gates.empty:
+        print("\n--- GENERANDO GRÁFICA DE PUERTAS (TODOS LOS CIRCUITOS) ---")
+        OUTPUT_IMAGE_GATES = "grafica_gates_todas.png" # Nombre del archivo global
+        plot_gate_composition(df_full_gates) # Le pasamos TODOS los datos sin filtrar
+
+    # --- 2. CONFIGURACIÓN DE LISTAS PARA LAS DEMÁS GRÁFICAS ---
     
     LISTA_SMALL = [
-        
         "toffoli_n3", "adder_n4", "bell_n4", "qft_n4"
     ]
 
@@ -484,7 +488,7 @@ if __name__ == "__main__":
     }
 
     for categoria, lista_nombres in configuraciones.items():
-        print(f"\n--- PROCESANDO CATEGORÍA: {categoria} ---")
+        print(f"\n--- PROCESANDO CATEGORÍA: {categoria} (Tiempo, RAM, CPU) ---")
         
         if not lista_nombres:
             print(f"Saltando {categoria} (Lista vacía).")
@@ -494,10 +498,6 @@ if __name__ == "__main__":
         df_time_filtro = df_full_time[df_full_time["CIRCUIT"].isin(lista_nombres)]
         df_ram_filtro = df_full_ram[df_full_ram["CIRCUIT"].isin(lista_nombres)]
         df_cpu_filtro = df_full_cpu[df_full_cpu["CIRCUIT"].isin(lista_nombres)]
-        df_gates_filtro = pd.DataFrame()
-        
-        if not df_full_gates.empty:
-            df_gates_filtro = df_full_gates[df_full_gates["CIRCUIT"].isin(lista_nombres)]
 
         if df_time_filtro.empty:
             print(f"No hay datos para la lista {categoria}. Revisa los nombres.")
@@ -507,7 +507,6 @@ if __name__ == "__main__":
         OUTPUT_IMAGE_TIME = f"grafica_tiempo_{categoria}.png"
         OUTPUT_IMAGE_RAM = f"grafica_RAM_{categoria}.png"
         OUTPUT_IMAGE_CPU = f"grafica_CPU_{categoria}.png"
-        OUTPUT_IMAGE_GATES = f"grafica_gates_{categoria}.png"
         OUTPUT_IMAGE_BOXPLOT_TIME = f"grafica_boxplot_tiempo_{categoria}.png"
         OUTPUT_IMAGE_BOXPLOT_RAM = f"grafica_boxplot_RAM_{categoria}.png"
         OUTPUT_IMAGE_BOXPLOT_CPU = f"grafica_boxplot_CPU_{categoria}.png"
@@ -521,6 +520,3 @@ if __name__ == "__main__":
         plot_boxplot_time(df_time_filtro)
         plot_boxplot_RAM(df_ram_filtro)
         plot_boxplot_CPU(df_cpu_filtro)
-
-        # Graficamos (Gates)
-        plot_gate_composition(df_gates_filtro)
