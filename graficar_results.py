@@ -269,6 +269,11 @@ def plot_boxplot_time(df):
     # Mantenemos la escala logarítmica para visualizar mejor las diferencias
     chart.set_yscale("log")
 
+    # --- LÍNEAS DISCONTINUAS SEPARADORAS ---
+    num_circuitos = len(df["CIRCUIT"].unique())
+    for i in range(num_circuitos - 1):
+        ax.axvline(x=i + 0.5, color='gray', linestyle='--', alpha=0.5)
+
     # Títulos y Etiquetas
     plt.title("Distribución del Tiempo de Ejecución (Escala Logarítmica)", fontsize=18, fontweight='bold', pad=20)
     plt.xlabel("Circuito", fontsize=14)
@@ -290,40 +295,69 @@ def plot_boxplot_RAM(df):
     Genera un diagrama de caja y bigotes para la distribución de RAM.
     """
     if df.empty:
-        print("No hay datos para graficar el boxplot de tiempo.")
+        print("No hay datos para graficar el boxplot de RAM.")
         return
 
     sns.set_theme(style="whitegrid")
     fig, ax = plt.subplots(figsize=(14, 8))
 
+    # --- ORDENAR Y CREAR EJE X COMBINADO ---
+    df_sorted = df.sort_values(by=["CIRCUIT", "FRAMEWORK"])
+    
+    df_sorted["COMBINED"] = df_sorted["CIRCUIT"] + "|" + df_sorted["FRAMEWORK"]
+
     # --- CREAR DIAGRAMA DE CAJA Y BIGOTES ---
     chart = sns.boxplot(
-        data=df,
-        x="CIRCUIT",       # Eje X: Circuitos
-        y="RAM_MEAN",     # Eje Y: Distribución del tiempo de las 10 iteraciones
-        hue="FRAMEWORK",   # Agrupación por color para cada framework
-        palette="Paired",  # Misma paleta de colores
-        linewidth=1.5,     # Grosor de las líneas de la caja y bigotes
-        fliersize=4,       # Tamaño de los puntos para los outliers
+        data=df_sorted,
+        x="COMBINED",
+        y="RAM_MEAN",
+        hue="FRAMEWORK",
+        palette="Paired",
+        dodge=False,
+        linewidth=1.5,
+        fliersize=4,
         ax=ax
     )
 
     # --- ESCALA LOGARÍTMICA ---
     chart.set_yscale("log")
 
-    # Títulos y Etiquetas
+    # --- ETIQUETAS DE FRAMEWORKS (Eje X) ---
+    unique_combined = df_sorted["COMBINED"].unique()
+    # Separamos por el símbolo "|" y cogemos la parte derecha (el framework)
+    labels = [val.split("|")[1] for val in unique_combined]
+    ax.set_xticks(range(len(labels)))
+    ax.set_xticklabels(labels, rotation=45, ha='center', fontsize=10)
+
+    # --- ETIQUETAS DE CIRCUITOS Y LÍNEAS SEPARADORAS ---
+    unique_circuits = df_sorted["CIRCUIT"].unique()
+    start = 0
+    for circuit in unique_circuits:
+        count = len(df_sorted[df_sorted["CIRCUIT"] == circuit]["COMBINED"].unique())
+        end = start + count
+        center = (start + (end - 1)) / 2
+        
+        ax.text(center, -0.15, circuit, ha='center', va='top', 
+                transform=ax.get_xaxis_transform(), 
+                fontsize=12, fontweight='bold', color='#222222')
+        
+        if end < len(unique_combined):
+            ax.axvline(x=end - 0.5, color='gray', linestyle='--', alpha=0.5)
+            
+        start = end
+
+    # Títulos y Ejes
     plt.title("Distribución de RAM de Ejecución (Escala Logarítmica)", fontsize=18, fontweight='bold', pad=20)
-    plt.xlabel("Circuito", fontsize=14)
+    plt.xlabel("")
     plt.ylabel("RAM (MB) - Log", fontsize=14)
     
     # Leyenda
     plt.legend(title="Framework", title_fontsize='12', fontsize='11', loc='upper left', bbox_to_anchor=(1, 1))
 
     # Ajuste de márgenes
-    plt.margins(y=0.1)
+    plt.subplots_adjust(bottom=0.20)
     
     plt.tight_layout()
-    # Guardar la imagen con el nuevo nombre
     plt.savefig(OUTPUT_IMAGE_BOXPLOT_RAM, dpi=300)
     print(f"\nGráfica de boxplot de RAM guardada en: {os.path.abspath(OUTPUT_IMAGE_BOXPLOT_RAM)}")
 
@@ -353,6 +387,11 @@ def plot_boxplot_CPU(df):
     # --- ESCALA LOGARÍTMICA ---
     # Mantenemos la escala logarítmica para visualizar mejor las diferencias
     chart.set_yscale("log")
+
+    # --- LÍNEAS DISCONTINUAS SEPARADORAS ---
+    num_circuitos = len(df["CIRCUIT"].unique())
+    for i in range(num_circuitos - 1):
+        ax.axvline(x=i + 0.5, color='gray', linestyle='--', alpha=0.5)
 
     # Títulos y Etiquetas
     plt.title("Distribución de CPU de Ejecución (Escala Logarítmica)", fontsize=18, fontweight='bold', pad=20)
