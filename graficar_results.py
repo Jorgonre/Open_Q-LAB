@@ -503,10 +503,15 @@ if __name__ == "__main__":
         "seca_n11", "dnn_n16", "qec9xz_n17" , "bigadder_n18"
     ]
 
+    LISTA_BIG = [
+        "bigadder_n28"
+    ]
+
     # Diccionario para iterar automáticamente, comentar si solo se quiere 1
     configuraciones = {
         "SMALL": LISTA_SMALL,
-        "MEDIUM": LISTA_MEDIUM
+        "MEDIUM": LISTA_MEDIUM,
+        "BIG": LISTA_BIG
     }
 
     for categoria, lista_nombres in configuraciones.items():
