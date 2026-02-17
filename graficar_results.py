@@ -389,7 +389,21 @@ def plot_gate_composition(df):
         if col not in df.columns:
             df[col] = 0
 
+    # 1. Agrupar datos reales
     df_grouped = df.groupby(["CIRCUIT", "FRAMEWORK"])[cols].mean().reset_index()
+    
+    # Obtenemos todos los circuitos únicos y todos los frameworks únicos
+    todos_circuitos = df_grouped["CIRCUIT"].unique()
+    todos_frameworks = ["qiskit", "cirq", "pennylane", "myqlm", "tket"] 
+
+    # Creamos un DataFrame con todas las combinaciones posibles
+    idx = pd.MultiIndex.from_product([todos_circuitos, todos_frameworks], names=["CIRCUIT", "FRAMEWORK"])
+    df_completo = pd.DataFrame(index=idx).reset_index()
+
+    # Hacemos un "merge" (unión) con los datos reales. 
+    # Lo que no existía se rellenará con NaN, y luego lo cambiamos a 0.
+    df_grouped = pd.merge(df_completo, df_grouped, on=["CIRCUIT", "FRAMEWORK"], how="left").fillna(0)
+
     # Ordenamos para que los frameworks del mismo circuito estén juntos
     df_grouped = df_grouped.sort_values(by=["CIRCUIT", "FRAMEWORK"])
 
@@ -397,7 +411,7 @@ def plot_gate_composition(df):
     x_pos = np.arange(len(df_grouped))
     data_plot = df_grouped[cols]
     
-    # Crear la figura
+    # Crear la figura (20 de ancho para que quepan todos con los frameworks vacíos)
     fig, ax = plt.subplots(figsize=(20, 7)) 
     
     data_plot.plot(kind='bar', stacked=True, ax=ax, width=0.8, 
@@ -409,13 +423,10 @@ def plot_gate_composition(df):
     # Etiquetas de Frameworks
     ax.set_xticks(x_pos)
     ax.set_xticklabels(df_grouped["FRAMEWORK"], rotation=45, ha='center', fontsize=9)
-    # Si nombres muy largos y se solapan, cambiar rotation y ha='right'
 
     # Etiquetas de Circuitos (Agrupadas debajo)
-    unique_circuits = df_grouped["CIRCUIT"].unique()
-    
     start = 0
-    for circuit in unique_circuits:
+    for circuit in todos_circuitos:
         count = len(df_grouped[df_grouped["CIRCUIT"] == circuit])
         end = start + count
         center = (start + (end - 1)) / 2
@@ -426,7 +437,7 @@ def plot_gate_composition(df):
         
         # Línea separadora vertical sutil
         if end < len(df_grouped):
-            ax.axvline(x=end - 0.5, color='gray', linestyle=':', alpha=0.6)
+            ax.axvline(x=end - 0.5, color='gray', alpha=0.6)
             
         start = end
 
@@ -443,10 +454,21 @@ def plot_gate_composition(df):
     # Añadir valores numéricos dentro de las barras
     for c in ax.containers:
         labels = [int(v) if v > 0 else "" for v in c.datavalues]
-        ax.bar_label(c, labels=labels, label_type='center', fontsize=5, color='white', weight='bold')
+        
+        texts = ax.bar_label(c, labels=labels, label_type='center', fontsize=7, color='black', weight='bold')
+        
+        for text in texts:
+            val_str = text.get_text()
+            if val_str: # Si hay número
+                valor = int(val_str)
+                
+                if valor == 384:
+                    text.set_rotation(0) # En horizontal
+                else:
+                    text.set_rotation(90) # Todos los demás en vertical
 
     # Ajuste de márgenes inferior
-    plt.subplots_adjust(bottom=0.1)
+    plt.subplots_adjust(bottom=0.15) # He subido esto a 0.15 para asegurar que no se corta el texto
     
     plt.tight_layout()
     plt.savefig(OUTPUT_IMAGE_GATES, dpi=300)
