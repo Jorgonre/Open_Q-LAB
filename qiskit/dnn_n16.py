@@ -2188,7 +2188,8 @@ build_time = time.time() - start_build
 start_transpile = time.time()
 
 sim = AerSimulator()
-transpiled = transpile(circuit, backend=sim)
+#transpiled = transpile(circuit, backend=sim)
+transpiled = transpile(circuit, backend=sim, optimization_level = 0)
 
 job = sim.run(transpiled, shots=1024)  
 result = job.result()

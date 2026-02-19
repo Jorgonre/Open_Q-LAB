@@ -110,8 +110,6 @@ start_transpile = time.time()
 context = cirq.TransformerContext(logger=cirq.TransformerLogger())
 #optimized_circuit = optimize_circuit(circuit, context)
 
-# El tiempo de transpilación es el tiempo que toma esta optimización
-
 # Resultados
 sim = cirq.Simulator()
 result = sim.run(circuit, repetitions=1024)
