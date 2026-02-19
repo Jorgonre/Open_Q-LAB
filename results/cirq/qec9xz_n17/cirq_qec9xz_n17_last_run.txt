@@ -1,5 +1,5 @@
 Benchmark cirq - qec9xz_n17.py - Iteration 10
-Duración script python: 5.14s
+Duración script python: 5.48s
 
 q0: 1.000 |0⟩  +  0.000 |1⟩
 q1: 1.000 |0⟩  +  0.000 |1⟩
@@ -53,9 +53,9 @@ Depth:16
 Gate_1q:21
 Gate_2q:32
 Total_gates:53
-Build_time:0.0043
-Transpile_execution_time:0.0693
-Total_time:0.0736
-CPU_usage:67.90
-RAM_usage_MB:200.18
+Build_time:0.0042
+Transpile_execution_time:0.0753
+Total_time:0.0794
+CPU_usage:50.30
+RAM_usage_MB:200.50
 # --- END_METRICS ---

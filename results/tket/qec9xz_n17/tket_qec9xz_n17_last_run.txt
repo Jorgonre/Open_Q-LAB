@@ -1,5 +1,5 @@
 Benchmark tket - qec9xz_n17.py - Iteration 10
-Duración script python: 6.00s
+Duración script python: 6.56s
 
 Circuito:
 <tket::Circuit, qubits=17, gates=61>
@@ -13,8 +13,8 @@ Gate_1q:21
 Gate_2q:32
 Total_gates:53
 Build_time:0.0005
-Transpile_execution_time:1.7696
-Total_time:1.7735
-CPU_usage:61.50
-RAM_usage_MB:255.75
+Transpile_execution_time:1.7100
+Total_time:1.7120
+CPU_usage:62.60
+RAM_usage_MB:255.97
 # --- END_METRICS ---

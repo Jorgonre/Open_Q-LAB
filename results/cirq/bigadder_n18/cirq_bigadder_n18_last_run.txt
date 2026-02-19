@@ -1,5 +1,5 @@
 Benchmark cirq - bigadder_n18.py - Iteration 10
-Duración script python: 6.84s
+Duración script python: 6.86s
 
 q0: 1.000 |0⟩  +  0.000 |1⟩
 q1: 0.000 |0⟩  +  1.000 |1⟩
@@ -57,9 +57,9 @@ Gate_1q:16
 Gate_2q:34
 Gate_3q:16
 Total_gates:66
-Build_time:0.0085
-Transpile_execution_time:0.1430
-Total_time:0.1516
-CPU_usage:26.40
-RAM_usage_MB:201.02
+Build_time:0.0076
+Transpile_execution_time:0.1421
+Total_time:0.1497
+CPU_usage:33.40
+RAM_usage_MB:201.36
 # --- END_METRICS ---

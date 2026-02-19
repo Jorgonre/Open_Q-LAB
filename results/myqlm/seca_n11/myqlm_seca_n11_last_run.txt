@@ -1,11 +1,11 @@
 Benchmark myqlm - seca_n11.py - Iteration 10
-Duración script python: 4.70s
+Duración script python: 4.44s
 
-|10000000011> 0.2548828125
-|00000000011> 0.23046875
-|00000000001> 0.24609375
-|10000000001> 0.2685546875
-<qat.lang.decorator._BaseWrapper object at 0x7e1a6008c910>
+|00000000011> 0.228515625
+|10000000001> 0.27734375
+|00000000001> 0.2578125
+|10000000011> 0.236328125
+<qat.lang.decorator._BaseWrapper object at 0x7675849fb750>
 # --- METRICS ---
 Qubits:11
 Depth:42
@@ -13,9 +13,9 @@ Gate_1q:26
 Gate_2q:36
 Gate_3q:8
 Total_gates:70
-Build_time:0.0058
-Transpile_execution_time:2.6803
-Total_time:2.6861
-CPU_usage:35.70
-RAM_usage_MB:164.04
+Build_time:0.0037
+Transpile_execution_time:2.3500
+Total_time:2.3537
+CPU_usage:42.10
+RAM_usage_MB:163.88
 # --- END_METRICS ---

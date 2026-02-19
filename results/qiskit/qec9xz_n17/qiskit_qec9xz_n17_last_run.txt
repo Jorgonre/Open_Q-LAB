@@ -1,5 +1,5 @@
 Benchmark qiskit - qec9xz_n17.py - Iteration 10
-Duración script python: 4.98s
+Duración script python: 5.48s
 
 1
 {'00000000': 1024}
@@ -9,9 +9,9 @@ Depth:16
 Gate_1q:21
 Gate_2q:32
 Total_gates:53
-Build_time:0.0009
-Transpile_execution_time:1.9675
-Total_time:1.9685
-CPU_usage:38.60
-RAM_usage_MB:131.22
+Build_time:0.0008
+Transpile_execution_time:1.9682
+Total_time:1.9690
+CPU_usage:40.10
+RAM_usage_MB:129.50
 # --- END_METRICS ---
