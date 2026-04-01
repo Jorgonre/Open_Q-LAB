@@ -1,20 +1,20 @@
 Benchmark tket - qft_n4.py - Iteration 10
-Duración script python: 5.33s
+Duración script python: 5.16s
 
 Circuito:
 <tket::Circuit, qubits=4, gates=17>
 
 Resultados:
-Counter({(1, 0, 0, 0): 79, (0, 0, 0, 0): 73, (1, 0, 0, 1): 72, (1, 1, 0, 1): 72, (0, 1, 0, 0): 70, (1, 1, 1, 1): 69, (0, 0, 0, 1): 66, (0, 1, 1, 1): 65, (1, 1, 1, 0): 64, (1, 1, 0, 0): 61, (1, 0, 1, 0): 60, (0, 1, 1, 0): 59, (1, 0, 1, 1): 57, (0, 1, 0, 1): 55, (0, 0, 1, 1): 54, (0, 0, 1, 0): 48})
+Counter({(0, 0, 0, 0): 74, (1, 0, 1, 0): 74, (0, 1, 1, 0): 73, (1, 1, 0, 0): 69, (1, 1, 1, 0): 69, (0, 1, 0, 0): 67, (1, 0, 0, 0): 66, (1, 0, 1, 1): 64, (0, 0, 1, 0): 61, (1, 0, 0, 1): 61, (1, 1, 1, 1): 61, (0, 0, 0, 1): 60, (1, 1, 0, 1): 60, (0, 1, 0, 1): 58, (0, 0, 1, 1): 55, (0, 1, 1, 1): 52})
 # --- METRICS ---
 Qubits:4
 Depth:9
 Gate_1q:6
 Gate_2q:6
 Total_gates:12
-Build_time:0.0023
-Transpile_execution_time:0.4710
-Total_time:0.4778
-CPU_usage:44.40
-RAM_usage_MB:255.19
+Build_time:0.0003
+Transpile_execution_time:0.1772
+Total_time:0.1788
+CPU_usage:101.40
+RAM_usage_MB:255.55
 # --- END_METRICS ---

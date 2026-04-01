@@ -1,5 +1,5 @@
 Benchmark pennylane - toffoli_n3.py - Iteration 10
-Duración script python: 9.46s
+Duración script python: 8.08s
 
 q0: 0.000 |0>  +  1.000 |1>
 q1: 0.000 |0>  +  1.000 |1>
@@ -15,9 +15,9 @@ Depth:21
 Gate_1q:24
 Gate_2q:6
 Total_gates:30
-Build_time:0.0167
-Transpile_execution_time:0.0921
-Total_time:0.1088
-CPU_usage:45.90
-RAM_usage_MB:362.75
+Build_time:0.0078
+Transpile_execution_time:0.0774
+Total_time:0.0852
+CPU_usage:58.60
+RAM_usage_MB:362.56
 # --- END_METRICS ---

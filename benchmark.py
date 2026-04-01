@@ -169,10 +169,10 @@ def main():
     # Obtener nombre del framework basado en la carpeta actual
     framework_name = os.path.basename(os.getcwd())
 
-    #circuitos = ["adder_n4.py","toffoli_n3.py","qft_n4.py", "bell_n4.py"] # Circuitos pequeños
+    circuitos = ["adder_n4.py","toffoli_n3.py","qft_n4.py", "bell_n4.py"] # Circuitos pequeños
     #circuitos = ["seca_n11.py", "bigadder_n18.py", "dnn_n16.py", "qec9xz_n17.py"] #Circuitos medianos
     #circuitos = ["vqe_uccsd_n28.py", "bigadder_n28.py"] # Circuitos grandes
-    circuitos = ["bigadder_n28.py"] # Descomentar para pruebas rápidas
+    #circuitos = ["bigadder_n28.py"] # Descomentar para pruebas rápidas
 
     for circuito in circuitos:
         print(f"\nProcesando circuito: {circuito}")
