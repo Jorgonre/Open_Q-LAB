@@ -20,6 +20,5 @@ job = sim.run(transpiled, shots=1024)
 result = job.result()
 
 
-
 qc.draw("mpl")
 plt.show()

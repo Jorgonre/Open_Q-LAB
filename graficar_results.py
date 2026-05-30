@@ -138,17 +138,20 @@ def plot_time(df):
     plt.ylabel("Tiempo Promedio (segundos) - Log", fontsize=14)
     
     # Leyenda
-    plt.legend(title="Framework", title_fontsize='12', fontsize='11', loc='upper left', bbox_to_anchor=(1, 1))
+    plt.legend(title="Framework", title_fontsize='16', fontsize='15', loc='upper left', bbox_to_anchor=(1.02, 1))
 
     # --- ETIQUETAS DE DATOS ---
     # Ponemos el número exacto encima de cada barra
     for container in chart.containers:
         # Formateamos el número: si es < 0.1 usamos 3 decimales, si no 2.
         labels = [f'{v:.3f}' if v < 0.1 else f'{v:.2f}' for v in container.datavalues]
-        chart.bar_label(container, labels=labels, padding=3, fontsize=9, rotation=45)
+        chart.bar_label(container, labels=labels, padding=3, fontsize=13, rotation=60)
 
     # Añadir un margen extra arriba para que los números no se corten
-    plt.margins(y=0.1)
+    if "bigadder_n28" in df["CIRCUIT"].values:
+        ax.set_ylim(top=120)  # Margen muy ajustado para la escala BIG
+    else:
+        plt.margins(y=0.15)  # Margen normal para las escalas pequeña y mediana
     
     plt.tight_layout()
     plt.savefig(OUTPUT_IMAGE_TIME, dpi=300)
@@ -182,17 +185,20 @@ def plot_RAM(df):
     plt.ylabel("RAM Promedio (MB) - Log", fontsize=14)
     
     # Leyenda
-    plt.legend(title="Framework", title_fontsize='12', fontsize='11', loc='upper left', bbox_to_anchor=(1, 1))
+    plt.legend(title="Framework", title_fontsize='16', fontsize='15', loc='upper left', bbox_to_anchor=(1.02, 1))
 
     # --- ETIQUETAS DE DATOS ---
     # Ponemos el número exacto encima de cada barra
     for container in chart.containers:
         # Formateamos el número: si es < 0.1 usamos 3 decimales, si no 2.
         labels = [f'{v:.3f}' if v < 0.1 else f'{v:.2f}' for v in container.datavalues]
-        chart.bar_label(container, labels=labels, padding=3, fontsize=9, rotation=45)
+        chart.bar_label(container, labels=labels, padding=3, fontsize=13, rotation=70)
 
     # Añadir un margen extra arriba para que los números no se corten
-    plt.margins(y=0.1)
+    if "bigadder_n28" in df["CIRCUIT"].values:
+        ax.set_ylim(top=200)  # Margen muy ajustado para la escala BIG
+    else:
+        plt.margins(y=0.15)  # Margen normal para las escalas pequeña y mediana
     
     plt.tight_layout()
     plt.savefig(OUTPUT_IMAGE_RAM, dpi=300)
@@ -226,17 +232,20 @@ def plot_CPU(df):
     plt.ylabel("CPU Promedio (%) - Log", fontsize=14)
     
     # Leyenda
-    plt.legend(title="Framework", title_fontsize='12', fontsize='11', loc='upper left', bbox_to_anchor=(1, 1))
+    plt.legend(title="Framework", title_fontsize='16', fontsize='15', loc='upper left', bbox_to_anchor=(1.02, 1))
 
     # --- ETIQUETAS DE DATOS ---
     # Ponemos el número exacto encima de cada barra
     for container in chart.containers:
         # Formateamos el número: si es < 0.1 usamos 3 decimales, si no 2.
         labels = [f'{v:.3f}' if v < 0.1 else f'{v:.2f}' for v in container.datavalues]
-        chart.bar_label(container, labels=labels, padding=3, fontsize=9, rotation=45)
+        chart.bar_label(container, labels=labels, padding=3, fontsize=13, rotation=60)
 
     # Añadir un margen extra arriba para que los números no se corten
-    plt.margins(y=0.1)
+    if "bigadder_n28" in df["CIRCUIT"].values:
+        ax.set_ylim(top=250)  # Margen muy ajustado para la escala BIG
+    else:
+        plt.margins(y=0.15)  # Margen normal para las escalas pequeña y mediana
     
     plt.tight_layout()
     plt.savefig(OUTPUT_IMAGE_CPU, dpi=300)
@@ -280,7 +289,7 @@ def plot_boxplot_time(df):
     plt.ylabel("Tiempo (segundos) - Log", fontsize=14)
     
     # Leyenda
-    plt.legend(title="Framework", title_fontsize='12', fontsize='11', loc='upper left', bbox_to_anchor=(1, 1))
+    plt.legend(title="Framework", title_fontsize='16', fontsize='15', loc='upper left', bbox_to_anchor=(1.02, 1))
 
     # Ajuste de márgenes
     plt.margins(y=0.1)
@@ -352,7 +361,7 @@ def plot_boxplot_RAM(df):
     plt.ylabel("RAM (MB) - Log", fontsize=14)
     
     # Leyenda
-    plt.legend(title="Framework", title_fontsize='12', fontsize='11', loc='upper left', bbox_to_anchor=(1, 1))
+    plt.legend(title="Framework", title_fontsize='16', fontsize='15', loc='upper left', bbox_to_anchor=(1.02, 1))
 
     # Ajuste de márgenes
     plt.subplots_adjust(bottom=0.20)
@@ -399,7 +408,7 @@ def plot_boxplot_CPU(df):
     plt.ylabel("CPU (%) - Log", fontsize=14)
     
     # Leyenda
-    plt.legend(title="Framework", title_fontsize='12', fontsize='11', loc='upper left', bbox_to_anchor=(1, 1))
+    plt.legend(title="Framework", title_fontsize='16', fontsize='15', loc='upper left', bbox_to_anchor=(1.02, 1))
 
     # Ajuste de márgenes
     plt.margins(y=0.1)
