@@ -301,70 +301,96 @@ def plot_boxplot_time(df):
 
 def plot_boxplot_RAM(df):
     """
-    Genera un diagrama de caja y bigotes para la distribución de RAM.
+    Genera un diagrama de caja y bigotes para la distribución de RAM garantizando
+    el orden idéntico de circuitos y frameworks respecto a las gráficas de barras.
     """
     if df.empty:
         print("No hay datos para graficar el boxplot de RAM.")
         return
 
     sns.set_theme(style="whitegrid")
-    fig, ax = plt.subplots(figsize=(14, 8))
+    fig, ax = plt.subplots(figsize=(15, 9)) # Aumentado ligeramente para fuentes grandes
 
-    # --- ORDENAR Y CREAR EJE X COMBINADO ---
-    df_sorted = df.sort_values(by=["CIRCUIT", "FRAMEWORK"])
+    # --- 1. DEFINIR ORDENAMIENTO CATEGÓRICO ESTRICTO ---
+    # Detectamos dinámicamente qué circuitos existen en el DataFrame para mantener su orden natural
+    all_circuits = list(df["CIRCUIT"].unique())
     
-    df_sorted["COMBINED"] = df_sorted["CIRCUIT"] + "|" + df_sorted["FRAMEWORK"]
+    # Mapeo del orden exacto que muestran tus gráficas de barras adjuntas
+    ordered_frameworks = ["pennylane", "cirq", "tket", "qiskit", "myqlm"]
+    
+    # Creamos una copia para no alterar el DataFrame original por referencia
+    df_sorted = df.copy()
+    
+    # Aseguramos homogeneidad de strings en minúsculas para los frameworks
+    df_sorted["FRAMEWORK"] = df_sorted["FRAMEWORK"].astype(str).str.lower()
+    
+    # Convertimos a tipo categórico ordenado
+    df_sorted["CIRCUIT"] = pd.Categorical(df_sorted["CIRCUIT"], categories=all_circuits, ordered=True)
+    df_sorted["FRAMEWORK"] = pd.Categorical(df_sorted["FRAMEWORK"], categories=ordered_frameworks, ordered=True)
+    
+    # Ordenamos el DataFrame usando los pesos de las categorías, NO el orden alfabético
+    df_sorted = df_sorted.sort_values(by=["CIRCUIT", "FRAMEWORK"])
+    
+    # Creamos el eje X combinado una vez que el DataFrame ya está perfectamente estructurado
+    df_sorted["COMBINED"] = df_sorted["CIRCUIT"].astype(str) + "|" + df_sorted["FRAMEWORK"].astype(str)
 
-    # --- CREAR DIAGRAMA DE CAJA Y BIGOTES ---
+    # --- 2. CREAR DIAGRAMA DE CAJA Y BIGOTES ---
     chart = sns.boxplot(
         data=df_sorted,
         x="COMBINED",
         y="RAM_MEAN",
         hue="FRAMEWORK",
+        hue_order=ordered_frameworks,
         palette="Paired",
         dodge=False,
-        linewidth=1.5,
-        fliersize=4,
+        linewidth=1.8,  # Líneas ligeramente más gruesas para impresión
+        fliersize=5,    # Outliers más visibles
         ax=ax
     )
 
     # --- ESCALA LOGARÍTMICA ---
     chart.set_yscale("log")
 
-    # --- ETIQUETAS DE FRAMEWORKS (Eje X) ---
+    # --- 3. ETIQUETAS DE FRAMEWORKS (Eje X) ---
     unique_combined = df_sorted["COMBINED"].unique()
-    # Separamos por el símbolo "|" y cogemos la parte derecha (el framework)
     labels = [val.split("|")[1] for val in unique_combined]
     ax.set_xticks(range(len(labels)))
-    ax.set_xticklabels(labels, rotation=45, ha='center', fontsize=10)
+    
+    # CAMBIO: Aumentado el tamaño de los nombres de los frameworks en el eje X
+    ax.set_xticklabels(labels, rotation=45, ha='center', fontsize=12, fontweight='semibold')
 
-    # --- ETIQUETAS DE CIRCUITOS Y LÍNEAS SEPARADORAS ---
-    unique_circuits = df_sorted["CIRCUIT"].unique()
+    # CAMBIO: Aumentado el tamaño de los números del eje Y
+    ax.tick_params(axis='y', which='major', labelsize=14)
+
+    # --- 4. ETIQUETAS DE CIRCUITOS Y LÍNEAS SEPARADORAS ---
+    # Extraemos los circuitos manteniendo el orden categórico
+    unique_circuits = [c for c in all_circuits if c in df_sorted["CIRCUIT"].values]
     start = 0
     for circuit in unique_circuits:
         count = len(df_sorted[df_sorted["CIRCUIT"] == circuit]["COMBINED"].unique())
         end = start + count
         center = (start + (end - 1)) / 2
         
-        ax.text(center, -0.15, circuit, ha='center', va='top', 
+        # CAMBIO: Nombre del circuito más grande (fontsize=15) y posicionado limpiamente abajo
+        ax.text(center, -0.22, circuit, ha='center', va='top', 
                 transform=ax.get_xaxis_transform(), 
-                fontsize=12, fontweight='bold', color='#222222')
+                fontsize=15, fontweight='bold', color='#111111')
         
         if end < len(unique_combined):
             ax.axvline(x=end - 0.5, color='gray', linestyle='--', alpha=0.5)
             
         start = end
 
-    # Títulos y Ejes
-    plt.title("Distribución de RAM de Ejecución (Escala Logarítmica)", fontsize=18, fontweight='bold', pad=20)
+    # Títulos y Ejes con fuentes aumentadas
+    plt.title("Distribución de RAM de Ejecución (Escala Logarítmica)", fontsize=20, fontweight='bold', pad=25)
     plt.xlabel("")
-    plt.ylabel("RAM (MB) - Log", fontsize=14)
+    plt.ylabel("RAM (MB) - Log", fontsize=16, fontweight='bold', labelpad=15)
     
-    # Leyenda
+    # CAMBIO: Leyenda más grande y desplazada a la derecha para evitar colisiones
     plt.legend(title="Framework", title_fontsize='16', fontsize='15', loc='upper left', bbox_to_anchor=(1.02, 1))
 
-    # Ajuste de márgenes
-    plt.subplots_adjust(bottom=0.20)
+    # Aumentado el margen inferior para que las etiquetas de los circuitos no sufran recortes
+    plt.subplots_adjust(bottom=0.25)
     
     plt.tight_layout()
     plt.savefig(OUTPUT_IMAGE_BOXPLOT_RAM, dpi=300)
