@@ -14,6 +14,8 @@ OUTPUT_IMAGE_BOXPLOT_RAM = "grafica_boxplot_RAM.png"
 OUTPUT_IMAGE_BOXPLOT_CPU = "grafica_boxplot_CPU.png"
 OUTPUT_IMAGE_GATES = "grafica_gates.png"
 
+ORDERED_FRAMEWORKS = ["pennylane", "cirq", "tket", "qiskit", "myqlm"]
+
 def get_latest_data_time(root_dir):
     """carga de datos de total time"""
     all_data = []
@@ -122,6 +124,7 @@ def plot_time(df):
         x="CIRCUIT",
         y="TIME_MEAN",
         hue="FRAMEWORK",
+        hue_order=ORDERED_FRAMEWORKS,
         errorbar=None,
         palette="Paired",
         edgecolor="black",
@@ -169,6 +172,7 @@ def plot_RAM(df):
         x="CIRCUIT",
         y="RAM_MEAN",
         hue="FRAMEWORK",
+        hue_order=ORDERED_FRAMEWORKS,
         errorbar=None,
         palette="Paired",
         edgecolor="black",
@@ -216,6 +220,7 @@ def plot_CPU(df):
         x="CIRCUIT",
         y="CPU_MEAN",
         hue="FRAMEWORK",
+        hue_order=ORDERED_FRAMEWORKS,
         errorbar=None,
         palette="Paired",
         edgecolor="black",
@@ -268,6 +273,7 @@ def plot_boxplot_time(df):
         x="CIRCUIT",       # Eje X: Circuitos
         y="TIME_MEAN",     # Eje Y: Distribución del tiempo de las 10 iteraciones
         hue="FRAMEWORK",   # Agrupación por color para cada framework
+        hue_order=ORDERED_FRAMEWORKS,
         palette="Paired",  # Misma paleta de colores
         linewidth=1.5,     # Grosor de las líneas de la caja y bigotes
         fliersize=4,       # Tamaño de los puntos para los outliers
@@ -340,7 +346,7 @@ def plot_boxplot_RAM(df):
         x="COMBINED",
         y="RAM_MEAN",
         hue="FRAMEWORK",
-        hue_order=ordered_frameworks,
+        hue_order=ORDERED_FRAMEWORKS,
         palette="Paired",
         dodge=False,
         linewidth=1.8,  # Líneas ligeramente más gruesas para impresión
@@ -413,6 +419,7 @@ def plot_boxplot_CPU(df):
         x="CIRCUIT",       # Eje X: Circuitos
         y="CPU_MEAN",     # Eje Y: Distribución del tiempo de las 10 iteraciones
         hue="FRAMEWORK",   # Agrupación por color para cada framework
+        hue_order=ORDERED_FRAMEWORKS,
         palette="Paired",  # Misma paleta de colores
         linewidth=1.5,     # Grosor de las líneas de la caja y bigotes
         fliersize=4,       # Tamaño de los puntos para los outliers
